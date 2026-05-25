@@ -154,7 +154,7 @@
             border-radius: 10px;
         }
 
-        /* 📊 DOUBLE PROGRESS BARS (FOUND & NOT FOUND PATTIS) */
+        /* 📊 DOUBLE PROGRESS BARS */
         .bars-container {
             display: none;
             margin: 15px 0;
@@ -171,7 +171,6 @@
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        /* Found Patti (Green) */
         .bar-found {
             background: linear-gradient(90deg, #4db6ac, #00796b);
             height: 100%;
@@ -179,7 +178,6 @@
             transition: width 0.1s ease;
         }
 
-        /* Not Found Patti (Red) */
         .bar-notfound {
             background: linear-gradient(90deg, #e57373, #c62828);
             height: 100%;
@@ -226,7 +224,7 @@
         }
 
         th, td { 
-            padding: 10px 12px; 
+            padding: 12px 10px; 
             text-align: center; 
             border-bottom: 1px solid #edf2f7; 
             font-size: 13px;
@@ -235,8 +233,22 @@
         th { background-color: #f8fafc; color: #64748b; font-weight: 700; }
         td { color: #334155; font-weight: 500; }
 
-        .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase;}
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; display: inline-block; margin-bottom: 5px;}
         .badge.found { background-color: #e6fffa; color: #319795; border: 1px solid #b2f5ea; }
+        .badge.notfound { background-color: #fff5f5; color: #e53e3e; border: 1px solid #fed7d7; }
+
+        .notfound-notice {
+            font-size: 11px;
+            color: #718096;
+            line-height: 1.3;
+            font-weight: 600;
+            background: #f7fafc;
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px dashed #cbd5e1;
+            margin-top: 4px;
+            text-align: left;
+        }
 
         .download-btn {
             background: linear-gradient(135deg, #ff9100, #ff3d00);
@@ -309,7 +321,6 @@
         const dynamicContainer = document.getElementById('dynamicContainer');
         const copyBtn = document.getElementById('copyAllBtn');
         
-        // Progress Patti Elements
         const barsContainer = document.getElementById('barsContainer');
         const barFound = document.getElementById('barFound');
         const barNotfound = document.getElementById('barNotfound');
@@ -323,7 +334,6 @@
         copyBtn.style.display = "none";
         matchedCNICs = []; 
         
-        // Reset bars
         barFound.style.width = "0%";
         barNotfound.style.width = "0%";
         textFound.innerText = "✅ Found: 0";
@@ -376,14 +386,20 @@
                                   </tr>`;
                 } else {
                     currentNotFound++;
-                    tableHTML += `<tr><td>${query}</td><td><span class="badge" style="background:#fff5f5; color:#e53e3e; border:1px solid #fed7d7;">Not Found</span></td></tr>`;
+                    tableHTML += `<tr>
+                                    <td>${query}</td>
+                                    <td>
+                                        <span class="badge notfound">Not Found</span>
+                                        <div class="notfound-notice">
+                                            ⏳ <strong>Pending Update:</strong> Is list k fingerprints 24 hours bad update kr diye jaye gy, please 24 hour bad try krian.
+                                        </div>
+                                    </td>
+                                  </tr>`;
                 }
 
-                // 📈 Patti Calculation (Percentage based)
                 let foundPercent = Math.round((currentFound / totalQueries) * 100);
                 let notFoundPercent = Math.round((currentNotFound / totalQueries) * 100);
 
-                // Update text and width live
                 barFound.style.width = foundPercent + "%";
                 textFound.innerText = `✅ Found: ${currentFound} (${foundPercent}%)`;
 
