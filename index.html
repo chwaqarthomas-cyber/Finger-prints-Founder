@@ -154,53 +154,49 @@
             border-radius: 10px;
         }
 
-        /* 📊 PROGRESS BAR & LIVE STATS STYLES */
-        .progress-container {
+        /* 📊 DOUBLE PROGRESS BARS (FOUND & NOT FOUND PATTIS) */
+        .bars-container {
             display: none;
             margin: 15px 0;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .progress-wrapper {
             background: #e2e8f0;
             border-radius: 10px;
-            height: 20px;
+            height: 22px;
             overflow: hidden;
             position: relative;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .progress-bar {
-            background: linear-gradient(90deg, #ff9100, #e65100);
+        /* Found Patti (Green) */
+        .bar-found {
+            background: linear-gradient(90deg, #4db6ac, #00796b);
             height: 100%;
             width: 0%;
             transition: width 0.1s ease;
         }
 
-        .progress-text {
+        /* Not Found Patti (Red) */
+        .bar-notfound {
+            background: linear-gradient(90deg, #e57373, #c62828);
+            height: 100%;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        .bar-text {
             position: absolute;
             width: 100%;
             text-align: center;
             top: 0; left: 0;
-            line-height: 20px;
+            line-height: 22px;
             font-size: 12px;
             font-weight: 700;
             color: #333;
         }
-
-        .live-stats {
-            display: none;
-            justify-content: space-around;
-            background: #f1f5f9;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .stat-item {
-            font-size: 13px;
-            font-weight: 700;
-            text-align: center;
-        }
-        .stat-item.found-count { color: #319795; }
-        .stat-item.notfound-count { color: #e53e3e; }
 
         .status-msg { 
             text-align: center; 
@@ -279,14 +275,16 @@
         <button id="copyAllBtn" class="copy-btn" onclick="copyAllMatched()">📋 COPY</button>
     </div>
     
-    <div class="progress-container" id="progressContainer">
-        <div class="progress-bar" id="progressBar"></div>
-        <div class="progress-text" id="progressText">0%</div>
-    </div>
-
-    <div class="live-stats" id="liveStats">
-        <div class="stat-item found-count">✅ Found: <span id="foundCount">0</span></div>
-        <div class="stat-item notfound-count">❌ Not Found: <span id="notFoundCount">0</span></div>
+    <div class="bars-container" id="barsContainer">
+        <div class="progress-wrapper">
+            <div class="bar-found" id="barFound"></div>
+            <div class="bar-text" id="textFound">✅ Found: 0</div>
+        </div>
+        
+        <div class="progress-wrapper">
+            <div class="bar-notfound" id="barNotfound"></div>
+            <div class="bar-text" id="textNotfound">❌ Not Found: 0</div>
+        </div>
     </div>
 
     <div id="status" class="status-msg"></div>
@@ -311,13 +309,12 @@
         const dynamicContainer = document.getElementById('dynamicContainer');
         const copyBtn = document.getElementById('copyAllBtn');
         
-        // Progress elements
-        const progContainer = document.getElementById('progressContainer');
-        const progBar = document.getElementById('progressBar');
-        const progText = document.getElementById('progressText');
-        const liveStats = document.getElementById('liveStats');
-        const fCount = document.getElementById('foundCount');
-        const nfCount = document.getElementById('notFoundCount');
+        // Progress Patti Elements
+        const barsContainer = document.getElementById('barsContainer');
+        const barFound = document.getElementById('barFound');
+        const barNotfound = document.getElementById('barNotfound');
+        const textFound = document.getElementById('textFound');
+        const textNotfound = document.getElementById('textNotfound');
         
         if(!input) { alert("Please enter CNIC numbers!"); return; }
         
@@ -326,13 +323,13 @@
         copyBtn.style.display = "none";
         matchedCNICs = []; 
         
-        // Clear counters & show bars
-        fCount.innerText = "0";
-        nfCount.innerText = "0";
-        progBar.style.width = "0%";
-        progText.innerText = "0%";
-        progContainer.style.display = "block";
-        liveStats.style.display = "flex";
+        // Reset bars
+        barFound.style.width = "0%";
+        barNotfound.style.width = "0%";
+        textFound.innerText = "✅ Found: 0";
+        textNotfound.innerText = "❌ Not Found: 0";
+        
+        barsContainer.style.display = "flex";
         resBox.style.display = 'none';
         
         const queries = input.split('\n').map(q => q.replace(/[^0-9]/g, '').trim()).filter(q => q.length > 0);
@@ -344,7 +341,7 @@
             
             if(data.error) { 
                 status.innerText = "Database Error: " + data.error; 
-                progContainer.style.display = "none";
+                barsContainer.style.display = "none";
                 return; 
             }
 
@@ -357,15 +354,12 @@
             let currentNotFound = 0;
             const totalQueries = queries.length;
 
-            // 🌀 SIMULATED SPEED COUNTER PROGRESS LOOP
             for (let i = 0; i < totalQueries; i++) {
                 const query = queries[i];
                 
-                // Live match detection
                 if(cnicSet.has(query)) {
                     matchedCNICs.push(query); 
                     currentFound++;
-                    fCount.innerText = currentFound;
                     
                     const waUrl = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(`Salam Rana Vyke Urf Bablo,\nMera yeh CNIC database mein Match ho gaya hai: ${query}\nKindly meri Jazz Android ID Generate kar dein.`)}`;
                     
@@ -382,17 +376,21 @@
                                   </tr>`;
                 } else {
                     currentNotFound++;
-                    nfCount.innerText = currentNotFound;
                     tableHTML += `<tr><td>${query}</td><td><span class="badge" style="background:#fff5f5; color:#e53e3e; border:1px solid #fed7d7;">Not Found</span></td></tr>`;
                 }
 
-                // Update bar percentage live
-                let percent = Math.round(((i + 1) / totalQueries) * 100);
-                progBar.style.width = percent + "%";
-                progText.innerText = percent + "%";
+                // 📈 Patti Calculation (Percentage based)
+                let foundPercent = Math.round((currentFound / totalQueries) * 100);
+                let notFoundPercent = Math.round((currentNotFound / totalQueries) * 100);
 
-                // Chota sa delay loading look dene ke liye
-                await new Promise(resolve => setTimeout(resolve, 80)); 
+                // Update text and width live
+                barFound.style.width = foundPercent + "%";
+                textFound.innerText = `✅ Found: ${currentFound} (${foundPercent}%)`;
+
+                barNotfound.style.width = notFoundPercent + "%";
+                textNotfound.innerText = `❌ Not Found: ${currentNotFound} (${notFoundPercent}%)`;
+
+                await new Promise(resolve => setTimeout(resolve, 60)); 
             }
             
             tableHTML += `</tbody></table>`;
@@ -403,7 +401,7 @@
             
         } catch (error) {
             status.innerText = "Connection error.";
-            progContainer.style.display = "none";
+            barsContainer.style.display = "none";
             console.error(error);
         }
     }
