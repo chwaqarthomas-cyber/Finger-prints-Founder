@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ CYBER DATABASE SEARCH ENGINE ⚡</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
+        
+        body { 
+            background-color: #030303; 
+            color: #00ff00; 
+            padding: 20px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0;
+            text-shadow: 0 0 5px #00ff00;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Multiple Big Fingerprint Background Elements Scattered Across Full Screen */
+        .bg-fingerprint {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: fixed;
+            color: rgba(0, 255, 0, 0.03); 
+            text-shadow: 0 0 30px rgba(0, 255, 0, 0.15);
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+        .fp-1 { top: 10%; left: 10%; font-size: 35vh; }
+        .fp-2 { top: 15%; right: 5%; font-size: 40vh; }
+        .fp-3 { bottom: 5%; left: -5%; font-size: 45vh; }
+        .fp-4 { bottom: 10%; right: 15%; font-size: 38vh; }
+        .fp-center { top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 65vh; color: rgba(0, 255, 0, 0.04); }
+
+        /* Advanced Scanline CRT effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+            z-index: 2;
+            background-size: 100% 3px, 4px 100%;
+            pointer-events: none;
+        }
+
+        .container { 
+            background: rgba(7, 7, 7, 0.92); 
+            padding: 35px; 
+            border-radius: 12px; 
+            border: 3px solid #00ff00; 
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6); 
+            width: 100%; 
+            max-width: 800px; 
+            z-index: 3;
+            position: relative;
+        }
+
+        h2 { 
+            color: #00ff00; 
+            text-align: center; 
+            margin-top: 0; 
+            font-size: 26px; 
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* Big Bold Neon Green Main Title */
+        .db-title {
+            color: #00ff00;
+            text-align: center;
+            font-weight: 900; 
+            font-size: 26px;  
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px #00ff00;
+            letter-spacing: 1px;
+            border-bottom: 3px dashed #00ff00;
+            padding-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* Large & Bold Professional System Info Box */
+        .info-box {
+            background: rgba(0, 30, 0, 0.7);
+            border: 2px solid #00ff00;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            font-size: 16px; 
+            font-weight: bold; 
+            line-height: 1.6;
+            color: #b3ffb3;
+            box-shadow: inset 0 0 15px rgba(0,255,0,0.2);
+        }
+
+        .info-box .highlight {
+            color: #ffcc00;
+            font-weight: 900;
+            font-size: 17px;
+            text-shadow: 0 0 6px #ffcc00;
+        }
+
+        p.prompt-text { 
+            color: #00ff00; 
+            font-size: 18px; 
+            margin: 0 0 15px 0; 
+            font-weight: 900; 
+            letter-spacing: 1px;
+        }
+        
+        textarea { 
+            width: 100%; 
+            height: 160px; 
+            padding: 15px; 
+            background-color: #000;
+            color: #00ff00;
+            border: 2px solid #00ff00; 
+            border-radius: 6px; 
+            resize: none; 
+            font-size: 18px; 
+            font-weight: bold;
+            margin-bottom: 25px; 
+            outline: none;
+            box-shadow: inset 0 0 15px rgba(0,255,0,0.4);
+        }
+        
+        textarea:focus { 
+            border-color: #00ff00; 
+            box-shadow: 0 0 25px rgba(0,255,0,0.8);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        button { 
+            flex: 2;
+            background: #00ff00; 
+            color: #000; 
+            border: none; 
+            padding: 18px; 
+            font-size: 18px; 
+            font-weight: 900; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(0,255,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        button:hover { 
+            background: #000; 
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 35px rgba(0,255,0,1);
+        }
+
+        .copy-btn {
+            flex: 1;
+            background: #004400;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            display: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 900;
+            border-radius: 6px;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn:hover {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .status-msg { 
+            text-align: center; 
+            font-weight: 900; 
+            margin-top: 15px; 
+            color: #ffcc00; 
+            font-size: 16px; 
+            letter-spacing: 1px;
+        }
+
+        .results-box { 
+            margin-top: 35px; 
+            border-top: 2px dashed #00ff00; 
+            padding-top: 25px; 
+            display: none; 
+        }
+
+        /* Styling for professional lock message */
+        .lock-notice-card {
+            background: rgba(20, 10, 0, 0.85);
+            border: 2px solid #ffaa00;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 15px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 170, 0, 0.4);
+        }
+
+        .lock-title {
+            color: #ff3333;
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px #ff3333;
+        }
+
+        .lock-desc {
+            color: #ffcc00;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 15px; 
+        }
+
+        th, td { 
+            padding: 16px; 
+            text-align: center; 
+            border: 2px solid #005500; 
+            vertical-align: middle;
+            font-weight: bold; 
+        }
+
+        th { 
+            background-color: #001100; 
+            color: #00ff00;
+            font-size: 16px; 
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        td {
+            background-color: #000400;
+            font-size: 17px; 
+        }
+
+        .badge { 
+            padding: 8px 14px; 
+            border-radius: 4px; 
+            font-size: 13px; 
+            font-weight: 900; 
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .badge.found { 
+            background-color: rgba(0, 255, 0, 0.2); 
+            color: #00ff00; 
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 12px rgba(0,255,0,0.5);
+        }
+
+        .wa-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 12px;
+            background: rgba(0, 40, 0, 0.6);
+            padding: 10px;
+            border-radius: 6px;
+            border: 2px solid #00ff00;
+        }
+
+        .wa-link {
+            color: #25D366;
+            font-size: 38px; 
+            cursor: pointer;
+            text-decoration: none;
+            text-shadow: 0 0 25px #25D366;
+            display: inline-block;
+            animation: cyberPulse 1s infinite alternate; 
+        }
+
+        @keyframes cyberPulse {
+            0% { opacity: 0.5; transform: scale(0.9); text-shadow: 0 0 15px #25D366; }
+            100% { opacity: 1; transform: scale(1.15); text-shadow: 0 0 30px #25D366, 0 0 15px #ffffff; }
+        }
+
+        .wa-text {
+            color: #ffcc00;
+            font-size: 13px; 
+            margin-left: 12px;
+            font-weight: 900; 
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 5px #ffcc00;
+            text-align: left;
+            max-width: 240px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-fingerprint fp-1">&#f577;</div>
+<div class="bg-fingerprint fp-2">&#f577;</div>
+<div class="bg-fingerprint fp-3">&#f577;</div>
+<div class="bg-fingerprint fp-4">&#f577;</div>
+<div class="bg-fingerprint fp-center">&#f577;</div>
+
+<div class="container">
+    <h2>[// SYSTEM_DATABASE_CORE ]</h2>
+    <div class="db-title">CNIC FINGERPRINT FOUNDER FOR FEW STEP JAZZ ANDROID ID GERNATE</div>
+    
+    <div class="info-box">
+        <strong>⚡ SYSTEM NOTICE:</strong> Jin k pas Jazzcash Few Step Waly CNIC k fingerprint Nahi hain, wo yhaan hamre secure database se found krain. Hamen umeed hai k aapka CNIC k fingerprints hamre database me mil jaye gy. <br><br>
+        <span class="highlight">>> Instruction:</span> Thumb prints Scan krian, record found hony par WhatsApp icon par click kr k direct inbox ayein.
+    </div>
+
+    <p class="prompt-text">root@system:~# Enter target CNICs (Line-by-Line):</p>
+    
+    <textarea id="searchInput" placeholder="3520212345677&#10;3120105711484"></textarea>
+    
+    <div class="btn-group">
+        <button onclick="searchCNIC()">⚡ RUN CYBER SCAN ⚡</button>
+        <button id="copyAllBtn" class="copy-btn" onclick="copyAllMatched()">📋 COPY MATCHED</button>
+    </div>
+    
+    <div id="status" class="status-msg"></div>
+
+    <div class="results-box" id="resultsBox">
+        <div id="dynamicContainer"></div>
+    </div>
+</div>
+
+<script>
+    // Connected Google Sheet ID & Configuration
+    const SHEET_ID = '1OjB1Ubo3sL9q5K7zfOMqhYbB0VSnvbfbAwPCXzJz5_A'; 
+    const SHEET_NAME = 'main data'; 
+    const WHATSAPP_NUM = '447915605790'; 
+    let matchedCNICs = []; 
+
+    // 🔒 LOCK CONTROL: Kal Sham 7 baje is false ko mita kar true kar dena bas!
+    const IS_LIVE = false; 
+
+    async function searchCNIC() {
+        const input = document.getElementById('searchInput').value.trim();
+        const status = document.getElementById('status');
+        const resBox = document.getElementById('resultsBox');
+        const dynamicContainer = document.getElementById('dynamicContainer');
+        const copyBtn = document.getElementById('copyAllBtn');
+        
+        if(!input) { alert("ERROR: Input field is empty!"); return; }
+        
+        status.innerText = ">> Initializing security handshake with core servers...";
+        dynamicContainer.innerHTML = "";
+        copyBtn.style.display = "none";
+        matchedCNICs = []; 
+        
+        const queries = input.split('\n').map(q => q.replace(/[^0-9]/g, '').trim()).filter(q => q.length > 0);
+        if (queries.length === 0) { alert("ERROR: No valid numerical data detected!"); return; }
+
+        // 🔒 CHECK IF SYSTEM IS LOCKED (MAINTENANCE MODE)
+        if (!IS_LIVE) {
+            setTimeout(() => {
+                status.innerText = ">> ACCESS REDIRECTED: SYSTEM RESERVED.";
+                resBox.style.display = 'block';
+                
+                const waMessage = encodeURIComponent(`Salam Rana Vyke Urf Bablo,\nMain website par aya tha, Kindly mujhe details chahiye.`);
+                const waUrl = `https://wa.me/${WHATSAPP_NUM}?text=${waMessage}`;
+
+                dynamicContainer.innerHTML = `
+                    <div class="lock-notice-card">
+                        <div class="lock-title">⚠️ SYSTEM LOCK: CORE ENGINE PREPARING</div>
+                        <div class="lock-desc">
+                            Ye service abi available ni ha inshallah Aj sham 7 bjy ap apni list search kr k apni Finger prints found kr skty hain please 7 bjy tk wait krain.
+                        </div>
+                        <div class="wa-box" style="max-width: 450px; margin: 15px auto 0 auto;">
+                            <a href="${waUrl}" target="_blank" class="wa-link" title="Contact Rana Vyke"><i class="fab fa-whatsapp"></i></a>
+                            <div class="wa-text" style="font-size:14px; max-width:100%;">
+                                [ Secure Contact Support ]<br>
+                                <strong>Rana Vyke Urf Bablo</strong><br>
+                                Click icon to contact via WhatsApp direct inbox.
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }, 1000);
+            return;
+        }
+
+        // 🟢 LIVE SYSTEM EXECUTION (Runs when IS_LIVE = true)
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${SHEET_NAME}`;
+            const response = await fetch(url);
+            const data = await response.text();
+            
+            status.innerText = ">> Scanning modules and decrypting records...";
+            
+            const rows = data.split('\n').map(row => row.split(','));
+            const cnicSet = new Set();
+            
+            for(let i=1; i<rows.length; i++) {
+                if(rows[i][0]) {
+                    let cleanCnic = rows[i][0].replace(/["']/g, "").trim();
+                    cnicSet.add(cleanCnic);
+                }
+            }
+            
+            let tableHTML = `<table>
+                                <thead>
+                                    <tr>
+                                        <th>TARGET CNIC</th>
+                                        <th>DATABASE SCAN RESULT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+
+            queries.forEach(query => {
+                if(cnicSet.has(query)) {
+                    matchedCNICs.push(query); 
+                    const waMessage = encodeURIComponent(`Salam Rana Vyke Urf Bablo,\nMera yeh CNIC database mein Match ho gaya hai: ${query}\nKindly meri Jazz Android ID Generate kar dein.`);
+                    const waUrl = `https://wa.me/${WHATSAPP_NUM}?text=${waMessage}`;
+                    
+                    tableHTML += `<tr>
+                                    <td>${query}</td>
+                                    <td>
+                                        <span class="badge found">Matched</span>
+                                        <div class="wa-box">
+                                            <a href="${waUrl}" target="_blank" class="wa-link" title="Contact Rana Vyke"><i class="fab fa-whatsapp"></i></a>
+                                            <div class="wa-text">Ju Cnic Found ho gaye hain Wo lny k liye Whatsapp pr rabta krian</div>
+                                        </div>
+                                    </td>
+                                  </tr>`;
+                } else {
+                    tableHTML += `<tr><td>${query}</td><td><span class="badge" style="background-color:rgba(255,0,0,0.2); color:#ff3333; border:2px solid #ff3333; box-shadow: 0 0 12px rgba(255,51,51,0.5);">Bypassed</span></td></tr>`;
+                }
+            });
+            
+            tableHTML += `</tbody></table>`;
+            dynamicContainer.innerHTML = tableHTML;
+            
+            status.innerText = ">> SCAN SEQUENCE COMPLETE. RESULTS EXTRACTED.";
+            resBox.style.display = 'block';
+            
+            if(matchedCNICs.length > 0) {
+                copyBtn.style.display = "inline-block"; 
+            }
+            
+        } catch (error) {
+            status.innerText = ">> CRITICAL ERROR: Core connection timed out.";
+            console.error(error);
+        }
+    }
+
+    function copyAllMatched() {
+        if(matchedCNICs.length === 0) return;
+        const textToCopy = matchedCNICs.join('\n');
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            const copyBtn = document.getElementById('copyAllBtn');
+            copyBtn.innerText = "✓ COPIED!";
+            setTimeout(() => { copyBtn.innerText = "📋 COPY MATCHED"; }, 2000);
+        }).catch(err => {
+            alert("Copy error: ", err);
+        });
+    }
+</script>
+
+</body>
+</html>
