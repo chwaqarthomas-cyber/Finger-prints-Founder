@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Agent X Paradox - AutoTrx.org</title>
+    <title>Rana Vyke Urf Bablo - Database</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -11,7 +11,7 @@
         body { 
             background: linear-gradient(135deg, #fce4ec 0%, #efebe9 50%, #e0f2f1 100%);
             color: #333; 
-            padding: 20px; 
+            padding: 12px; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
@@ -20,93 +20,113 @@
         }
 
         .container { 
-            background: rgba(255, 255, 255, 0.9); 
-            padding: 35px; 
-            border-radius: 24px; 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 20px; 
+            border-radius: 16px; 
             border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05); 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); 
             width: 100%; 
-            max-width: 850px; 
+            max-width: 500px; 
             z-index: 3;
             position: relative;
             backdrop-filter: blur(10px);
         }
 
         .main-header-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            margin-bottom: 25px;
-            border: 1px solid #e0e0e0;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 12px 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
         }
 
-        h2 { 
-            color: #00796b; 
-            text-align: center; 
-            margin-top: 0; 
-            font-size: 20px; 
-            font-weight: 700;
+        .admin-profile {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .admin-title {
+            color: #2d3748;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
             letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+
+        .admin-name {
+            color: #00796b;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .header-wa-btn {
+            background-color: #25D366;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 3px 8px rgba(37, 211, 102, 0.3);
         }
 
         .db-title {
             color: #e65100;
             text-align: center;
             font-weight: 700; 
-            font-size: 24px;  
-            margin-bottom: 20px;
-            line-height: 1.4;
+            font-size: 18px;  
+            margin-bottom: 15px;
+            line-height: 1.3;
         }
 
         .info-box {
-            background: #f9f9f9;
-            border-left: 5px solid #009688;
-            padding: 15px 20px;
+            background: #f8fafc;
+            border-left: 4px solid #009688;
+            padding: 12px 15px;
             border-radius: 8px;
-            margin-bottom: 25px;
-            font-size: 15px; 
-            line-height: 1.6;
-            color: #555;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.01);
-        }
-
-        .info-box .highlight {
-            color: #d84315;
-            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 13px; 
+            line-height: 1.5;
+            color: #4a5568;
         }
 
         p.prompt-text { 
-            color: #444; 
-            font-size: 16px; 
-            margin: 0 0 10px 0; 
+            color: #4a5568; 
+            font-size: 14px; 
+            margin: 0 0 8px 0; 
             font-weight: 600; 
         }
         
         textarea { 
             width: 100%; 
-            height: 140px; 
-            padding: 15px; 
+            height: 110px; 
+            padding: 12px; 
             background-color: #ffffff;
-            color: #333;
-            border: 2px solid #ced4da; 
-            border-radius: 12px; 
+            color: #2d3748;
+            border: 1.5px solid #cbd5e1; 
+            border-radius: 10px; 
             resize: none; 
-            font-size: 16px; 
-            margin-bottom: 20px; 
+            font-size: 15px; 
+            margin-bottom: 15px; 
             outline: none;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-            transition: border-color 0.2s;
         }
         
-        textarea:focus { 
-            border-color: #009688; 
-        }
+        textarea:focus { border-color: #009688; }
 
         .btn-group {
             display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         button.scan-btn { 
@@ -114,115 +134,137 @@
             background: linear-gradient(90deg, #009688, #00bfa5);
             color: #fff; 
             border: none; 
-            padding: 16px; 
-            font-size: 16px; 
+            padding: 14px; 
+            font-size: 15px; 
             font-weight: 700; 
-            border-radius: 12px; 
+            border-radius: 10px; 
             cursor: pointer; 
-            box-shadow: 0 4px 12px rgba(0, 150, 136, 0.2);
-            transition: all 0.2s ease;
-        }
-
-        button.scan-btn:hover { 
-            transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(0, 150, 136, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 150, 136, 0.15);
         }
 
         .copy-btn {
             flex: 1;
             background: #ffffff;
             color: #009688;
-            border: 2px solid #009688;
+            border: 1.5px solid #009688;
             display: none;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 700;
-            border-radius: 12px;
+            border-radius: 10px;
         }
+
+        /* 📊 PROGRESS BAR & LIVE STATS STYLES */
+        .progress-container {
+            display: none;
+            margin: 15px 0;
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #ff9100, #e65100);
+            height: 100%;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 0; left: 0;
+            line-height: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .live-stats {
+            display: none;
+            justify-content: space-around;
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-item {
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+        }
+        .stat-item.found-count { color: #319795; }
+        .stat-item.notfound-count { color: #e53e3e; }
 
         .status-msg { 
             text-align: center; 
             font-weight: 600; 
-            margin-top: 15px; 
+            margin-top: 10px; 
             color: #ef6c00; 
-            font-size: 15px; 
+            font-size: 14px; 
         }
 
         .results-box { 
-            margin-top: 30px; 
-            border-top: 1px solid #e0e0e0; 
-            padding-top: 20px; 
+            margin-top: 20px; 
+            border-top: 1px solid #e2e8f0; 
+            padding-top: 15px; 
             display: none; 
         }
 
-        /* Lock Card Setup */
-        .lock-notice-card {
-            background: #fff3e0;
-            border: 1px solid #ffe0b2;
-            padding: 20px;
-            border-radius: 14px;
-            text-align: center;
-        }
-        .lock-title { color: #d84315; font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-        .lock-desc { color: #e65100; font-size: 15px; line-height: 1.5; margin-bottom: 15px; }
+        .table-wrapper { width: 100%; overflow-x: auto; }
 
         table { 
             width: 100%; 
             border-collapse: collapse; 
-            margin-top: 15px; 
+            margin-top: 10px; 
             background: #fff;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
         }
 
         th, td { 
-            padding: 14px; 
+            padding: 10px 12px; 
             text-align: center; 
             border-bottom: 1px solid #edf2f7; 
-            vertical-align: middle;
+            font-size: 13px;
         }
 
-        th { 
-            background-color: #f7fafc; 
-            color: #4a5568;
-            font-size: 14px; 
-            font-weight: 700;
-        }
+        th { background-color: #f8fafc; color: #64748b; font-weight: 700; }
+        td { color: #334155; font-weight: 500; }
 
-        td { color: #2d3748; font-size: 15px; }
-
-        .badge { 
-            padding: 6px 12px; 
-            border-radius: 20px; 
-            font-size: 12px; 
-            font-weight: 700; 
-            text-transform: uppercase;
-            display: inline-block;
-        }
-
-        .badge.found { 
-            background-color: #e6fffa; 
-            color: #319795; 
-            border: 1px solid #b2f5ea;
-        }
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase;}
+        .badge.found { background-color: #e6fffa; color: #319795; border: 1px solid #b2f5ea; }
 
         .download-btn {
             background: linear-gradient(135deg, #ff9100, #ff3d00);
-            color: #fff; border: none; padding: 10px 15px; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; margin-top: 8px; display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center; box-shadow: 0 2px 6px rgba(255,61,0,0.2);
+            color: #fff; border: none; padding: 8px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer; margin-top: 6px; display: inline-flex; align-items: center; gap: 4px; width: 100%; justify-content: center;
         }
 
-        .wa-box { display: flex; align-items: center; justify-content: center; margin-top: 10px; background: #e8f5e9; padding: 10px; border-radius: 8px; border: 1px solid #c8e6c9; }
-        .wa-link { color: #2e7d32; font-size: 28px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .wa-text { color: #1b5e20; font-size: 12px; margin-left: 10px; font-weight: 600; text-align: left; max-width: 220px; line-height: 1.3; }
+        .wa-box { display: flex; align-items: center; justify-content: center; margin-top: 8px; background: #f0fdf4; padding: 8px; border-radius: 6px; border: 1px solid #bbf7d0; }
+        .wa-link { color: #16a34a; font-size: 22px; text-decoration: none; }
+        .wa-text { color: #166534; font-size: 11px; margin-left: 8px; font-weight: 600; text-align: left; line-height: 1.2; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="main-header-card">
-        <h2>Smart Agent X Paradox – AutoTrx.org</h2>
+        <div class="admin-profile">
+            <span class="admin-title">System Owner</span>
+            <span class="admin-name">Rana Vyke Urf Bablo</span>
+        </div>
+        <a href="https://wa.me/447915605790?text=Salam%20Rana%20Vyke%20Urf%20Bablo" target="_blank" class="header-wa-btn">
+            <i class="fab fa-whatsapp"></i> Chat Inbox
+        </a>
     </div>
+    
     <div class="db-title">CNIC FINGERPRINT FOUNDER SYSTEM</div>
     
     <div class="info-box">
@@ -234,13 +276,25 @@
     
     <div class="btn-group">
         <button class="scan-btn" onclick="searchCNIC()">START SEARCH</button>
-        <button id="copyAllBtn" class="copy-btn" onclick="copyAllMatched()">📋 COPY MATCHED</button>
+        <button id="copyAllBtn" class="copy-btn" onclick="copyAllMatched()">📋 COPY</button>
     </div>
     
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text" id="progressText">0%</div>
+    </div>
+
+    <div class="live-stats" id="liveStats">
+        <div class="stat-item found-count">✅ Found: <span id="foundCount">0</span></div>
+        <div class="stat-item notfound-count">❌ Not Found: <span id="notFoundCount">0</span></div>
+    </div>
+
     <div id="status" class="status-msg"></div>
 
     <div class="results-box" id="resultsBox">
-        <div id="dynamicContainer"></div>
+        <div class="table-wrapper">
+            <div id="dynamicContainer"></div>
+        </div>
     </div>
 </div>
 
@@ -248,8 +302,6 @@
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbypmjaOxCghV8sZvlUnOkfF-EsGN4zhuD20nal_PXtjpSLQOHCeYRTiv9U1vGJydU8awQ/exec'; 
     const WHATSAPP_NUM = '447915605790'; 
     let matchedCNICs = []; 
-
-    // LIVE MODE SWITCH (True = Search Chalay gi)
     const IS_LIVE = true; 
 
     async function searchCNIC() {
@@ -259,72 +311,89 @@
         const dynamicContainer = document.getElementById('dynamicContainer');
         const copyBtn = document.getElementById('copyAllBtn');
         
+        // Progress elements
+        const progContainer = document.getElementById('progressContainer');
+        const progBar = document.getElementById('progressBar');
+        const progText = document.getElementById('progressText');
+        const liveStats = document.getElementById('liveStats');
+        const fCount = document.getElementById('foundCount');
+        const nfCount = document.getElementById('notFoundCount');
+        
         if(!input) { alert("Please enter CNIC numbers!"); return; }
         
-        status.innerText = "Connecting to secure database...";
+        status.innerText = "Connecting to database...";
         dynamicContainer.innerHTML = "";
         copyBtn.style.display = "none";
         matchedCNICs = []; 
         
+        // Clear counters & show bars
+        fCount.innerText = "0";
+        nfCount.innerText = "0";
+        progBar.style.width = "0%";
+        progText.innerText = "0%";
+        progContainer.style.display = "block";
+        liveStats.style.display = "flex";
+        resBox.style.display = 'none';
+        
         const queries = input.split('\n').map(q => q.replace(/[^0-9]/g, '').trim()).filter(q => q.length > 0);
         if (queries.length === 0) { alert("No valid CNIC numbers detected!"); return; }
-
-        if (!IS_LIVE) {
-            setTimeout(() => {
-                status.innerText = "Service Maintenance Mode active.";
-                resBox.style.display = 'block';
-                const waUrl = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent('Salam Rana Vyke Urf Bablo, Main website par aya tha, Kindly mujhe details chahiye.')}`;
-
-                dynamicContainer.innerHTML = `
-                    <div class="lock-notice-card">
-                        <div class="lock-title">⚠️ SERVICE NOT AVAILABLE</div>
-                        <div class="lock-desc">
-                            Ye service abi available ni ha inshallah Aj sham 7 bjy ap apni list search kr k apni Finger prints found kr skty hain please 7 bjy tk wait krain.
-                        </div>
-                        <div class="wa-box" style="max-width: 450px; margin: 15px auto 0 auto;">
-                            <a href="${waUrl}" target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i></a>
-                            <div class="wa-text" style="font-size:14px; max-width:100%;">
-                                <strong>Contact Admin (Rana Vyke Urf Bablo)</strong><br>
-                                Click icon to contact via WhatsApp.
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }, 1000);
-            return;
-        }
 
         try {
             const response = await fetch(WEB_APP_URL);
             const data = await response.json();
             
-            if(data.error) { status.innerText = "Database Error: " + data.error; return; }
+            if(data.error) { 
+                status.innerText = "Database Error: " + data.error; 
+                progContainer.style.display = "none";
+                return; 
+            }
 
-            status.innerText = "Searching records...";
+            status.innerText = "Scanning database records...";
             const cnicSet = new Set(data.cnics);
             
             let tableHTML = `<table><thead><tr><th>TARGET CNIC</th><th>STATUS & ACTION</th></tr></thead><tbody>`;
+            
+            let currentFound = 0;
+            let currentNotFound = 0;
+            const totalQueries = queries.length;
 
-            queries.forEach(query => {
+            // 🌀 SIMULATED SPEED COUNTER PROGRESS LOOP
+            for (let i = 0; i < totalQueries; i++) {
+                const query = queries[i];
+                
+                // Live match detection
                 if(cnicSet.has(query)) {
                     matchedCNICs.push(query); 
+                    currentFound++;
+                    fCount.innerText = currentFound;
+                    
                     const waUrl = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(`Salam Rana Vyke Urf Bablo,\nMera yeh CNIC database mein Match ho gaya hai: ${query}\nKindly meri Jazz Android ID Generate kar dein.`)}`;
                     
                     tableHTML += `<tr>
-                                    <td>${query}</td>
+                                    <td><strong>${query}</strong></td>
                                     <td>
                                         <span class="badge found">Matched</span>
                                         <button class="download-btn" onclick="triggerDownloadError('${query}')"><i class="fas fa-file-archive"></i> DOWNLOAD (.RAR)</button>
                                         <div class="wa-box">
                                             <a href="${waUrl}" target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i></a>
-                                            <div class="wa-text">Ju Cnic Found ho gaye hain Wo lny k liye Whatsapp pr rabta krian</div>
+                                            <div class="wa-text">WhatsApp par rabta krian</div>
                                         </div>
                                     </td>
                                   </tr>`;
                 } else {
+                    currentNotFound++;
+                    nfCount.innerText = currentNotFound;
                     tableHTML += `<tr><td>${query}</td><td><span class="badge" style="background:#fff5f5; color:#e53e3e; border:1px solid #fed7d7;">Not Found</span></td></tr>`;
                 }
-            });
+
+                // Update bar percentage live
+                let percent = Math.round(((i + 1) / totalQueries) * 100);
+                progBar.style.width = percent + "%";
+                progText.innerText = percent + "%";
+
+                // Chota sa delay loading look dene ke liye
+                await new Promise(resolve => setTimeout(resolve, 80)); 
+            }
             
             tableHTML += `</tbody></table>`;
             dynamicContainer.innerHTML = tableHTML;
@@ -333,21 +402,22 @@
             if(matchedCNICs.length > 0) copyBtn.style.display = "inline-block";
             
         } catch (error) {
-            status.innerText = "Error: Could not connect to backend.";
+            status.innerText = "Connection error.";
+            progContainer.style.display = "none";
             console.error(error);
         }
     }
 
     function triggerDownloadError(cnic) {
-        alert(`🚨 [DOWNLOAD LOCK]\n\nDear User, please recharge your wallet/credit first to download the fingerprint data package for CNIC: ${cnic}.\n\nContact Admin (Rana Vyke Urf Bablo) via WhatsApp to add credit immediately.`);
+        alert(`🚨 [DOWNLOAD LOCK]\n\nDear User, please recharge your wallet/credit first to download the fingerprint data package.\n\nContact Admin (Rana Vyke Urf Bablo) via WhatsApp.`);
     }
 
     function copyAllMatched() {
         if(matchedCNICs.length === 0) return;
         navigator.clipboard.writeText(matchedCNICs.join('\n')).then(() => {
             const btn = document.getElementById('copyAllBtn');
-            btn.innerText = "✓ COPIED!";
-            setTimeout(() => { btn.innerText = "📋 COPY MATCHED"; }, 2000);
+            btn.innerText = "✓ OK";
+            setTimeout(() => { btn.innerText = "📋 COPY"; }, 2000);
         });
     }
 </script>
