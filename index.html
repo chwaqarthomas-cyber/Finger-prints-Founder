@@ -30,6 +30,7 @@
         Ek CNIC Fingerprint Found Hony Par 1200 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
     </div>
 
+    <!-- Multi-line search bypass ya space manage karne ke liye line-by-line function -->
     <input type="text" id="cnicInput" placeholder="Enter CNIC (e.g., 3520212345677)" maxlength="15">
     <button onclick="searchCNIC()">START SEARCH</button>
     
@@ -48,15 +49,15 @@ async function searchCNIC() {
         return;
     }
     
-    // UI Reset
+    // UI Refresh
     resultBox.style.display = 'none';
     loadingBox.style.display = 'block';
     
-    // ⚠️ APNA APPS SCRIPT URL YAHAN PASTE KAREIN
-    const scriptUrl = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL"; 
+    // Aapka diya gaya updated Web App URL yahan lagaya hai
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbxya9Jvq4E9tKQKZ7sdjZAvf30DC4huTIWcSvUbwlF6lXKW3GhTktZSKd6j3j-JN87ZjQ/exec"; 
     
     try {
-        // Google Script ko secure request bhejna
+        // Fetch API request
         let response = await fetch(`${scriptUrl}?cnic=${cnic}`);
         let data = await response.json();
         
