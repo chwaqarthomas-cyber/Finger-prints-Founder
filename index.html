@@ -3,478 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rana Vyke Urf Bablo - Database</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>CNIC Fingerprint Founder System</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        body { 
-            background: linear-gradient(135deg, #fce4ec 0%, #efebe9 50%, #e0f2f1 100%);
-            color: #333; 
-            padding: 12px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0;
-        }
-
-        .container { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 20px; 
-            border-radius: 16px; 
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); 
-            width: 100%; 
-            max-width: 500px; 
-            z-index: 3;
-            position: relative;
-            backdrop-filter: blur(10px);
-        }
-
-        .main-header-card {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 12px 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .admin-profile {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .admin-title {
-            color: #2d3748;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            opacity: 0.8;
-        }
-
-        .admin-name {
-            color: #00796b;
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .header-wa-btn {
-            background-color: #25D366;
-            color: white;
-            padding: 8px 14px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 3px 8px rgba(37, 211, 102, 0.3);
-        }
-
-        .db-title {
-            color: #e65100;
-            text-align: center;
-            font-weight: 700; 
-            font-size: 18px;  
-            margin-bottom: 15px;
-            line-height: 1.3;
-        }
-
-        /* 💰 NEW FEES CHARGE HIGH LIGHT BOX */
-        .fee-highlight-box {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-            border: 2px solid #ff9100;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(255, 145, 0, 0.1);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-
-        .fee-title {
-            color: #d84315;
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .fee-text {
-            color: #4e342e;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 1.4;
-        }
-
-        .info-box {
-            background: #f8fafc;
-            border-left: 4px solid #009688;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 13px; 
-            line-height: 1.5;
-            color: #4a5568;
-        }
-
-        p.prompt-text { 
-            color: #4a5568; 
-            font-size: 14px; 
-            margin: 0 0 8px 0; 
-            font-weight: 600; 
-        }
-        
-        textarea { 
-            width: 100%; 
-            height: 110px; 
-            padding: 12px; 
-            background-color: #ffffff;
-            color: #2d3748;
-            border: 1.5px solid #cbd5e1; 
-            border-radius: 10px; 
-            resize: none; 
-            font-size: 15px; 
-            margin-bottom: 15px; 
-            outline: none;
-        }
-        
-        textarea:focus { border-color: #009688; }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        button.scan-btn { 
-            flex: 2;
-            background: linear-gradient(90deg, #009688, #00bfa5);
-            color: #fff; 
-            border: none; 
-            padding: 14px; 
-            font-size: 15px; 
-            font-weight: 700; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            box-shadow: 0 4px 10px rgba(0, 150, 136, 0.15);
-        }
-
-        .copy-btn {
-            flex: 1;
-            background: #ffffff;
-            color: #009688;
-            border: 1.5px solid #009688;
-            display: none;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 700;
-            border-radius: 10px;
-        }
-
-        /* 📊 DOUBLE PROGRESS BARS */
-        .bars-container {
-            display: none;
-            margin: 15px 0;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .progress-wrapper {
-            background: #e2e8f0;
-            border-radius: 10px;
-            height: 22px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .bar-found {
-            background: linear-gradient(90deg, #4db6ac, #00796b);
-            height: 100%;
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-
-        .bar-notfound {
-            background: linear-gradient(90deg, #e57373, #c62828);
-            height: 100%;
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-
-        .bar-text {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            top: 0; left: 0;
-            line-height: 22px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .status-msg { 
-            text-align: center; 
-            font-weight: 600; 
-            margin-top: 10px; 
-            color: #ef6c00; 
-            font-size: 14px; 
-        }
-
-        .results-box { 
-            margin-top: 20px; 
-            border-top: 1px solid #e2e8f0; 
-            padding-top: 15px; 
-            display: none; 
-        }
-
-        .table-wrapper { width: 100%; overflow-x: auto; }
-
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin-top: 10px; 
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid #e2e8f0;
-        }
-
-        th, td { 
-            padding: 12px 10px; 
-            text-align: center; 
-            border-bottom: 1px solid #edf2f7; 
-            font-size: 13px;
-        }
-
-        th { background-color: #f8fafc; color: #64748b; font-weight: 700; }
-        td { color: #334155; font-weight: 500; }
-
-        .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; display: inline-block; margin-bottom: 5px;}
-        .badge.found { background-color: #e6fffa; color: #319795; border: 1px solid #b2f5ea; }
-        .badge.notfound { background-color: #fff5f5; color: #e53e3e; border: 1px solid #fed7d7; }
-
-        .notfound-notice {
-            font-size: 11px;
-            color: #718096;
-            line-height: 1.3;
-            font-weight: 600;
-            background: #f7fafc;
-            padding: 6px;
-            border-radius: 6px;
-            border: 1px dashed #cbd5e1;
-            margin-top: 4px;
-            text-align: left;
-        }
-
-        .download-btn {
-            background: linear-gradient(135deg, #ff9100, #ff3d00);
-            color: #fff; border: none; padding: 8px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer; margin-top: 6px; display: inline-flex; align-items: center; gap: 4px; width: 100%; justify-content: center;
-        }
-
-        .wa-box { display: flex; align-items: center; justify-content: center; margin-top: 8px; background: #f0fdf4; padding: 8px; border-radius: 6px; border: 1px solid #bbf7d0; }
-        .wa-link { color: #16a34a; font-size: 22px; text-decoration: none; }
-        .wa-text { color: #166534; font-size: 11px; margin-left: 8px; font-weight: 600; text-align: left; line-height: 1.2; }
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; }
+        .container { max-width: 500px; background: white; margin: 40px auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #1a365d; margin-bottom: 5px; }
+        .system-owner { font-size: 14px; color: #718096; margin-bottom: 20px; }
+        .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; font-weight: bold; }
+        input[type="text"] { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 16px; text-align: center; }
+        button { width: 100%; background-color: #319795; color: white; border: none; padding: 14px; font-size: 16px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        button:hover { background-color: #2c7a7b; }
+        .result { margin-top: 20px; padding: 15px; border-radius: 6px; display: none; font-weight: bold; }
+        .found { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
+        .not-found { background-color: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; }
+        .loading { color: #4a5568; font-style: italic; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="main-header-card">
-        <div class="admin-profile">
-            <span class="admin-title">System Owner</span>
-            <span class="admin-name">Rana Vyke Urf Bablo</span>
-        </div>
-        <a href="https://wa.me/447915605790?text=Salam%20Rana%20Vyke%20Urf%20Bablo" target="_blank" class="header-wa-btn">
-            <i class="fab fa-whatsapp"></i> Chat Inbox
-        </a>
-    </div>
+    <h2>CNIC FINGERPRINT FOUNDER SYSTEM</h2>
+    <div class="system-owner">SYSTEM OWNER: Rana Vyke Urf Bablo</div>
     
-    <div class="db-title">CNIC FINGERPRINT FOUNDER SYSTEM</div>
-
-    <div class="fee-highlight-box">
-        <div class="fee-title">⚠️ SYSTEM FEES WARNING</div>
-        <div class="fee-text">Ek CNIC Fingerprint Found Hony Par <span style="color: #e65100; font-size: 16px; font-weight: 900;">1200 Rs</span> Cut Hoga! Balance Lazmi Check Kar Lain.</div>
-    </div>
-    
-    <div class="info-box">
-        <strong>⚙️ SYSTEM NOTICE:</strong> Jin k pas Jazzcash Few Step Waly CNIC k fingerprint Nahi hain, wo yhaan hamre database se found krain. Record found hony par WhatsApp icon par click kr k direct inbox ayein.
+    <div class="warning-box">
+        ⚠️ SYSTEM FEES WARNING<br>
+        Ek CNIC Fingerprint Found Hony Par 1200 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
     </div>
 
-    <p class="prompt-text">Enter target CNICs (Line-by-Line):</p>
-    <textarea id="searchInput" placeholder="3520212345677&#10;3120105711484"></textarea>
+    <input type="text" id="cnicInput" placeholder="Enter CNIC (e.g., 3520212345677)" maxlength="15">
+    <button onclick="searchCNIC()">START SEARCH</button>
     
-    <div class="btn-group">
-        <button class="scan-btn" onclick="searchCNIC()">START SEARCH</button>
-        <button id="copyAllBtn" class="copy-btn" onclick="copyAllMatched()">📋 COPY</button>
-    </div>
-    
-    <div class="bars-container" id="barsContainer">
-        <div class="progress-wrapper">
-            <div class="bar-found" id="barFound"></div>
-            <div class="bar-text" id="textFound">✅ Found: 0</div>
-        </div>
-        
-        <div class="progress-wrapper">
-            <div class="bar-notfound" id="barNotfound"></div>
-            <div class="bar-text" id="textNotfound">❌ Not Found: 0</div>
-        </div>
-    </div>
-
-    <div id="status" class="status-msg"></div>
-
-    <div class="results-box" id="resultsBox">
-        <div class="table-wrapper">
-            <div id="dynamicContainer"></div>
-        </div>
-    </div>
+    <div id="loadingBox" class="loading">Searching secure database...</div>
+    <div id="resultBox" class="result"></div>
 </div>
 
 <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzFFbAy-QIZFAvsAdY8oMcvGVWvBxmwkzGhdVOP1IJPglaHOCM7Txm23mk1l-bd_Ozykw/exec 
-    const WHATSAPP_NUM = '447915605790'; 
-    let matchedCNICs = []; 
-    const IS_LIVE = true; 
-
-    async function searchCNIC() {
-        const input = document.getElementById('searchInput').value.trim();
-        const status = document.getElementById('status');
-        const resBox = document.getElementById('resultsBox');
-        const dynamicContainer = document.getElementById('dynamicContainer');
-        const copyBtn = document.getElementById('copyAllBtn');
+async function searchCNIC() {
+    let cnic = document.getElementById('cnicInput').value.replace(/[- ]/g, '').trim();
+    let resultBox = document.getElementById('resultBox');
+    let loadingBox = document.getElementById('loadingBox');
+    
+    if(cnic.length < 5) {
+        alert('Baraye meharbani mukammal aur darust CNIC darj karein.');
+        return;
+    }
+    
+    // UI Reset
+    resultBox.style.display = 'none';
+    loadingBox.style.display = 'block';
+    
+    // ⚠️ APNA APPS SCRIPT URL YAHAN PASTE KAREIN
+    const scriptUrl = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL"; 
+    
+    try {
+        // Google Script ko secure request bhejna
+        let response = await fetch(`${scriptUrl}?cnic=${cnic}`);
+        let data = await response.json();
         
-        const barsContainer = document.getElementById('barsContainer');
-        const barFound = document.getElementById('barFound');
-        const barNotfound = document.getElementById('barNotfound');
-        const textFound = document.getElementById('textFound');
-        const textNotfound = document.getElementById('textNotfound');
+        loadingBox.style.display = 'none';
         
-        if(!input) { alert("Please enter CNIC numbers!"); return; }
-        
-        status.innerText = "Connecting to database...";
-        dynamicContainer.innerHTML = "";
-        copyBtn.style.display = "none";
-        matchedCNICs = []; 
-        
-        barFound.style.width = "0%";
-        barNotfound.style.width = "0%";
-        textFound.innerText = "✅ Found: 0";
-        textNotfound.innerText = "❌ Not Found: 0";
-        
-        barsContainer.style.display = "flex";
-        resBox.style.display = 'none';
-        
-        const queries = input.split('\n').map(q => q.replace(/[^0-9]/g, '').trim()).filter(q => q.length > 0);
-        if (queries.length === 0) { alert("No valid CNIC numbers detected!"); return; }
-
-        try {
-            const response = await fetch(WEB_APP_URL);
-            const data = await response.json();
-            
-            if(data.error) { 
-                status.innerText = "Database Error: " + data.error; 
-                barsContainer.style.display = "none";
-                return; 
-            }
-
-            status.innerText = "Scanning database records...";
-            const cnicSet = new Set(data.cnics);
-            
-            let tableHTML = `<table><thead><tr><th>TARGET CNIC</th><th>STATUS & ACTION</th></tr></thead><tbody>`;
-            
-            let currentFound = 0;
-            let currentNotFound = 0;
-            const totalQueries = queries.length;
-
-            for (let i = 0; i < totalQueries; i++) {
-                const query = queries[i];
-                
-                if(cnicSet.has(query)) {
-                    matchedCNICs.push(query); 
-                    currentFound++;
-                    
-                    const waUrl = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(`Salam Rana Vyke Urf Bablo,\nMera yeh CNIC database mein Match ho gaya hai: ${query}\nKindly meri Jazz Android ID Generate kar dein.`)}`;
-                    
-                    tableHTML += `<tr>
-                                    <td><strong>${query}</strong></td>
-                                    <td>
-                                        <span class="badge found">Matched</span>
-                                        <button class="download-btn" onclick="triggerDownloadError('${query}')"><i class="fas fa-file-archive"></i> DOWNLOAD (.RAR)</button>
-                                        <div class="wa-box">
-                                            <a href="${waUrl}" target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i></a>
-                                            <div class="wa-text">WhatsApp par rabta krian</div>
-                                        </div>
-                                    </td>
-                                  </tr>`;
-                } else {
-                    currentNotFound++;
-                    tableHTML += `<tr>
-                                    <td>${query}</td>
-                                    <td>
-                                        <span class="badge notfound">Not Found</span>
-                                        <div class="notfound-notice">
-                                            ⏳ <strong>Pending Update:</strong> Is list k fingerprints 24 hours bad update kr diye jaye gy, please 24 hour bad try krian.
-                                        </div>
-                                    </td>
-                                  </tr>`;
-                }
-
-                let foundPercent = Math.round((currentFound / totalQueries) * 100);
-                let notFoundPercent = Math.round((currentNotFound / totalQueries) * 100);
-
-                barFound.style.width = foundPercent + "%";
-                textFound.innerText = `✅ Found: ${currentFound} (${foundPercent}%)`;
-
-                barNotfound.style.width = notFoundPercent + "%";
-                textNotfound.innerText = `❌ Not Found: ${currentNotFound} (${notFoundPercent}%)`;
-
-                await new Promise(resolve => setTimeout(resolve, 60)); 
-            }
-            
-            tableHTML += `</tbody></table>`;
-            dynamicContainer.innerHTML = tableHTML;
-            status.innerText = "Search completed successfully.";
-            resBox.style.display = 'block';
-            if(matchedCNICs.length > 0) copyBtn.style.display = "inline-block";
-            
-        } catch (error) {
-            status.innerText = "Connection error.";
-            barsContainer.style.display = "none";
-            console.error(error);
+        if(data.status === "found") {
+            resultBox.className = "result found";
+            resultBox.innerHTML = `✅ FINGERPRINT FOUND!<br>Database Location: ${data.owner}`;
+            resultBox.style.display = 'block';
+        } else {
+            resultBox.className = "result not-found";
+            resultBox.innerHTML = "❌ Record Not Found in our system.";
+            resultBox.style.display = 'block';
         }
+    } catch (error) {
+        loadingBox.style.display = 'none';
+        resultBox.className = "result not-found";
+        resultBox.innerHTML = "⚠️ System error or connection timeout.";
+        resultBox.style.display = 'block';
+        console.error(error);
     }
-
-    function triggerDownloadError(cnic) {
-        alert(`🚨 [DOWNLOAD LOCK]\n\nDear User, please recharge your wallet/credit first to download the fingerprint data package.\n\nContact Admin (Rana Vyke Urf Bablo) via WhatsApp.`);
-    }
-
-    function copyAllMatched() {
-        if(matchedCNICs.length === 0) return;
-        navigator.clipboard.writeText(matchedCNICs.join('\n')).then(() => {
-            const btn = document.getElementById('copyAllBtn');
-            btn.innerText = "✓ OK";
-            setTimeout(() => { btn.innerText = "📋 COPY"; }, 2000);
-        });
-    }
+}
 </script>
 </body>
 </html>
