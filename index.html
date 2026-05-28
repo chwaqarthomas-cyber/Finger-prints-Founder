@@ -3,35 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNIC Fingerprint Founder System - Bulk Search</title>
+    <title>CNIC Fingerprint Founder System - Turbo Bulk</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; }
         .container { max-width: 650px; background: white; margin: 40px auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         h2 { color: #1a365d; margin-bottom: 5px; }
         .system-owner { font-size: 14px; color: #718096; margin-bottom: 20px; }
         .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; font-weight: bold; }
-        
-        /* Textarea styling for bulk inputs */
         textarea { width: 100%; height: 150px; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 16px; font-family: inherit; resize: vertical; }
-        
         button { width: 100%; background-color: #319795; color: white; border: none; padding: 14px; font-size: 16px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 15px; }
         button:hover { background-color: #2c7a7b; }
-        
         .loading { color: #4a5568; font-style: italic; margin-top: 10px; display: none; margin-bottom: 15px; }
-        
-        /* Bulk results table layout */
         .results-container { display: none; margin-top: 20px; text-align: left; }
         .results-container h3 { color: #1a365d; margin-bottom: 10px; border-bottom: 2px solid #edf2f7; padding-bottom: 5px; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: left; font-size: 14px; }
         th { background-color: #2b6cb0; color: white; font-weight: bold; }
         tr:nth-child(even) { background-color: #f7fafc; }
-        
-        /* Badges for status */
         .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; display: inline-block; }
         .badge-found { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
         .badge-not-found { background-color: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; }
-        .badge-error { background-color: #feebc8; color: #744210; border: 1px solid #fbd38d; }
     </style>
 </head>
 <body>
@@ -45,10 +36,10 @@
         Ek CNIC Fingerprint Found Hony Par 1200 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
     </div>
 
-    <textarea id="cnicBulkInput" placeholder="Enter target CNICs (Line-by-Line):&#10;3520212345677&#10;3120105711484"></textarea>
+    <textarea id="cnicBulkInput" placeholder="Enter target CNICs (Line-by-Line):&#10;5440178619178&#10;5530232277050"></textarea>
     <button onclick="searchBulkCNICs()">START BULK SEARCH</button>
     
-    <div id="loadingBox" class="loading">Searching secure database... Please wait...</div>
+    <div id="loadingBox" class="loading">Searching secure turbo database... Please wait...</div>
     
     <div id="resultsContainer" class="results-container">
         <h3>Search Results:</h3>
@@ -61,8 +52,7 @@
                     <th>Database Location</th>
                 </tr>
             </thead>
-            <tbody id="resultsTableBody">
-                </tbody>
+            <tbody id="resultsTableBody"></tbody>
         </table>
     </div>
 </div>
@@ -74,76 +64,63 @@ async function searchBulkCNICs() {
     let tableBody = document.getElementById('resultsTableBody');
     let loadingBox = document.getElementById('loadingBox');
     
-    // Lines ko split karke har line se spaces aur dashes khatam karna
     let cnicList = rawInput.split('\n')
                           .map(line => line.replace(/[- ]/g, '').trim())
-                          .filter(line => line.length > 0);
+                          .filter(line => line.length >= 5);
     
     if(cnicList.length === 0) {
         alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
         return;
     }
     
-    // UI Reset
     tableBody.innerHTML = "";
     resultsContainer.style.display = 'none';
     loadingBox.style.display = 'block';
     
+    // ⚠️ AGAR NEW DEPLOYMENT KIYA HAI TOH APNA NEW URL YAHAN PASTE KAREIN
     const scriptUrl = "https://script.google.com/macros/s/AKfycbxya9Jvq4E9tKQKZ7sdjZAvf30DC4huTIWcSvUbwlF6lXKW3GhTktZSKd6j3j-JN87ZjQ/exec"; 
     
-    // Loop chala kar aik aik karke saare CNICs check karna
-    for(let i = 0; i < cnicList.length; i++) {
-        let currentCnic = cnicList[i];
-        let row = document.createElement('tr');
+    try {
+        // Saare CNICs ko comma se separate karke aik sath bhejna
+        let response = await fetch(`${scriptUrl}?cnics=${cnicList.join(',')}`);
+        let jsonResponse = await response.json();
         
-        // Sr No & CNIC Text cells columns
-        let cellSr = document.createElement('td');
-        cellSr.textContent = i + 1;
-        let cellCnic = document.createElement('td');
-        cellCnic.textContent = currentCnic;
+        loadingBox.style.display = 'none';
         
-        let cellStatus = document.createElement('td');
-        let cellOwner = document.createElement('td');
-        
-        // Choti inputs ko skip karna safety ke liye
-        if(currentCnic.length < 5) {
-            cellStatus.innerHTML = `<span class="status-badge badge-error">Invalid</span>`;
-            cellOwner.textContent = "Short CNIC Length";
-            appendRow(row, cellSr, cellCnic, cellStatus, cellOwner, tableBody);
-            continue;
-        }
-        
-        try {
-            let response = await fetch(`${scriptUrl}?cnic=${currentCnic}`);
-            let data = await response.json();
-            
-            if(data.status === "found") {
-                cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
-                cellOwner.textContent = data.owner; // Show Database name (Database1, 2 etc)
-            } else {
-                cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
-                cellOwner.textContent = "-";
+        if(jsonResponse.status === "success") {
+            let records = jsonResponse.data;
+            for(let i = 0; i < records.length; i++) {
+                let row = document.createElement('tr');
+                
+                let cellSr = document.createElement('td');
+                cellSr.textContent = i + 1;
+                
+                let cellCnic = document.createElement('td');
+                cellCnic.textContent = records[i].cnic;
+                
+                let cellStatus = document.createElement('td');
+                if(records[i].status === "found") {
+                    cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
+                } else {
+                    cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
+                }
+                
+                let cellOwner = document.createElement('td');
+                cellOwner.textContent = records[i].owner;
+                
+                row.appendChild(cellSr);
+                row.appendChild(cellCnic);
+                row.appendChild(cellStatus);
+                row.appendChild(cellOwner);
+                tableBody.appendChild(row);
             }
-        } catch (error) {
-            cellStatus.innerHTML = `<span class="status-badge badge-error">⚠️ ERROR</span>`;
-            cellOwner.textContent = "Connection Timeout";
-            console.error(error);
+            resultsContainer.style.display = 'block';
         }
-        
-        appendRow(row, cellSr, cellCnic, cellStatus, cellOwner, tableBody);
+    } catch (error) {
+        loadingBox.style.display = 'none';
+        alert("System busy ya connection error. Koshish karein ke aik sath bohot zyada numbers na dalein.");
+        console.error(error);
     }
-    
-    // Search complete hone par loading hide aur table show karna
-    loadingBox.style.display = 'none';
-    resultsContainer.style.display = 'block';
-}
-
-function appendRow(row, cellSr, cellCnic, cellStatus, cellOwner, tableBody) {
-    row.appendChild(cellSr);
-    row.appendChild(cellCnic);
-    row.appendChild(cellStatus);
-    row.appendChild(cellOwner);
-    tableBody.appendChild(row);
 }
 </script>
 </body>
