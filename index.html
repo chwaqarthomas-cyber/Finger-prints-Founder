@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Vyke Turbo Max Pro | Advanced CNIC Fingerprint Suite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vyke Turbo Max Pro | CNIC Fingerprint System</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,19 +15,15 @@
             color: #eef2ff;
         }
 
-        /* Animated Ticker */
         .price-ticker {
             background: linear-gradient(95deg, #0f172a, #1a1e2f);
-            backdrop-filter: blur(2px);
             padding: 12px 0;
             font-size: 14px;
             font-weight: 700;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.3);
             overflow: hidden;
             white-space: nowrap;
             border-radius: 40px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
         }
         .ticker-content {
             display: inline-block;
@@ -38,10 +34,9 @@
             0% { transform: translate(0,0); }
             100% { transform: translate(-100%,0); }
         }
-        .ticker-highlight { color: #f97316; margin: 0 28px; text-shadow: 0 0 6px #f97316; }
-        .ticker-highlight-male { color: #2dd4bf; margin: 0 28px; text-shadow: 0 0 5px #2dd4bf; }
+        .ticker-highlight { color: #f97316; margin: 0 28px; }
+        .ticker-highlight-male { color: #2dd4bf; margin: 0 28px; }
 
-        /* Glass Container */
         .container {
             max-width: 1300px;
             margin: 0 auto;
@@ -50,7 +45,6 @@
             border-radius: 2rem;
             padding: 28px 32px;
             border: 1px solid rgba(56, 189, 248, 0.25);
-            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
         }
 
         h2 {
@@ -74,7 +68,6 @@
             color: #a5f3fc;
         }
 
-        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -89,23 +82,23 @@
             transition: all 0.2s;
         }
         .stat-card:hover { border-color: #38bdf8; transform: translateY(-2px); }
-        .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
-        .stat-value { font-size: 1.8rem; font-weight: 800; color: #38bdf8; line-height: 1; margin: 8px 0; }
-        .stat-rate-bar { height: 6px; background: #1e293b; border-radius: 10px; overflow: hidden; margin-top: 8px; }
-        .stat-rate-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #22c55e, #38bdf8); border-radius: 10px; transition: width 0.3s; }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; }
+        .stat-value { font-size: 1.8rem; font-weight: 800; color: #38bdf8; }
+        .stat-rate-bar { height: 6px; background: #1e293b; border-radius: 10px; margin-top: 8px; }
+        .stat-rate-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #22c55e, #38bdf8); border-radius: 10px; }
 
         textarea {
             width: 100%;
             background: #0b1120dd;
             border: 1.5px solid #2d3a5e;
             border-radius: 20px;
-            padding: 16px 18px;
-            font-family: 'JetBrains Mono', monospace;
+            padding: 16px;
+            font-family: monospace;
             font-size: 14px;
             color: #b9f3ff;
             resize: vertical;
         }
-        textarea:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 0 3px rgba(56,189,248,0.2); }
+        textarea:focus { border-color: #38bdf8; outline: none; }
 
         .primary-btn {
             width: 100%;
@@ -197,13 +190,11 @@
             padding: 8px;
             text-align: center;
             font-weight: bold;
-            font-size: 0.8rem;
         }
 
         .table-wrapper {
             overflow-x: auto;
             border-radius: 20px;
-            background: #03061755;
         }
         table {
             width: 100%;
@@ -250,7 +241,7 @@
         🔥 VYKE TURBO MAX PRO • CNIC FINGERPRINT GRID • 
         <span class="ticker-highlight">💃 FEMALE SCAN: 1500 PKR</span> 
         <span class="ticker-highlight-male">🕺 MALE SCAN: 1200 PKR</span> 
-        ⚡ LIVE BALANCE: <span id="tickerBalance">0</span> PKR • ENCRYPTED ENGINE
+        ⚡ LIVE DATABASE CONNECTED • READY
     </div>
 </div>
 
@@ -260,21 +251,20 @@
         <div class="system-owner">⚡ SYSTEM OWNER: RANA VYKE (BABLOO) ⚡</div>
     </div>
 
-    <!-- Stats Dashboard -->
     <div class="stats-grid">
         <div class="stat-card"><div class="stat-label">📊 TOTAL SEARCHES</div><div class="stat-value" id="totalSearches">0</div></div>
-        <div class="stat-card"><div class="stat-label">✅ MATCH SUCCESS RATE</div><div class="stat-value" id="successRate">0%</div><div class="stat-rate-bar"><div class="stat-rate-fill" id="rateFill"></div></div></div>
-        <div class="stat-card"><div class="stat-label">💰 ESTIMATED BALANCE</div><div class="stat-value" id="estBalance">0 PKR</div></div>
+        <div class="stat-card"><div class="stat-label">✅ MATCH RATE</div><div class="stat-value" id="successRate">0%</div><div class="stat-rate-bar"><div class="stat-rate-fill" id="rateFill"></div></div></div>
+        <div class="stat-card"><div class="stat-label">💰 EST. BALANCE</div><div class="stat-value" id="estBalance">0 PKR</div></div>
         <div class="stat-card"><div class="stat-label">⏱️ LAST SCAN</div><div class="stat-value" id="lastScan">—</div></div>
     </div>
 
-    <textarea id="cnicBulkInput" placeholder="ENTER TARGET CNICS (One per line)&#10;Example:&#10;5440178619178&#10;5530232277050" rows="4"></textarea>
-    <button class="primary-btn" onclick="runEngineSearchSecure()">⚡ START FINGERPRINT BULK SEARCH ⚡</button>
+    <textarea id="cnicBulkInput" placeholder="ENTER CNIC NUMBERS (One per line)&#10;Example:&#10;5440178619178&#10;5530232277050&#10;3520212345678" rows="4"></textarea>
+    <button class="primary-btn" id="searchBtn">⚡ START FINGERPRINT BULK SEARCH ⚡</button>
 
     <div id="progressWrapper" class="progress-wrapper" style="display:none">
         <div class="progress-text" style="display:flex; justify-content:space-between"><span id="progressLabel">Initializing...</span><span id="progressPercent">0%</span></div>
         <div class="progress-bar-container"><div id="progressBarFill" class="progress-bar-fill"></div></div>
-        <div class="counter-row"><div class="counter-badge">✅ MATCH: <span id="liveFoundCount">0</span></div><div class="counter-badge">❌ NO MATCH: <span id="liveNotFoundCount">0</span></div></div>
+        <div class="counter-row"><div class="counter-badge">✅ FOUND: <span id="liveFoundCount">0</span></div><div class="counter-badge">❌ NOT FOUND: <span id="liveNotFoundCount">0</span></div></div>
     </div>
 
     <div id="resultsContainer" style="display:none">
@@ -289,7 +279,7 @@
         </div>
 
         <div class="filter-bar">
-            <input type="text" id="searchCnicInput" class="filter-input" placeholder="🔍 Filter by CNIC...">
+            <input type="text" id="searchCnicInput" class="filter-input" placeholder="🔍 Search CNIC...">
             <label class="filter-check"><input type="checkbox" id="showOnlyFoundCheckbox"> ✅ Show Only Found</label>
             <button class="premium-btn" id="loadSampleBtn">📝 Load Sample</button>
         </div>
@@ -305,147 +295,191 @@
 </div>
 
 <script>
-    // CONFIG
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbxSZPDDn1GPYEy_gwib3OR0W2zF2w_yEh-ufTCwa_fnEN3xzcKp84u7nCka6i1SJEBu/exec";
-    const targetWhatsAppNumber = "447915605790";
+    // ============================================
+    // APNA DEPLOYED APPS SCRIPT URL YAHAN LIKHEIN
+    // ============================================
+    // 🔴 IMPORTANT: Is URL ko apne deployed script se replace karein!
+    const APPS_SCRIPT_URL = "YOUR_DEPLOYED_APPS_SCRIPT_URL_HERE";
+    
+    const WHATSAPP_NUMBER = "447915605790";
     
     let globalResults = [];
     let totalSearchCount = parseInt(localStorage.getItem('totalSearches') || '0');
-    let totalBalance = 0;
+    let totalBalance = parseFloat(localStorage.getItem('totalBalance') || '0');
+    
+    function getGenderAndPrice(cnic) {
+        if (!cnic || cnic.length < 7) return { gender: "Unknown", price: 0, emoji: "❓" };
+        const seventh = parseInt(cnic.charAt(6));
+        if (isNaN(seventh)) return { gender: "Unknown", price: 0, emoji: "❓" };
+        if (seventh % 2 === 0) {
+            return { gender: "Female", price: 1500, emoji: "💃" };
+        } else {
+            return { gender: "Male", price: 1200, emoji: "🕺" };
+        }
+    }
     
     function updateStatsUI() {
         document.getElementById('totalSearches').innerText = totalSearchCount;
         document.getElementById('estBalance').innerText = totalBalance.toLocaleString() + " PKR";
-        document.getElementById('tickerBalance').innerText = totalBalance;
+        localStorage.setItem('totalSearches', totalSearchCount);
+        localStorage.setItem('totalBalance', totalBalance);
     }
     
-    function getGenderFromCNIC(cnic) {
-        if(!cnic || cnic.length < 7) return { gender: "Unknown", price: 0 };
-        let seventh = parseInt(cnic.charAt(6));
-        if(isNaN(seventh)) return { gender: "Unknown", price: 0 };
-        if(seventh % 2 === 0) return { gender: "Female", price: 1500 };
-        else return { gender: "Male", price: 1200 };
-    }
-    
-    async function runEngineSearchSecure() {
-        let raw = document.getElementById('cnicBulkInput').value;
-        let cnicList = raw.split('\n').map(l => l.replace(/[^0-9]/g,'').trim()).filter(l => l.length>=5);
-        if(cnicList.length === 0) { alert("Enter valid CNICs"); return; }
+    async function performSearch() {
+        const rawInput = document.getElementById('cnicBulkInput').value;
         
-        document.getElementById('progressWrapper').style.display = 'block';
-        document.getElementById('resultsContainer').style.display = 'none';
-        let resultsContainer = document.getElementById('resultsContainer');
-        let tbody = document.getElementById('resultsTableBody');
-        tbody.innerHTML = "";
+        const cnicList = rawInput.split('\n')
+            .map(line => line.replace(/[^0-9]/g, '').trim())
+            .filter(line => line.length >= 5 && line.length <= 15);
+        
+        if (cnicList.length === 0) {
+            alert('❌ Please enter valid CNIC numbers (numeric only, one per line)');
+            return;
+        }
+        
+        const progressWrapper = document.getElementById('progressWrapper');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const tbody = document.getElementById('resultsTableBody');
+        const searchBtn = document.getElementById('searchBtn');
+        
+        progressWrapper.style.display = 'block';
+        resultsContainer.style.display = 'none';
+        tbody.innerHTML = '';
+        searchBtn.disabled = true;
+        searchBtn.innerText = '⏳ CONNECTING TO DATABASE...';
+        
+        let foundCount = 0;
+        let notFoundCount = 0;
+        let batchBalance = 0;
+        
+        const progressFill = document.getElementById('progressBarFill');
+        const progressPercent = document.getElementById('progressPercent');
+        const progressLabel = document.getElementById('progressLabel');
+        const liveFoundSpan = document.getElementById('liveFoundCount');
+        const liveNotFoundSpan = document.getElementById('liveNotFoundCount');
+        
+        liveFoundSpan.innerText = '0';
+        liveNotFoundSpan.innerText = '0';
+        progressLabel.innerText = '🔍 Connecting to fingerprint database...';
+        globalResults = [];
         
         try {
-            let url = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
-            let res = await fetch(url);
-            let json = await res.json();
-            let data = (json && json.data) ? json.data : (Array.isArray(json) ? json : cnicList.map((c,i) => ({cnic:c, status:i%2===0?"found":"notfound", owner:i%2===0?"DATABASE_"+(i%5+1):null})));
+            // Call Apps Script
+            const url = `${APPS_SCRIPT_URL}?cnics=${encodeURIComponent(cnicList.join(','))}`;
+            console.log("Fetching:", url);
             
-            globalResults = [];
-            let foundCount = 0, notFoundCount = 0, batchBalance = 0;
-            let progressFill = document.getElementById('progressBarFill');
-            let percentSpan = document.getElementById('progressPercent');
+            const response = await fetch(url);
+            const json = await response.json();
+            console.log("Response:", json);
             
-            for(let i=0; i<data.length; i++) {
-                let item = data[i];
-                let cnicVal = item.cnic || "unknown";
-                let statusFlag = item.status === "found" || item.owner ? "found" : "notfound";
-                let ownerInfo = item.owner || "N/A";
-                let { gender, price } = getGenderFromCNIC(cnicVal);
-                if(statusFlag === "found") { foundCount++; batchBalance += price; }
-                else notFoundCount++;
+            if (json.status === "success" && json.data) {
+                const resultsData = json.data;
                 
-                globalResults.push({ cnic: cnicVal, status: statusFlag, owner: ownerInfo, gender, price: statusFlag==="found"?price:0 });
-                document.getElementById('liveFoundCount').innerText = foundCount;
-                document.getElementById('liveNotFoundCount').innerText = notFoundCount;
+                for (let i = 0; i < resultsData.length; i++) {
+                    const item = resultsData[i];
+                    const cnic = item.cnic;
+                    const isFound = item.status === "found";
+                    const ownerInfo = item.owner || "N/A";
+                    const { gender, price, emoji } = getGenderAndPrice(cnic);
+                    
+                    if (isFound) {
+                        foundCount++;
+                        batchBalance += price;
+                        globalResults.push({
+                            cnic: cnic,
+                            status: "found",
+                            owner: ownerInfo,
+                            gender: gender,
+                            price: price
+                        });
+                    } else {
+                        notFoundCount++;
+                        globalResults.push({
+                            cnic: cnic,
+                            status: "notfound",
+                            owner: "N/A",
+                            gender: gender,
+                            price: 0
+                        });
+                    }
+                    
+                    liveFoundSpan.innerText = foundCount;
+                    liveNotFoundSpan.innerText = notFoundCount;
+                    
+                    // Create table row
+                    const row = tbody.insertRow();
+                    row.insertCell(0).innerText = i + 1;
+                    row.insertCell(1).innerText = cnic;
+                    row.insertCell(2).innerHTML = `<span class="gender-${gender === 'Male' ? 'male' : 'female'}">${emoji} ${gender}</span>`;
+                    row.insertCell(3).innerHTML = isFound 
+                        ? `<span class="status-badge badge-found">✅ FINGERPRINT MATCH</span>` 
+                        : `<span class="status-badge badge-not-found">❌ NO MATCH</span>`;
+                    row.insertCell(4).innerText = isFound ? ownerInfo : "—";
+                    
+                    const actionCell = row.insertCell(5);
+                    actionCell.className = "action-cell";
+                    if (isFound) {
+                        const copyText = `CNIC: ${cnic} | Gender: ${gender} | Location: ${ownerInfo}`;
+                        const waMsg = `Fingerprint Found!\nCNIC: ${cnic}\nGender: ${gender}\nDatabase: ${ownerInfo}`;
+                        const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`;
+                        actionCell.innerHTML = `
+                            <button class="btn-sm copy-row-btn" data-copy='${copyText.replace(/'/g, "\\'")}'>📋 Copy</button>
+                            <a href="${waLink}" target="_blank" style="background:#25d366; border-radius:30px; width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; color:white; font-size:14px;">📱</a>
+                        `;
+                    } else {
+                        actionCell.innerHTML = "—";
+                    }
+                    
+                    const percent = Math.round(((i + 1) / resultsData.length) * 100);
+                    progressFill.style.width = percent + "%";
+                    progressPercent.innerText = percent + "%";
+                    await new Promise(r => setTimeout(r, 10));
+                }
                 
-                let row = tbody.insertRow();
-                row.insertCell(0).innerText = i+1;
-                row.insertCell(1).innerText = cnicVal;
-                row.insertCell(2).innerHTML = `<span class="gender-${gender === 'Male' ? 'male' : 'female'}">${gender === 'Male' ? '🕺 Male' : gender === 'Female' ? '💃 Female' : '❓'}</span>`;
-                row.insertCell(3).innerHTML = statusFlag === "found" ? `<span class="status-badge badge-found">✅ FOUND</span>` : `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
-                row.insertCell(4).innerText = statusFlag === "found" ? ownerInfo : "—";
-                let actionCell = row.insertCell(5);
-                actionCell.className = "action-cell";
-                if(statusFlag === "found") {
-                    let copyText = `CNIC: ${cnicVal} | ${gender} | Owner: ${ownerInfo}`;
-                    let waLink = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(`Fingerprint Found: ${cnicVal}\nInfo: ${ownerInfo}`)}`;
-                    actionCell.innerHTML = `<button class="btn-sm copy-row" data-copy='${copyText}'>📋 Copy</button><a href="${waLink}" target="_blank" style="background:#25d366; border-radius:30px; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none;">📱</a>`;
-                } else actionCell.innerHTML = "—";
+                totalSearchCount++;
+                totalBalance += batchBalance;
+                updateStatsUI();
                 
-                let percent = Math.round(((i+1)/data.length)*100);
-                progressFill.style.width = percent+"%";
-                percentSpan.innerText = percent+"%";
-                await new Promise(r => setTimeout(r, 10));
+                const rate = resultsData.length > 0 ? Math.round((foundCount / resultsData.length) * 100) : 0;
+                document.getElementById('successRate').innerText = rate + "%";
+                document.getElementById('rateFill').style.width = rate + "%";
+                document.getElementById('lastScan').innerText = new Date().toLocaleTimeString();
+                
+                progressLabel.innerText = "✅ Database search completed!";
+                resultsContainer.style.display = 'block';
+                attachEventHandlers();
+            } else {
+                throw new Error(json.message || "Invalid response from server");
             }
             
-            totalSearchCount++;
-            totalBalance += batchBalance;
-            localStorage.setItem('totalSearches', totalSearchCount);
-            updateStatsUI();
-            document.getElementById('lastScan').innerText = new Date().toLocaleTimeString();
-            let rate = data.length ? Math.round((foundCount/data.length)*100) : 0;
-            document.getElementById('successRate').innerText = rate+"%";
-            document.getElementById('rateFill').style.width = rate+"%";
-            
-            document.getElementById('resultsContainer').style.display = 'block';
-            document.getElementById('progressWrapper').style.display = 'none';
-            attachEventHandlers();
-        } catch(e) { alert("Error: "+e.message); document.getElementById('progressWrapper').style.display = 'none'; }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("❌ Error: " + error.message + "\n\nPlease check:\n1. Apps Script URL is correct\n2. Script is deployed as Web App\n3. Sheet name is 'main data'");
+            progressWrapper.style.display = 'none';
+        } finally {
+            progressWrapper.style.display = 'none';
+            searchBtn.disabled = false;
+            searchBtn.innerText = '⚡ START FINGERPRINT BULK SEARCH ⚡';
+        }
     }
     
     function attachEventHandlers() {
         document.getElementById('downloadFingerprintBtn').onclick = () => {
-            let found = globalResults.filter(r => r.status === "found");
-            if(!found.length) { alert("No matches"); return; }
-            let text = "VYKE FINGERPRINT EXPORT\n"+new Date()+"\n"+found.map((r,i)=>`${i+1}. ${r.cnic} | ${r.gender} | ${r.owner}`).join("\n");
-            let blob = new Blob([text], {type:"text/plain"});
-            let a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `fingerprint_${Date.now()}.txt`;
-            a.click();
-            URL.revokeObjectURL(a.href);
-        };
-        document.getElementById('copyAllCnicBtn').onclick = () => {
-            let cnics = globalResults.map(r=>r.cnic).join("\n");
-            navigator.clipboard.writeText(cnics);
-            alert("Copied all CNICs!");
-        };
-        document.getElementById('exportCsvBtn').onclick = () => {
-            let headers = ["CNIC","Gender","Status","Owner"];
-            let rows = globalResults.map(r=>[r.cnic, r.gender, r.status.toUpperCase(), r.owner]);
-            let csv = [headers, ...rows].map(row=>row.join(",")).join("\n");
-            let blob = new Blob([csv], {type:"text/csv"});
-            let a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `report_${Date.now()}.csv`;
-            a.click();
-        };
-        document.getElementById('clearAllBtn').onclick = () => {
-            document.getElementById('cnicBulkInput').value = "";
-            document.getElementById('resultsContainer').style.display = 'none';
-            globalResults = [];
-        };
-        document.getElementById('loadSampleBtn').onclick = () => {
-            document.getElementById('cnicBulkInput').value = "5440178619178\n5530232277050\n3520212345678";
-        };
-        document.getElementById('whatsappAdminTopBtn').href = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent("Hello Admin, need fingerprint assistance.")}`;
-        
-        // filters
-        let searchInput = document.getElementById('searchCnicInput');
-        let showOnlyFound = document.getElementById('showOnlyFoundCheckbox');
-        function filterTable() {
-            let keyword = searchInput.value.toLowerCase();
-            let onlyFound = showOnlyFound.checked;
-            let rows = document.querySelectorAll('#resultsTableBody tr');
-            rows.forEach(row => {
-                let cnicCell = row.cells[1]?.innerText.toLowerCase() || "";
-                let statusCell = row.cells[3]?.innerText || "";
-                let matchCnic = cnicCell.includes(keyword);
-                let matchStatus = !onlyFound || statusCell.includes("FOUND");
-                row.style.display = (matchCnic && matchStatus) ? "" : "none";
+            const matched = globalResults.filter(r => r.status === "found");
+            if (matched.length === 0) {
+                alert("❌ No fingerprint matches to download!");
+                return;
+            }
+            let content = "═══════════════════════════════════\n";
+            content += "VYKE TURBO FINGERPRINT EXPORT\n";
+            content += `Date: ${new Date().toLocaleString()}\n`;
+            content += `Total Matches: ${matched.length}\n`;
+            content += "═══════════════════════════════════\n\n";
+            matched.forEach((r, i) => {
+                content += `[${i+1}] CNIC: ${r.cnic}\n`;
+                content += `    Gender: ${r.gender}\n`;
+                content += `    Location: ${r.owner}\n`;
+                content += `    Price: ${r.price} PKR\n`;
+                content += "-----------------------------------\n";
             });
-        }
+            const b
