@@ -3,30 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNIC Fingerprint Founder System - Final Stable</title>
+    <title>CNIC Fingerprint Founder System - Vyke Turbo</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 650px; background: white; margin: 30px auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h2 { color: #1a365d; margin-bottom: 5px; }
-        .system-owner { font-size: 14px; color: #718096; margin-bottom: 20px; }
-        .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; font-weight: bold; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f4f8; margin: 0; padding: 20px; text-align: center; color: #2d3748; }
+        .container { max-width: 680px; background: white; margin: 20px auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h2 { color: #1a365d; margin: 0 0 5px 0; letter-spacing: 0.5px; }
+        .system-owner { font-size: 14px; color: #4a5568; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; }
+        .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 8px; font-size: 13px; margin-bottom: 25px; font-weight: bold; line-height: 1.5; }
         
-        /* Textarea hamesha ready state me rahega */
-        textarea { width: 100%; height: 150px; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 16px; font-family: inherit; resize: vertical; background-color: #ffffff !important; color: #000000 !important; }
+        .step-box { background: #f7fafc; border: 1px solid #e2e8f0; padding: 18px; border-radius: 8px; margin-bottom: 20px; text-align: left; }
+        .step-title { font-weight: 700; color: #2b6cb0; font-size: 14px; margin-bottom: 8px; display: block; }
         
-        button { width: 100%; background-color: #319795; color: white; border: none; padding: 14px; font-size: 16px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 15px; }
-        button:hover { background-color: #2c7a7b; }
+        textarea { width: 100%; height: 120px; padding: 12px; margin: 8px 0; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 15px; font-family: monospace; resize: vertical; transition: 0.2s; }
+        textarea:focus { border-color: #3182ce; outline: none; box-shadow: 0 0 0 3px rgba(66,153,225,0.15); }
         
-        .engine-status { font-weight: bold; font-size: 14px; margin-bottom: 15px; color: #dd6b20; }
-        .results-container { display: none; margin-top: 20px; text-align: left; }
-        .results-container h3 { color: #1a365d; margin-bottom: 10px; border-bottom: 2px solid #edf2f7; padding-bottom: 5px; }
+        button { width: 100%; color: white; border: none; padding: 14px; font-size: 15px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-load { background-color: #4a5568; }
+        .btn-load:hover { background-color: #2d3748; }
+        .btn-search { background-color: #319795; margin-bottom: 10px; }
+        .btn-search:hover { background-color: #2c7a7b; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
+        .status-alert { font-weight: bold; font-size: 13px; margin-top: 8px; display: none; padding: 6px 12px; border-radius: 4px; }
+        .status-success { background-color: #c6f6d5; color: #22543d; }
+        
+        .results-container { display: none; margin-top: 25px; text-align: left; }
+        .results-container h3 { color: #1a365d; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; font-size: 16px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
         th { background-color: #2b6cb0; color: white; font-weight: bold; }
         tr:nth-child(even) { background-color: #f7fafc; }
         
-        .status-badge { padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; }
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; text-transform: uppercase; }
         .badge-found { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
         .badge-not-found { background-color: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; }
     </style>
@@ -42,20 +50,29 @@
         Ek CNIC Fingerprint Found Hony Par 1200 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
     </div>
 
-    <div id="engineStatus" class="engine-status">🔄 Connecting to database stream... Please wait...</div>
+    <div class="step-box">
+        <span class="step-title">📋 STEP 1: PASTE SHEET DATA (CNIC & OWNER)</span>
+        <span style="font-size: 12px; color: #718096;">Google Sheet se dono columns select karke copy karein aur yahan paste kar dein:</span>
+        <textarea id="rawDatabaseInput" placeholder="Dono columns ka data yahan paste karein..."></textarea>
+        <button class="btn-load" onclick="processSheetData()">LOAD DATA INTO ENGINE</button>
+        <div id="loadAlert" class="status-alert status-success"></div>
+    </div>
 
-    <textarea id="cnicBulkInput" placeholder="Enter target CNICs (Line-by-Line):&#10;5440178619178&#10;5530232277050"></textarea>
-    <button id="searchBtn" onclick="searchBulkFast()">START FAST BULK SEARCH</button>
+    <div class="step-box">
+        <span class="step-title">🎯 STEP 2: ENTER TARGET CNICS FOR BULK SEARCH</span>
+        <textarea id="searchTargetInput" placeholder="Jo CNICs dhoondne hain unhe yahan line-by-line likhein...&#10;5440178619178&#10;5530232277050"></textarea>
+        <button class="btn-search" onclick="executeBulkSearch()">START FAST BULK SEARCH</button>
+    </div>
     
     <div id="resultsContainer" class="results-container">
-        <h3>Search Results:</h3>
+        <h3>⚡ SEARCH RESULTS</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Sr No.</th>
-                    <th>CNIC Number</th>
-                    <th>Status</th>
-                    <th>Database Location</th>
+                    <th style="width: 10%;">Sr No.</th>
+                    <th style="width: 40%;">CNIC Number</th>
+                    <th style="width: 20%;">Status</th>
+                    <th style="width: 30%;">Database Location</th>
                 </tr>
             </thead>
             <tbody id="resultsTableBody"></tbody>
@@ -64,106 +81,92 @@
 </div>
 
 <script>
-// Memory tables
-let localCnicArray = [];
-let localOwnerArray = [];
-let isDatabaseReady = false;
+// Local variable map acting as an in-memory dictionary database
+let engineDatabaseMap = {};
 
-// ⚠️ APNA NEW DEPLOYMENT URL YAHAN PASTE KAREIN
-const scriptUrl = "https://script.google.com/macros/s/AKfycbxya9Jvq4E9tKQKZ7sdjZAvf30DC4huTIWcSvUbwlF6lXKW3GhTktZSKd6j3j-JN87ZjQ/exec"; 
-
-// Background auto data fetcher
-async function downloadDatabaseToBrowser() {
-    let statusBox = document.getElementById('engineStatus');
-    try {
-        let response = await fetch(scriptUrl);
-        let data = await response.json();
-        
-        if (data.cnics && data.owners) {
-            localCnicArray = data.cnics;
-            localOwnerArray = data.owners;
-            isDatabaseReady = true;
-            statusBox.textContent = `✅ Turbo Engine Online! ${localCnicArray.length.toLocaleString()} records cached successfully.`;
-            statusBox.style.color = "#38a169";
-            return true;
-        } else {
-            statusBox.textContent = "⚠️ Sheet data empty or layout conflict.";
-            statusBox.style.color = "#e53e3e";
-            return false;
-        }
-    } catch (error) {
-        statusBox.textContent = "⚠️ Cloud Network Syncing Error. Will auto-retry on click.";
-        statusBox.style.color = "#dd6b20";
-        console.error(error);
-        return false;
-    }
-}
-
-async function searchBulkFast() {
-    let rawInput = document.getElementById('cnicBulkInput').value;
-    let resultsContainer = document.getElementById('resultsContainer');
-    let tableBody = document.getElementById('resultsTableBody');
-    let statusBox = document.getElementById('engineStatus');
+function processSheetData() {
+    let rawData = document.getElementById('rawDatabaseInput').value;
+    let alertBox = document.getElementById('loadAlert');
     
-    let cnicList = rawInput.split('\n')
-                          .map(line => line.replace(/[^0-9]/g, '').trim())
-                          .filter(line => line.length >= 5);
-                          
-    if(cnicList.length === 0) {
-        alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
+    if (!rawData.trim()) {
+        alert("Baraye meharbani pehle Google Sheet ka data paste karein.");
         return;
     }
-
-    // Fail-Safe: Agar automatic data sync nahi hua tha, toh search click karne par yeh foran live fetch karega
-    if (!isDatabaseReady) {
-        statusBox.textContent = "🔄 Fetching cloud database stream... Please hold...";
-        statusBox.style.color = "#dd6b20";
-        let retrySuccess = await downloadDatabaseToBrowser();
-        if(!retrySuccess) {
-            alert("Database download nahi ho saka. Ya toh internet bnd hai ya Google Script ka URL sahi nahi lagaya.");
-            return;
+    
+    engineDatabaseMap = {};
+    let rows = rawData.split('\n');
+    let successfulRecordsCount = 0;
+    
+    for (let i = 0; i < rows.length; i++) {
+        let currentRow = rows[i].trim();
+        if (!currentRow) continue;
+        
+        // Tab-separated pattern recognition (Native spreadsheet copy layout)
+        let dataColumns = currentRow.split('\t');
+        let rawCnic = dataColumns[0].replace(/[^0-9]/g, '').trim(); 
+        let databaseLabel = dataColumns[1] ? dataColumns[1].trim() : "Database1";
+        
+        if (rawCnic) {
+            engineDatabaseMap[rawCnic] = databaseLabel;
+            successfulRecordsCount++;
         }
     }
     
-    tableBody.innerHTML = "";
-    
-    // Fast local browser RAM engine indexing loop
-    for (let i = 0; i < cnicList.length; i++) {
-        let currentCnic = cnicList[i];
-        
-        let row = document.createElement('tr');
-        let cellSr = document.createElement('td');
-        cellSr.textContent = i + 1;
-        
-        let cellCnic = document.createElement('td');
-        cellCnic.textContent = currentCnic;
-        
-        let cellStatus = document.createElement('td');
-        let cellOwner = document.createElement('td');
-        
-        // Match optimization index pattern
-        let matchIndex = localCnicArray.indexOf(currentCnic);
-        
-        if (matchIndex !== -1) {
-            cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
-            cellOwner.textContent = localOwnerArray[matchIndex]; 
-        } else {
-            cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
-            cellOwner.textContent = "-";
-        }
-        
-        row.appendChild(cellSr);
-        row.appendChild(cellCnic);
-        row.appendChild(cellStatus);
-        row.appendChild(cellOwner);
-        tableBody.appendChild(row);
-    }
-    
-    resultsContainer.style.display = 'block';
+    alertBox.textContent = `✅ Vyke Engine Activated! ${successfulRecordsCount.toLocaleString()} records cached successfully in browser memory.`;
+    alertBox.style.display = "block";
 }
 
-// Windows page trigger stream
-window.onload = downloadDatabaseToBrowser;
+function executeBulkSearch() {
+    let rawSearchInput = document.getElementById('searchTargetInput').value;
+    let containerLayout = document.getElementById('resultsContainer');
+    let outputTableBody = document.getElementById('resultsTableBody');
+    
+    // Clean string input to process integers cleanly line-by-line
+    let targetCnicList = rawSearchInput.split('\n')
+                                      .map(line => line.replace(/[^0-9]/g, '').trim())
+                                      .filter(line => line.length >= 5);
+                                      
+    if (targetCnicList.length === 0) {
+        alert('Baraye meharbani targets box me valid CNICs darj karein.');
+        return;
+    }
+    
+    // Reset output table view matrix
+    outputTableBody.innerHTML = "";
+    
+    // Super fast key lookup matching loop
+    for (let i = 0; i < targetCnicList.length; i++) {
+        let activeCnic = targetCnicList[i];
+        
+        let tableRow = document.createElement('tr');
+        
+        let serialCell = document.createElement('td');
+        serialCell.textContent = i + 1;
+        
+        let cnicCell = document.createElement('td');
+        cnicCell.textContent = activeCnic;
+        
+        let statusCell = document.createElement('td');
+        let databaseCell = document.createElement('td');
+        
+        // Hash map O(1) matching phase 
+        if (engineDatabaseMap[activeCnic]) {
+            statusCell.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
+            databaseCell.textContent = engineDatabaseMap[activeCnic];
+        } else {
+            statusCell.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
+            databaseCell.textContent = "-";
+        }
+        
+        tableRow.appendChild(serialCell);
+        tableRow.appendChild(cnicCell);
+        tableRow.appendChild(statusCell);
+        tableRow.appendChild(databaseCell);
+        outputTableBody.appendChild(tableRow);
+    }
+    
+    containerLayout.style.display = 'block';
+}
 </script>
 </body>
 </html>
