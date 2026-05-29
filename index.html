@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vyke Turbo Max Pro Dashboard</title>
+<title>Vyke Turbo Max Pro</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -14,109 +15,104 @@
 }
 
 body{
-    background:#0f172a;
-    color:white;
+    background:#020617;
+    color:#e2e8f0;
     overflow-x:hidden;
 }
 
-/* TOPBAR */
+/* TOP ADMIN BAR */
 
-.topbar{
+.top-admin-bar{
     width:100%;
-    background:linear-gradient(90deg,#0f172a,#1e293b,#0f172a);
-    padding:15px;
-    border-bottom:1px solid #334155;
+    padding:14px;
+    background:linear-gradient(90deg,#020617,#0f172a,#020617);
+    border-bottom:1px solid #1e293b;
     display:flex;
-    justify-content:space-between;
+    justify-content:center;
     align-items:center;
     position:sticky;
     top:0;
     z-index:999;
+    backdrop-filter:blur(10px);
 }
 
-.logo{
-    font-size:22px;
-    font-weight:bold;
-    color:#38bdf8;
-}
-
-.admin-btn{
-    background:#25d366;
-    color:white;
-    text-decoration:none;
-    padding:12px 18px;
-    border-radius:12px;
+.contact-admin-btn{
     display:flex;
     align-items:center;
-    gap:8px;
+    gap:10px;
+    background:linear-gradient(135deg,#25d366,#128c7e);
+    padding:12px 24px;
+    border-radius:50px;
+    text-decoration:none;
+    color:white;
     font-weight:bold;
-    box-shadow:0 5px 15px rgba(37,211,102,0.3);
-    transition:.3s;
+    font-size:14px;
+    box-shadow:0 10px 25px rgba(37,211,102,0.35);
+    transition:0.25s;
 }
 
-.admin-btn:hover{
-    transform:translateY(-2px);
-    background:#1ebe5d;
-}
-
-.wa-icon{
-    width:20px;
-    height:20px;
+.contact-admin-btn:hover{
+    transform:translateY(-2px) scale(1.03);
 }
 
 /* TICKER */
 
-.ticker{
-    width:100%;
+.price-ticker{
+    background:linear-gradient(90deg,#111827,#1e1b4b,#111827);
     overflow:hidden;
     white-space:nowrap;
-    background:#111827;
-    padding:12px 0;
     border-bottom:1px solid #334155;
+    padding:12px 0;
 }
 
-.ticker-text{
+.ticker-content{
     display:inline-block;
-    animation:move 18s linear infinite;
-    color:#38bdf8;
+    animation:marquee 18s linear infinite;
+    padding-left:100%;
     font-weight:bold;
+    color:#38bdf8;
 }
 
-@keyframes move{
-    0%{
-        transform:translateX(100%);
-    }
-    100%{
-        transform:translateX(-100%);
-    }
+@keyframes marquee{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-100%);}
+}
+
+.ticker-highlight{
+    color:#f43f5e;
+    margin:0 20px;
+}
+
+.ticker-highlight-male{
+    color:#22c55e;
+    margin:0 20px;
 }
 
 /* CONTAINER */
 
 .container{
-    width:95%;
-    max-width:1000px;
+    max-width:900px;
     margin:30px auto;
-    background:#1e293b;
+    background:rgba(15,23,42,0.85);
+    border:1px solid rgba(255,255,255,0.08);
     border-radius:20px;
-    padding:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.4);
-    border:1px solid #334155;
+    padding:30px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 15px 40px rgba(0,0,0,0.5);
 }
 
-.title{
-    text-align:center;
-    margin-bottom:25px;
-}
-
-.title h1{
+h1{
     color:#38bdf8;
+    text-align:center;
+    margin-bottom:8px;
     font-size:32px;
 }
 
-.title p{
+.owner{
+    text-align:center;
     color:#94a3b8;
-    margin-top:8px;
+    margin-bottom:25px;
+    font-size:14px;
 }
 
 /* TEXTAREA */
@@ -124,38 +120,41 @@ body{
 textarea{
     width:100%;
     height:180px;
-    background:#0f172a;
+    background:#020617;
     border:1px solid #334155;
-    border-radius:15px;
-    padding:15px;
+    border-radius:16px;
+    padding:18px;
     color:#38bdf8;
     font-size:15px;
     resize:none;
     outline:none;
+    transition:0.25s;
 }
 
 textarea:focus{
     border-color:#38bdf8;
-    box-shadow:0 0 10px rgba(56,189,248,0.3);
+    transform:scale(1.01);
+    box-shadow:0 0 20px rgba(56,189,248,0.2);
 }
 
 /* BUTTONS */
 
-.btn{
+.main-btn{
     width:100%;
-    margin-top:18px;
+    margin-top:20px;
     border:none;
     padding:16px;
-    border-radius:14px;
+    border-radius:16px;
     background:linear-gradient(135deg,#0284c7,#0369a1);
     color:white;
     font-size:16px;
     font-weight:bold;
     cursor:pointer;
-    transition:.3s;
+    transition:0.25s;
+    box-shadow:0 10px 25px rgba(2,132,199,0.3);
 }
 
-.btn:hover{
+.main-btn:hover{
     transform:translateY(-2px);
 }
 
@@ -166,67 +165,74 @@ textarea:focus{
     flex-wrap:wrap;
 }
 
-.small-btn{
+.action-btn{
     flex:1;
     border:none;
     padding:14px;
-    border-radius:12px;
-    background:#0f172a;
-    color:#38bdf8;
+    border-radius:14px;
+    color:white;
     font-weight:bold;
     cursor:pointer;
-    border:1px solid #334155;
-    transition:.3s;
+    transition:0.25s;
 }
 
-.small-btn:hover{
-    background:#38bdf8;
-    color:#0f172a;
+.copy-btn{
+    background:linear-gradient(135deg,#7c3aed,#6d28d9);
+}
+
+.download-btn{
+    background:linear-gradient(135deg,#0891b2,#0e7490);
+}
+
+.action-btn:hover{
+    transform:translateY(-2px);
 }
 
 /* PROGRESS */
 
-.progress-box{
+.progress-wrapper{
     margin-top:25px;
-    background:#0f172a;
-    padding:18px;
-    border-radius:15px;
+    background:#020617;
     border:1px solid #334155;
+    border-radius:16px;
+    padding:20px;
 }
 
 .progress-top{
     display:flex;
     justify-content:space-between;
-    margin-bottom:10px;
+    margin-bottom:12px;
+    color:#38bdf8;
+    font-weight:bold;
 }
 
 .progress-bar{
     width:100%;
     height:12px;
     background:#1e293b;
-    border-radius:20px;
+    border-radius:30px;
     overflow:hidden;
 }
 
 .progress-fill{
     width:0%;
     height:100%;
-    background:linear-gradient(90deg,#38bdf8,#0ea5e9);
-    transition:.2s;
+    background:linear-gradient(90deg,#38bdf8,#06b6d4);
+    transition:0.2s;
 }
 
 /* COUNTERS */
 
-.counter-wrap{
+.counter-row{
     display:flex;
     gap:15px;
-    margin-top:15px;
+    margin-top:18px;
 }
 
 .counter{
     flex:1;
     padding:15px;
-    border-radius:12px;
+    border-radius:16px;
     text-align:center;
     font-weight:bold;
 }
@@ -246,19 +252,23 @@ textarea:focus{
 /* TABLE */
 
 .results{
-    margin-top:25px;
+    margin-top:30px;
+}
+
+.results h2{
+    color:#38bdf8;
+    margin-bottom:15px;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    margin-top:15px;
     overflow:hidden;
-    border-radius:15px;
+    border-radius:16px;
 }
 
 th{
-    background:#0f172a;
+    background:#111827;
     color:#38bdf8;
     padding:14px;
     border:1px solid #334155;
@@ -274,11 +284,15 @@ tr:nth-child(even){
     background:#0f172a;
 }
 
+tr:hover{
+    background:rgba(56,189,248,0.08);
+}
+
 .badge-found{
     background:#14532d;
     color:#4ade80;
-    padding:6px 10px;
-    border-radius:8px;
+    padding:6px 12px;
+    border-radius:10px;
     font-size:12px;
     font-weight:bold;
 }
@@ -286,113 +300,151 @@ tr:nth-child(even){
 .badge-not{
     background:#7f1d1d;
     color:#f87171;
-    padding:6px 10px;
-    border-radius:8px;
+    padding:6px 12px;
+    border-radius:10px;
     font-size:12px;
     font-weight:bold;
 }
 
 /* MOBILE */
 
-@media(max-width:768px){
-
-    .topbar{
-        flex-direction:column;
-        gap:12px;
-    }
-
-    .counter-wrap{
-        flex-direction:column;
-    }
+@media(max-width:700px){
 
     .action-bar{
         flex-direction:column;
     }
 
+    .counter-row{
+        flex-direction:column;
+    }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="topbar">
-    <div class="logo">⚡ VYKE TURBO MAX PRO</div>
+<!-- TOP ADMIN -->
 
-    <a href="https://wa.me/447915605790" target="_blank" class="admin-btn">
-        <svg class="wa-icon" viewBox="0 0 32 32" fill="white">
-            <path d="M19.11 17.34c-.29-.14-1.7-.84-1.96-.93-.26-.1-.45-.14-.64.14-.19.29-.74.93-.91 1.12-.17.19-.34.22-.63.07-.29-.14-1.2-.44-2.28-1.39-.84-.75-1.41-1.67-1.57-1.95-.17-.29-.02-.44.13-.58.13-.13.29-.34.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.55-.88-2.12-.23-.56-.47-.48-.64-.49l-.55-.01c-.19 0-.5.07-.76.36-.26.29-1 1-.99 2.45.01 1.44 1.04 2.83 1.18 3.02.14.19 2.04 3.11 4.95 4.36.69.3 1.23.48 1.65.61.69.22 1.32.19 1.81.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/>
-        </svg>
-        Contact Admin
-    </a>
+<div class="top-admin-bar">
+
+<a href="https://wa.me/447915605790" target="_blank" class="contact-admin-btn">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 24 24">
+<path d="M20.52 3.48A11.82 11.82 0 0 0 12.06 0C5.47 0 .11 5.36.11 11.95c0 2.1.55 4.16 1.59 5.97L0 24l6.27-1.64a11.9 11.9 0 0 0 5.69 1.45h.01c6.59 0 11.95-5.36 11.95-11.95 0-3.19-1.24-6.19-3.4-8.38z"/>
+</svg>
+
+Contact Admin
+
+</a>
+
 </div>
 
-<div class="ticker">
-    <div class="ticker-text">
-        ⚡ FEMALE PRICE: 1500 PKR ⚡ MALE PRICE: 1200 PKR ⚡ SECURE CLOUD ONLINE ⚡ VYKE CORE ENGINE V2 ACTIVE ⚡
-    </div>
+<!-- TICKER -->
+
+<div class="price-ticker">
+
+<div class="ticker-content">
+
+⚡ FEMALE FINGERPRINT: 1500 PKR 
+
+<span class="ticker-highlight">⚠️ PREMIUM ACCESS ACTIVE</span>
+
+<span class="ticker-highlight-male">✅ MALE FINGERPRINT: 1200 PKR</span>
+
+⚡ VYKE CORE ENGINE V2 ONLINE ⚡
+
 </div>
+
+</div>
+
+<!-- MAIN CONTAINER -->
 
 <div class="container">
 
-    <div class="title">
-        <h1>CNIC Fingerprint Founder System</h1>
-        <p>System Owner: Rana Vyke Urf Bablo</p>
-    </div>
+<h1>CNIC Fingerprint Founder System</h1>
 
-    <textarea id="cnicInput" placeholder="5440178619178&#10;5530232277050"></textarea>
+<div class="owner">
+SYSTEM OWNER: Rana Vyke Urf Bablo
+</div>
 
-    <button class="btn" onclick="startSearch()">
-        START SECURE BULK SEARCH
-    </button>
+<textarea id="cnicInput" placeholder="5440178619178&#10;5530232277050"></textarea>
 
-    <div class="action-bar">
-        <button class="small-btn" onclick="copyAllCNICs()">
-            📋 Copy All CNICs
-        </button>
+<button class="main-btn" onclick="startSearch()">
+START SECURE BULK SEARCH
+</button>
 
-        <button class="small-btn" onclick="downloadFingerprint()">
-            📥 Download Fingerprint
-        </button>
-    </div>
+<div class="action-bar">
 
-    <div class="progress-box">
-        <div class="progress-top">
-            <span id="progressText">Initializing...</span>
-            <span id="progressPercent">0%</span>
-        </div>
+<button class="action-btn copy-btn" onclick="copyAllCNICs()">
+📋 Copy All CNICs
+</button>
 
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
+<button class="action-btn download-btn" onclick="downloadFingerprints()">
+📥 Download Fingerprint
+</button>
 
-        <div class="counter-wrap">
-            <div class="counter green">
-                ✅ Found: <span id="foundCount">0</span>
-            </div>
+</div>
 
-            <div class="counter red">
-                ❌ Not Found: <span id="notFoundCount">0</span>
-            </div>
-        </div>
-    </div>
+<!-- PROGRESS -->
 
-    <div class="results">
+<div class="progress-wrapper">
 
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>CNIC</th>
-                    <th>Status</th>
-                    <th>Database</th>
-                </tr>
-            </thead>
+<div class="progress-top">
 
-            <tbody id="tableBody"></tbody>
+<span id="progressText">Initializing Secure Engine...</span>
 
-        </table>
+<span id="progressPercent">0%</span>
 
-    </div>
+</div>
+
+<div class="progress-bar">
+
+<div class="progress-fill" id="progressFill"></div>
+
+</div>
+
+<div class="counter-row">
+
+<div class="counter green">
+✅ Found:
+<span id="foundCount">0</span>
+</div>
+
+<div class="counter red">
+❌ Not Found:
+<span id="notFoundCount">0</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- RESULTS -->
+
+<div class="results">
+
+<h2>⚡ Search Results</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>CNIC</th>
+<th>Status</th>
+<th>Database</th>
+</tr>
+
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+</div>
 
 </div>
 
@@ -400,101 +452,127 @@ tr:nth-child(even){
 
 function startSearch(){
 
-    let input=document.getElementById('cnicInput').value.trim();
+let input=document.getElementById('cnicInput').value.trim();
 
-    let cnics=input.split('\n');
+if(input===""){
+alert("Please enter CNICs");
+return;
+}
 
-    let table=document.getElementById('tableBody');
+let cnics=input.split('\n');
 
-    table.innerHTML='';
+let table=document.getElementById('tableBody');
 
-    let found=0;
-    let notFound=0;
+table.innerHTML='';
 
-    for(let i=0;i<cnics.length;i++){
+let found=0;
+let notFound=0;
 
-        let percent=Math.round(((i+1)/cnics.length)*100);
+for(let i=0;i<cnics.length;i++){
 
-        document.getElementById('progressFill').style.width=percent+'%';
+let percent=Math.round(((i+1)/cnics.length)*100);
 
-        document.getElementById('progressPercent').innerText=percent+'%';
+document.getElementById('progressFill').style.width=percent+'%';
 
-        document.getElementById('progressText').innerText='Scanning Secure Database...';
+document.getElementById('progressPercent').innerText=percent+'%';
 
-        let random=Math.random();
+document.getElementById('progressText').innerText='Scanning Secure Database...';
 
-        let status=random>0.4?'FOUND':'NOT FOUND';
+let random=Math.random();
 
-        let tr=document.createElement('tr');
+let status=random>0.4?'FOUND':'NOT FOUND';
 
-        if(status==='FOUND'){
+let tr=document.createElement('tr');
 
-            found++;
+if(status==='FOUND'){
 
-            document.getElementById('foundCount').innerText=found;
+found++;
 
-            tr.innerHTML=`
-            <td>${i+1}</td>
-            <td>${cnics[i]}</td>
-            <td><span class="badge-found">FOUND</span></td>
-            <td>Punjab NADRA</td>
-            `;
+document.getElementById('foundCount').innerText=found;
 
-        }else{
+tr.innerHTML=`
+<td>${i+1}</td>
+<td>${cnics[i]}</td>
+<td><span class="badge-found">FOUND</span></td>
+<td>Punjab NADRA</td>
+`;
 
-            notFound++;
+}else{
 
-            document.getElementById('notFoundCount').innerText=notFound;
+notFound++;
 
-            tr.innerHTML=`
-            <td>${i+1}</td>
-            <td>${cnics[i]}</td>
-            <td><span class="badge-not">NOT FOUND</span></td>
-            <td>-</td>
-            `;
-        }
+document.getElementById('notFoundCount').innerText=notFound;
 
-        table.appendChild(tr);
-
-    }
+tr.innerHTML=`
+<td>${i+1}</td>
+<td>${cnics[i]}</td>
+<td><span class="badge-not">NOT FOUND</span></td>
+<td>-</td>
+`;
 
 }
+
+table.appendChild(tr);
+
+}
+
+document.getElementById('progressText').innerText='Database Scan Completed';
+
+}
+
+/* COPY ALL */
 
 function copyAllCNICs(){
 
-    let rows=document.querySelectorAll('#tableBody tr');
+let rows=document.querySelectorAll('#tableBody tr');
 
-    let data=[];
+let data=[];
 
-    rows.forEach(row=>{
-        data.push(row.children[1].innerText);
-    });
+rows.forEach(row=>{
 
-    navigator.clipboard.writeText(data.join('\n'));
+data.push(row.children[1].innerText);
 
-    alert('✅ All CNICs Copied');
+});
+
+if(data.length===0){
+alert("No CNICs Available");
+return;
+}
+
+navigator.clipboard.writeText(data.join('\n'));
+
+alert("✅ All CNICs Copied");
 
 }
 
-function downloadFingerprint(){
+/* DOWNLOAD */
 
-    let rows=document.querySelectorAll('#tableBody tr');
+function downloadFingerprints(){
 
-    let data=[];
+let rows=document.querySelectorAll('#tableBody tr');
 
-    rows.forEach(row=>{
-        data.push(row.children[1].innerText);
-    });
+let data=[];
 
-    let blob=new Blob([data.join('\n')],{type:'text/plain'});
+rows.forEach(row=>{
 
-    let a=document.createElement('a');
+data.push(row.children[1].innerText);
 
-    a.href=URL.createObjectURL(blob);
+});
 
-    a.download='fingerprint.txt';
+if(data.length===0){
+alert("No Data Found");
+return;
+}
 
-    a.click();
+let blob=new Blob([data.join('\n')],{type:'text/plain'});
+
+let a=document.createElement('a');
+
+a.href=URL.createObjectURL(blob);
+
+a.download='fingerprint-data.txt';
+
+a.click();
 
 }
 
