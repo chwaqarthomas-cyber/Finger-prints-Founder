@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNIC Fingerprint Founder System - Secure Turbo</title>
+    <title>CNIC Fingerprint Founder System - Secure Engine</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/md5.min.js"></script>
     <style>
@@ -66,13 +66,11 @@
 </div>
 
 <script>
-// Memory database mapping for local secure dictionary lookup
 let encryptedDatabaseMap = {};
 
-// ⚠️ APNA APPS SCRIPT URL YAHAN PASTE KAREIN
+// ⚠️ APNA NEW APPS SCRIPT URL YAHAN BHI PASTE KAREIN
 const scriptUrl = "https://script.google.com/macros/s/AKfycbxya9Jvq4E9tKQKZ7sdjZAvf30DC4huTIWcSvUbwlF6lXKW3GhTktZSKd6j3j-JN87ZjQ/exec"; 
 
-// Website khultay hi background me secure keys load karna
 async function initSecureEngine() {
     let statusBox = document.getElementById('engineStatus');
     let searchBtn = document.getElementById('searchBtn');
@@ -84,15 +82,17 @@ async function initSecureEngine() {
         
         if (json.secureData) {
             encryptedDatabaseMap = json.secureData;
-            statusBox.textContent = "✅ Turbo Engine Online! Safe Mode Activated.";
+            statusBox.textContent = "✅ Turbo Engine Online! Data Safely Loaded.";
             statusBox.style.color = "#38a169";
             searchBtn.disabled = false;
             inputArea.disabled = false;
         } else {
             statusBox.textContent = "❌ Database Format Error.";
+            statusBox.style.color = "#e53e3e";
         }
     } catch (error) {
         statusBox.textContent = "⚠️ Cloud Network Error. Refresh the page.";
+        statusBox.style.color = "#e53e3e";
         console.error(error);
     }
 }
@@ -103,7 +103,7 @@ function searchBulkSecure() {
     let tableBody = document.getElementById('resultsTableBody');
     
     let cnicList = rawInput.split('\n')
-                          .map(line => line.replace(/[- ]/g, '').trim())
+                          .map(line => line.replace(/[^0-9]/g, '').trim())
                           .filter(line => line.length >= 5);
                           
     if(cnicList.length === 0) {
@@ -113,11 +113,10 @@ function searchBulkSecure() {
     
     tableBody.innerHTML = "";
     
-    // Pure Local Lightning Execution Engine
     for (let i = 0; i < cnicList.length; i++) {
         let currentCnic = cnicList[i];
         
-        // Input cnic ko local encrypt karna match karne ke liye
+        // Input ko encrypt karke backend structure se match karna
         let inputHash = CryptoJS.MD5(currentCnic).toString();
         
         let row = document.createElement('tr');
@@ -130,10 +129,10 @@ function searchBulkSecure() {
         let cellStatus = document.createElement('td');
         let cellOwner = document.createElement('td');
         
-        // Exact O(1) hash check dictionary operation (Chutkiyon me output)
+        // Lightning fast dictionary map validation
         if (encryptedDatabaseMap[inputHash]) {
             cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
-            cellOwner.textContent = encryptedDatabaseMap[inputHash]; // Direct shows Database number
+            cellOwner.textContent = encryptedDatabaseMap[inputHash]; 
         } else {
             cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
             cellOwner.textContent = "-";
@@ -149,7 +148,6 @@ function searchBulkSecure() {
     resultsContainer.style.display = 'block';
 }
 
-// Execute connection stream on load window phase
 window.onload = initSecureEngine;
 </script>
 </body>
