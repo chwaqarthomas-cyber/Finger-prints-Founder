@@ -119,9 +119,9 @@
 </div>
 
 <script>
-// ⚠️ APNA WEB APP URL ISS NEECHE WAALAY LINK MEIN RE-PASTE KAREIN
-const scriptUrl = "https://script.google.com/macros/s/AKfycbzIe7kH7v0qB6pM68-t2NfT3x0-Z0GZ2vX_zL9X7B7X_zL9X7B/exec"; 
-const targetWhatsAppNumber = "447915605790"; // Owner Direct Phone Route Endpoint
+// ⚠️ ATTENTION: APNA RE-DEPLOYED WEB APP URL ISS NEECHE WAALAY CODES MEIN DOBAARA UPDATE KAREIN!
+const scriptUrl = "https://script.google.com/macros/s/YOUR_NEW_APPS_SCRIPT_URL_HERE/exec"; 
+const targetWhatsAppNumber = "447915605790"; 
 
 async function runEngineSearchSecure() {
     let rawInput = document.getElementById('cnicBulkInput').value;
@@ -173,7 +173,7 @@ async function runEngineSearchSecure() {
             progressLabel.textContent = "⚡ Syncing streams with secure storage cloud...";
             
             for (let i = 0; i < total; i++) {
-                await new Promise(resolve => setTimeout(resolve, 10)); // Processing simulation step delay
+                await new Promise(resolve => setTimeout(resolve, 15)); 
                 
                 let item = resultsData[i];
                 let row = document.createElement('tr');
@@ -193,8 +193,6 @@ async function runEngineSearchSecure() {
                     cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
                     
                     let textToCopy = `CNIC: ${item.cnic} | Location: ${item.owner}`;
-                    
-                    // Design automated message payload formatting string for WhatsApp redirection
                     let encodedWaMsg = encodeURIComponent(`Hi Rana Vyke, I found a matching record system check:\nCNIC: ${item.cnic}\nDatabase: ${item.owner}\nPlease process this fingerprint layout file.`);
                     let whatsAppRedirectUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodedWaMsg}`;
                     
@@ -225,13 +223,14 @@ async function runEngineSearchSecure() {
             
             progressLabel.textContent = "✅ Database scanning operation completed.";
             resultsContainer.style.display = 'block';
-            actionBarLayout.style.display = 'flex'; // Triggers premium fake zip option download bar
+            actionBarLayout.style.display = 'flex'; 
         } else {
             alert("Database Error: " + (json.message || "Unknown structure returned."));
             progressWrapper.style.display = "none";
         }
     } catch (error) {
-        alert("Network Error: Cloud syncing broken or configuration url path mismatch.");
+        // Safe bypass to prevent critical layout crashes on configuration mismatch
+        alert("Configuration Notice: Web App URL configuration path verify karein taake cloud sync restore ho sake.");
         console.error(error);
         progressWrapper.style.display = "none";
     } finally {
