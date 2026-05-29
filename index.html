@@ -3,291 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vyke Turbo Max Pro | CNIC Fingerprint System</title>
+    <title>CNIC Fingerprint Founder System - Vyke Turbo Max Pro v15.0</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #0f172a; margin: 0; padding: 0; text-align: center; color: #e2e8f0; }
+        
+        /* Premium Live Moving Price Highlights Patti */
+        .price-ticker { background: linear-gradient(90deg, #1e1b4b, #311042); color: #38bdf8; padding: 10px 0; font-size: 13px; font-weight: bold; border-bottom: 1px solid #475569; overflow: hidden; white-space: nowrap; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .ticker-content { display: inline-block; animation: marquee 25s linear infinite; padding-left: 100%; letter-spacing: 1px; }
+        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+        .ticker-highlight { color: #f43f5e; margin: 0 25px; text-shadow: 0 0 8px rgba(244,63,94,0.4); }
+        .ticker-highlight-male { color: #22c55e; margin: 0 25px; text-shadow: 0 0 8px rgba(34,197,94,0.4); }
 
-        body {
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-            background: radial-gradient(circle at 10% 20%, #0a0f1e, #03050b);
-            min-height: 100vh;
-            padding: 20px;
-            color: #eef2ff;
-        }
+        .container { max-width: 800px; background: #1e293b; margin: 30px auto; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; }
+        h2 { color: #38bdf8; margin: 0 0 5px 0; letter-spacing: 1px; font-size: 26px; text-shadow: 0 0 12px rgba(56,189,248,0.3); }
+        .system-owner { font-size: 13px; color: #94a3b8; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* System Main Layout Fields */
+        textarea { width: 100%; height: 140px; padding: 14px; margin: 10px 0; border: 1px solid #475569; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-family: monospace; background-color: #0f172a; color: #38bdf8; resize: vertical; }
+        textarea:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 0 3px rgba(56,189,248,0.2); }
+        
+        button { width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 15px; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+        button:hover { background: linear-gradient(135deg, #0369a1, #075985); transform: translateY(-1px); }
+        button:disabled { background: #475569 !important; cursor: not-allowed; box-shadow: none; transform: none; }
+        
+        /* Premium Action Control Panel Buttons */
+        .action-bar { display: none; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #0f172a; padding: 10px; border-radius: 8px; border: 1px solid #334155; }
+        .btn-group { display: flex; gap: 8px; }
+        .btn-zip { background: linear-gradient(135deg, #b45309, #92400e); width: auto; font-size: 13px; padding: 10px 18px; box-shadow: 0 4px 10px rgba(180,83,9,0.3); margin: 0; }
+        .btn-zip:hover { background: linear-gradient(135deg, #92400e, #78350f); }
+        .btn-csv { background: linear-gradient(135deg, #059669, #047857); width: auto; font-size: 13px; padding: 10px 18px; box-shadow: 0 4px 10px rgba(5,150,105,0.3); margin: 0; }
+        .btn-csv:hover { background: linear-gradient(135deg, #047857, #065f46); }
 
-        .price-ticker {
-            background: linear-gradient(95deg, #0f172a, #1a1e2f);
-            padding: 12px 0;
-            font-size: 14px;
-            font-weight: 700;
-            overflow: hidden;
-            white-space: nowrap;
-            border-radius: 40px;
-            margin-bottom: 20px;
-        }
-        .ticker-content {
-            display: inline-block;
-            animation: marquee 28s linear infinite;
-            padding-left: 100%;
-        }
-        @keyframes marquee {
-            0% { transform: translate(0,0); }
-            100% { transform: translate(-100%,0); }
-        }
-        .ticker-highlight { color: #f97316; margin: 0 28px; }
-        .ticker-highlight-male { color: #2dd4bf; margin: 0 28px; }
+        /* Filter Controls */
+        .filter-tabs { display: flex; gap: 5px; }
+        .filter-tab { background: #1e293b; color: #94a3b8; border: 1px solid #334155; padding: 6px 12px; font-size: 11px; font-weight: bold; border-radius: 4px; cursor: pointer; }
+        .filter-tab.active { background: #38bdf8; color: #0f172a; border-color: #38bdf8; }
 
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            background: rgba(15, 25, 45, 0.6);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            padding: 28px 32px;
-            border: 1px solid rgba(56, 189, 248, 0.25);
-        }
+        /* Real-time Tracking Progress Systems */
+        .progress-wrapper { display: none; margin: 20px 0; background: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid #334155; }
+        .progress-text { font-weight: bold; font-size: 14px; color: #38bdf8; margin-bottom: 8px; text-align: left; display: flex; justify-content: space-between; }
+        .progress-bar-container { width: 100%; height: 10px; background: #334155; border-radius: 5px; overflow: hidden; margin-bottom: 12px; }
+        .progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #38bdf8, #0ea5e9); transition: width 0.1s linear; }
+        
+        .counter-row { display: flex; gap: 10px; justify-content: space-between; }
+        .counter-badge { flex: 1; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: bold; text-align: center; text-transform: uppercase; }
+        .count-found { background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; color: #4ade80; }
+        .count-notfound { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #f87171; }
+        
+        /* Table Dynamic Visual Grid */
+        .results-container { display: none; margin-top: 20px; text-align: left; }
+        .results-container h3 { color: #38bdf8; margin-bottom: 12px; border-bottom: 2px solid #334155; padding-bottom: 6px; font-size: 16px; letter-spacing: 0.5px; }
+        
+        .table-scroll { max-height: 400px; overflow-y: auto; border: 1px solid #334155; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; background: #0f172a; }
+        th, td { padding: 12px; border-bottom: 1px solid #334155; text-align: left; font-size: 13px; vertical-align: middle; }
+        th { background-color: #1e293b; color: #38bdf8; font-weight: bold; position: sticky; top: 0; z-index: 10; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: #1e293b; }
+        
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; }
+        .badge-found { background-color: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .badge-not-found { background-color: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+        
+        /* Advanced Row Action Assets */
+        .btn-copy { background: #334155; color: #38bdf8; border: 1px solid #475569; padding: 4px 8px; font-size: 11px; border-radius: 4px; cursor: pointer; font-weight: bold; width: auto; display: inline-block; margin: 0; box-shadow: none; text-transform: none; letter-spacing: 0; }
+        .btn-copy:hover { background: #38bdf8; color: #0f172a; }
+        
+        /* WhatsApp Direct Integration Icon */
+        .wa-link { display: inline-flex; align-items: center; justify-content: center; margin-left: 8px; vertical-align: middle; text-decoration: none; transition: 0.2s; }
+        .wa-link:hover { transform: scale(1.15); }
+        .wa-icon { width: 18px; height: 18px; display: inline-block; background: #25d366; border-radius: 50%; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .wa-icon::before { content: ""; position: absolute; width: 10px; height: 10px; background: white; border-radius: 50%; top: 4px; left: 4px; clip-path: polygon(30% 20%, 75% 50%, 30% 80%); }
 
-        h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #38bdf8, #a855f7);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-align: center;
-        }
-        .system-owner {
-            text-align: center;
-            font-size: 0.8rem;
-            background: #1e2a44aa;
-            display: inline-block;
-            width: auto;
-            margin: 0 auto 24px;
-            padding: 4px 20px;
-            border-radius: 40px;
-            color: #a5f3fc;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 28px;
-        }
-        .stat-card {
-            background: rgba(5, 10, 25, 0.6);
-            border-radius: 24px;
-            padding: 16px 20px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            transition: all 0.2s;
-        }
-        .stat-card:hover { border-color: #38bdf8; transform: translateY(-2px); }
-        .stat-label { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; }
-        .stat-value { font-size: 1.8rem; font-weight: 800; color: #38bdf8; }
-        .stat-rate-bar { height: 6px; background: #1e293b; border-radius: 10px; margin-top: 8px; }
-        .stat-rate-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #22c55e, #38bdf8); border-radius: 10px; }
-
-        textarea {
-            width: 100%;
-            background: #0b1120dd;
-            border: 1.5px solid #2d3a5e;
-            border-radius: 20px;
-            padding: 16px;
-            font-family: monospace;
-            font-size: 14px;
-            color: #b9f3ff;
-            resize: vertical;
-        }
-        textarea:focus { border-color: #38bdf8; outline: none; }
-
-        .primary-btn {
-            width: 100%;
-            background: linear-gradient(95deg, #0f3b5e, #0b2b44);
-            border: none;
-            padding: 16px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 60px;
-            color: white;
-            cursor: pointer;
-            margin: 18px 0 12px;
-            transition: 0.2s;
-        }
-        .primary-btn:hover { background: linear-gradient(95deg, #1c6d9e, #0e5a87); transform: scale(1.01); }
-
-        .action-bar {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .premium-btn {
-            background: #1e293b;
-            border: 1px solid #38bdf866;
-            padding: 10px 18px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #e0f2fe;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .premium-btn:hover { background: #1e3a5f; transform: translateY(-2px); }
-        .wa-btn { background: #075e54; border: none; }
-        .wa-btn:hover { background: #128c7e; }
-
-        .filter-bar {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .filter-input {
-            flex: 1;
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 40px;
-            padding: 10px 18px;
-            color: white;
-        }
-        .filter-check {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #0f172a;
-            padding: 0 16px;
-            border-radius: 40px;
-        }
-
-        .progress-wrapper {
-            background: #030617aa;
-            border-radius: 28px;
-            padding: 18px;
-            margin: 20px 0;
-        }
-        .progress-bar-container {
-            background: #1e293b;
-            border-radius: 30px;
-            height: 10px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #38bdf8, #a855f7);
-            transition: width 0.15s;
-        }
-        .counter-row {
-            display: flex;
-            gap: 14px;
-            margin-top: 12px;
-        }
-        .counter-badge {
-            flex: 1;
-            background: #0f172a;
-            border-radius: 40px;
-            padding: 8px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-        }
-        th, td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #1e2f46;
-            text-align: left;
-        }
-        th { background: #0e1b2f; color: #7dd3fc; }
-        .status-badge {
-            padding: 4px 10px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            display: inline-block;
-        }
-        .badge-found { background: #14532d40; color: #86efac; border: 0.5px solid #4ade80; }
-        .badge-not-found { background: #7f1d1d40; color: #fca5a5; border: 0.5px solid #ef4444; }
-        .gender-male { color: #2dd4bf; }
-        .gender-female { color: #f472b6; }
-        .btn-sm {
-            background: #1f3a5f;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 30px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-        .action-cell { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-
-        @media (max-width: 768px) {
-            .container { padding: 18px; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+        /* Row Filtering Hiding Logic */
+        .row-hidden { display: none !important; }
     </style>
 </head>
 <body>
 
 <div class="price-ticker">
     <div class="ticker-content">
-        🔥 VYKE TURBO MAX PRO • CNIC FINGERPRINT GRID • 
-        <span class="ticker-highlight">💃 FEMALE SCAN: 1500 PKR</span> 
-        <span class="ticker-highlight-male">🕺 MALE SCAN: 1200 PKR</span> 
-        ⚡ LIVE DATABASE CONNECTED • READY
+        ⚡ ATTENTION ALL AGENTS & MEMBERS: SYSTEM BIOMETRIC VERIFICATION ONLINE... 
+        <span class="ticker-highlight">⚠️ FEMALE FINGERPRINT SCAN PRICE: 1500 PKR</span> 
+        <span class="ticker-highlight-male">✅ MALE FINGERPRINT SCAN PRICE: 1200 PKR</span> 
+        ⚡ BALANCES AND LOGS ARE ENCRYPTED VIA VYKE CORE ENGINE V2...
     </div>
 </div>
 
 <div class="container">
-    <div style="text-align: center;">
-        <h2>🕵️ CNIC FINGERPRINT FOUNDER</h2>
-        <div class="system-owner">⚡ SYSTEM OWNER: RANA VYKE (BABLOO) ⚡</div>
+    <h2>CNIC FINGERPRINT FOUNDER SYSTEM</h2>
+    <div class="system-owner">SYSTEM OWNER: Rana Vyke Urf Bablo</div>
+    
+    <div id="progressWrapper" class="progress-wrapper">
+        <div class="progress-text">
+            <span id="progressLabel">⚡ Initializing network handshake...</span>
+            <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="progressBarFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="counter-row">
+            <div class="counter-badge count-found">✅ Live Found: <span id="liveFoundCount">0</span></div>
+            <div class="counter-badge count-notfound">❌ Live Not Found: <span id="liveNotFoundCount">0</span></div>
+        </div>
     </div>
 
-    <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">📊 TOTAL SEARCHES</div><div class="stat-value" id="totalSearches">0</div></div>
-        <div class="stat-card"><div class="stat-label">✅ MATCH RATE</div><div class="stat-value" id="successRate">0%</div><div class="stat-rate-bar"><div class="stat-rate-fill" id="rateFill"></div></div></div>
-        <div class="stat-card"><div class="stat-label">💰 EST. BALANCE</div><div class="stat-value" id="estBalance">0 PKR</div></div>
-        <div class="stat-card"><div class="stat-label">⏱️ LAST SCAN</div><div class="stat-value" id="lastScan">—</div></div>
-    </div>
-
-    <textarea id="cnicBulkInput" placeholder="ENTER CNIC NUMBERS (One per line)&#10;Example:&#10;5440178619178&#10;5530232277050&#10;3520212345678" rows="4"></textarea>
-    <button class="primary-btn" id="searchBtn">⚡ START FINGERPRINT BULK SEARCH ⚡</button>
-
-    <div id="progressWrapper" class="progress-wrapper" style="display:none">
-        <div class="progress-text" style="display:flex; justify-content:space-between"><span id="progressLabel">Initializing...</span><span id="progressPercent">0%</span></div>
-        <div class="progress-bar-container"><div id="progressBarFill" class="progress-bar-fill"></div></div>
-        <div class="counter-row"><div class="counter-badge">✅ FOUND: <span id="liveFoundCount">0</span></div><div class="counter-badge">❌ NOT FOUND: <span id="liveNotFoundCount">0</span></div></div>
-    </div>
-
-    <div id="resultsContainer" style="display:none">
-        <div class="action-bar">
-            <div style="display:flex; gap:10px; flex-wrap:wrap">
-                <button class="premium-btn" id="downloadFingerprintBtn">📥 DOWNLOAD FINGERPRINT</button>
-                <button class="premium-btn" id="copyAllCnicBtn">📋 COPY ALL CNIC</button>
-                <button class="premium-btn" id="exportCsvBtn">📊 EXPORT CSV</button>
-                <button class="premium-btn" id="clearAllBtn">🧹 CLEAR ALL</button>
+    <textarea id="cnicBulkInput" placeholder="Targets likhein (Line-by-Line):&#10;5440178619178&#10;5530232277050"></textarea>
+    <button id="searchBtn" onclick="runEngineSearchSecure()">START SECURE BULK SEARCH</button>
+    
+    <div id="resultsContainer" class="results-container">
+        <div class="action-bar" id="actionBarLayout">
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterResults('all', this)">ALL</button>
+                <button class="filter-tab" onclick="filterResults('found', this)">FOUND</button>
+                <button class="filter-tab" onclick="filterResults('not_found', this)">NOT FOUND</button>
             </div>
-            <a id="whatsappAdminTopBtn" class="premium-btn wa-btn" href="#" target="_blank">💬 CONTACT ADMIN</a>
+            <div class="btn-group">
+                <button class="btn-csv" onclick="exportTableToCSV()">📊 Export Sheet (.CSV)</button>
+                <button class="btn-zip" onclick="triggerFakeBalanceError()">📦 Download Results (.ZIP)</button>
+            </div>
         </div>
 
-        <div class="filter-bar">
-            <input type="text" id="searchCnicInput" class="filter-input" placeholder="🔍 Search CNIC...">
-            <label class="filter-check"><input type="checkbox" id="showOnlyFoundCheckbox"> ✅ Show Only Found</label>
-            <button class="premium-btn" id="loadSampleBtn">📝 Load Sample</button>
-        </div>
-
-        <h3>🔎 FINGERPRINT LIVE RESULTS</h3>
-        <div class="table-wrapper">
-            <table id="resultsTable">
-                <thead><tr><th>#</th><th>CNIC</th><th>Gender</th><th>Status</th><th>Owner/Location</th><th>Action</th></tr></thead>
+        <h3>⚡ SEARCH RESULTS</h3>
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">Sr.</th>
+                        <th style="width: 37%;">CNIC Number</th>
+                        <th style="width: 20%;">Status</th>
+                        <th style="width: 35%;">Action / Database</th>
+                    </tr>
+                </thead>
                 <tbody id="resultsTableBody"></tbody>
             </table>
         </div>
@@ -295,191 +142,192 @@
 </div>
 
 <script>
-    // ============================================
-    // APNA DEPLOYED APPS SCRIPT URL YAHAN LIKHEIN
-    // ============================================
-    // 🔴 IMPORTANT: Is URL ko apne deployed script se replace karein!
-    const APPS_SCRIPT_URL = "YOUR_DEPLOYED_APPS_SCRIPT_URL_HERE";
+const scriptUrl = "https://script.google.com/macros/s/AKfycbxSZPDDn1GPYEy_gwib3OR0W2zF2w_yEh-ufTCwa_fnEN3xzcKp84u7nCka6i1SJEBu/exec"; 
+const targetWhatsAppNumber = "447915605790"; 
+let globalResultsData = []; // Store state for high-end client-side modifications
+
+async function runEngineSearchSecure() {
+    let rawInput = document.getElementById('cnicBulkInput').value;
+    let resultsContainer = document.getElementById('resultsContainer');
+    let tableBody = document.getElementById('resultsTableBody');
+    let searchBtn = document.getElementById('searchBtn');
+    let actionBarLayout = document.getElementById('actionBarLayout');
     
-    const WHATSAPP_NUMBER = "447915605790";
+    let progressWrapper = document.getElementById('progressWrapper');
+    let progressBarFill = document.getElementById('progressBarFill');
+    let progressPercent = document.getElementById('progressPercent');
+    let progressLabel = document.getElementById('progressLabel');
+    let liveFoundCount = document.getElementById('liveFoundCount');
+    let liveNotFoundCount = document.getElementById('liveNotFoundCount');
     
-    let globalResults = [];
-    let totalSearchCount = parseInt(localStorage.getItem('totalSearches') || '0');
-    let totalBalance = parseFloat(localStorage.getItem('totalBalance') || '0');
-    
-    function getGenderAndPrice(cnic) {
-        if (!cnic || cnic.length < 7) return { gender: "Unknown", price: 0, emoji: "❓" };
-        const seventh = parseInt(cnic.charAt(6));
-        if (isNaN(seventh)) return { gender: "Unknown", price: 0, emoji: "❓" };
-        if (seventh % 2 === 0) {
-            return { gender: "Female", price: 1500, emoji: "💃" };
-        } else {
-            return { gender: "Male", price: 1200, emoji: "🕺" };
-        }
+    // Clean array creation and advanced duplicate mitigation
+    let initialList = rawInput.split('\n')
+                          .map(line => line.replace(/[^0-9]/g, '').trim())
+                          .filter(line => line.length >= 5);
+                          
+    let cnicList = [...new Set(initialList)]; // Advanced Filter: Auto duplicate cleanup loop
+                          
+    if(cnicList.length === 0) {
+        alert('Baraye meharbani targets box me valid CNICs darj karein.');
+        return;
     }
     
-    function updateStatsUI() {
-        document.getElementById('totalSearches').innerText = totalSearchCount;
-        document.getElementById('estBalance').innerText = totalBalance.toLocaleString() + " PKR";
-        localStorage.setItem('totalSearches', totalSearchCount);
-        localStorage.setItem('totalBalance', totalBalance);
+    // Check if system cleaned up duplicates to alert user quietly
+    if (initialList.length !== cnicList.length) {
+        console.log(`Mitigation Layer: Filtered out ${initialList.length - cnicList.length} duplicate queries.`);
     }
     
-    async function performSearch() {
-        const rawInput = document.getElementById('cnicBulkInput').value;
+    searchBtn.disabled = true;
+    resultsContainer.style.display = 'none';
+    actionBarLayout.style.display = 'none';
+    tableBody.innerHTML = "";
+    globalResultsData = []; 
+    
+    progressWrapper.style.display = "block";
+    progressBarFill.style.width = "0%";
+    progressPercent.textContent = "0%";
+    progressLabel.textContent = "🔗 Verifying access token with backend...";
+    liveFoundCount.textContent = "0";
+    liveNotFoundCount.textContent = "0";
+    
+    try {
+        let finalRequestUrl = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
         
-        const cnicList = rawInput.split('\n')
-            .map(line => line.replace(/[^0-9]/g, '').trim())
-            .filter(line => line.length >= 5 && line.length <= 15);
+        let response = await fetch(finalRequestUrl);
+        let json = await response.json();
         
-        if (cnicList.length === 0) {
-            alert('❌ Please enter valid CNIC numbers (numeric only, one per line)');
-            return;
-        }
-        
-        const progressWrapper = document.getElementById('progressWrapper');
-        const resultsContainer = document.getElementById('resultsContainer');
-        const tbody = document.getElementById('resultsTableBody');
-        const searchBtn = document.getElementById('searchBtn');
-        
-        progressWrapper.style.display = 'block';
-        resultsContainer.style.display = 'none';
-        tbody.innerHTML = '';
-        searchBtn.disabled = true;
-        searchBtn.innerText = '⏳ CONNECTING TO DATABASE...';
-        
-        let foundCount = 0;
-        let notFoundCount = 0;
-        let batchBalance = 0;
-        
-        const progressFill = document.getElementById('progressBarFill');
-        const progressPercent = document.getElementById('progressPercent');
-        const progressLabel = document.getElementById('progressLabel');
-        const liveFoundSpan = document.getElementById('liveFoundCount');
-        const liveNotFoundSpan = document.getElementById('liveNotFoundCount');
-        
-        liveFoundSpan.innerText = '0';
-        liveNotFoundSpan.innerText = '0';
-        progressLabel.innerText = '🔍 Connecting to fingerprint database...';
-        globalResults = [];
-        
-        try {
-            // Call Apps Script
-            const url = `${APPS_SCRIPT_URL}?cnics=${encodeURIComponent(cnicList.join(','))}`;
-            console.log("Fetching:", url);
+        if (json.status === "success" && json.data) {
+            globalResultsData = json.data;
+            let total = globalResultsData.length;
+            let foundCounter = 0;
+            let notFoundCounter = 0;
             
-            const response = await fetch(url);
-            const json = await response.json();
-            console.log("Response:", json);
+            progressLabel.textContent = "⚡ Syncing streams with secure storage cloud...";
             
-            if (json.status === "success" && json.data) {
-                const resultsData = json.data;
+            for (let i = 0; i < total; i++) {
+                await new Promise(resolve => setTimeout(resolve, 15)); 
                 
-                for (let i = 0; i < resultsData.length; i++) {
-                    const item = resultsData[i];
-                    const cnic = item.cnic;
-                    const isFound = item.status === "found";
-                    const ownerInfo = item.owner || "N/A";
-                    const { gender, price, emoji } = getGenderAndPrice(cnic);
+                let item = globalResultsData[i];
+                let row = document.createElement('tr');
+                row.setAttribute('data-status', item.status); // Used for active sorting filters
+                
+                let cellSr = document.createElement('td');
+                cellSr.textContent = i + 1;
+                
+                let cellCnic = document.createElement('td');
+                cellCnic.textContent = item.cnic;
+                
+                let cellStatus = document.createElement('td');
+                let cellAction = document.createElement('td');
+                
+                if (item.status === "found") {
+                    foundCounter++;
+                    liveFoundCount.textContent = foundCounter;
+                    cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
                     
-                    if (isFound) {
-                        foundCount++;
-                        batchBalance += price;
-                        globalResults.push({
-                            cnic: cnic,
-                            status: "found",
-                            owner: ownerInfo,
-                            gender: gender,
-                            price: price
-                        });
-                    } else {
-                        notFoundCount++;
-                        globalResults.push({
-                            cnic: cnic,
-                            status: "notfound",
-                            owner: "N/A",
-                            gender: gender,
-                            price: 0
-                        });
-                    }
+                    let textToCopy = `CNIC: ${item.cnic} | Location: ${item.owner}`;
+                    let encodedWaMsg = encodeURIComponent(`Hi Rana Vyke, I found a matching record system check:\nCNIC: ${item.cnic}\nDatabase: ${item.owner}\nPlease process this fingerprint layout file.`);
+                    let whatsAppRedirectUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodedWaMsg}`;
                     
-                    liveFoundSpan.innerText = foundCount;
-                    liveNotFoundSpan.innerText = notFoundCount;
-                    
-                    // Create table row
-                    const row = tbody.insertRow();
-                    row.insertCell(0).innerText = i + 1;
-                    row.insertCell(1).innerText = cnic;
-                    row.insertCell(2).innerHTML = `<span class="gender-${gender === 'Male' ? 'male' : 'female'}">${emoji} ${gender}</span>`;
-                    row.insertCell(3).innerHTML = isFound 
-                        ? `<span class="status-badge badge-found">✅ FINGERPRINT MATCH</span>` 
-                        : `<span class="status-badge badge-not-found">❌ NO MATCH</span>`;
-                    row.insertCell(4).innerText = isFound ? ownerInfo : "—";
-                    
-                    const actionCell = row.insertCell(5);
-                    actionCell.className = "action-cell";
-                    if (isFound) {
-                        const copyText = `CNIC: ${cnic} | Gender: ${gender} | Location: ${ownerInfo}`;
-                        const waMsg = `Fingerprint Found!\nCNIC: ${cnic}\nGender: ${gender}\nDatabase: ${ownerInfo}`;
-                        const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`;
-                        actionCell.innerHTML = `
-                            <button class="btn-sm copy-row-btn" data-copy='${copyText.replace(/'/g, "\\'")}'>📋 Copy</button>
-                            <a href="${waLink}" target="_blank" style="background:#25d366; border-radius:30px; width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; color:white; font-size:14px;">📱</a>
-                        `;
-                    } else {
-                        actionCell.innerHTML = "—";
-                    }
-                    
-                    const percent = Math.round(((i + 1) / resultsData.length) * 100);
-                    progressFill.style.width = percent + "%";
-                    progressPercent.innerText = percent + "%";
-                    await new Promise(r => setTimeout(r, 10));
+                    cellAction.innerHTML = `
+                        <button class="btn-copy" onclick="copyRowData(this, '${textToCopy}')">📋 Copy</button>
+                        <a href="${whatsAppRedirectUrl}" target="_blank" class="wa-link" title="Contact System Owner on WhatsApp">
+                            <span class="wa-icon"></span>
+                        </a>
+                        <span style="font-size:11px; margin-left:6px; color:#94a3b8;">(${item.owner})</span>
+                    `;
+                } else {
+                    notFoundCounter++;
+                    liveNotFoundCount.textContent = notFoundCounter;
+                    cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
+                    cellAction.textContent = "-";
                 }
                 
-                totalSearchCount++;
-                totalBalance += batchBalance;
-                updateStatsUI();
+                row.appendChild(cellSr);
+                row.appendChild(cellCnic);
+                row.appendChild(cellStatus);
+                row.appendChild(cellAction);
+                tableBody.appendChild(row);
                 
-                const rate = resultsData.length > 0 ? Math.round((foundCount / resultsData.length) * 100) : 0;
-                document.getElementById('successRate').innerText = rate + "%";
-                document.getElementById('rateFill').style.width = rate + "%";
-                document.getElementById('lastScan').innerText = new Date().toLocaleTimeString();
-                
-                progressLabel.innerText = "✅ Database search completed!";
-                resultsContainer.style.display = 'block';
-                attachEventHandlers();
-            } else {
-                throw new Error(json.message || "Invalid response from server");
+                let percentCalculated = Math.round(((i + 1) / total) * 100);
+                progressBarFill.style.width = percentCalculated + "%";
+                progressPercent.textContent = percentCalculated + "%";
             }
             
-        } catch (error) {
-            console.error("Error:", error);
-            alert("❌ Error: " + error.message + "\n\nPlease check:\n1. Apps Script URL is correct\n2. Script is deployed as Web App\n3. Sheet name is 'main data'");
-            progressWrapper.style.display = 'none';
-        } finally {
-            progressWrapper.style.display = 'none';
-            searchBtn.disabled = false;
-            searchBtn.innerText = '⚡ START FINGERPRINT BULK SEARCH ⚡';
+            progressLabel.textContent = "✅ Database scanning operation completed.";
+            resultsContainer.style.display = 'block';
+            actionBarLayout.style.display = 'flex'; 
+        } else {
+            alert("Database Error: " + (json.message || "Unknown structure returned."));
+            progressWrapper.style.display = "none";
         }
+    } catch (error) {
+        alert("Configuration Notice: Web App URL configuration path verify karein taake cloud sync restore ho sake.");
+        console.error(error);
+        progressWrapper.style.display = "none";
+    } finally {
+        searchBtn.disabled = false;
     }
+}
+
+// Advanced Content Filter Engine Logic
+function filterResults(filterType, btnElement) {
+    // Reset active visual layout state for filter elements
+    document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+    btnElement.classList.add('active');
     
-    function attachEventHandlers() {
-        document.getElementById('downloadFingerprintBtn').onclick = () => {
-            const matched = globalResults.filter(r => r.status === "found");
-            if (matched.length === 0) {
-                alert("❌ No fingerprint matches to download!");
-                return;
-            }
-            let content = "═══════════════════════════════════\n";
-            content += "VYKE TURBO FINGERPRINT EXPORT\n";
-            content += `Date: ${new Date().toLocaleString()}\n`;
-            content += `Total Matches: ${matched.length}\n`;
-            content += "═══════════════════════════════════\n\n";
-            matched.forEach((r, i) => {
-                content += `[${i+1}] CNIC: ${r.cnic}\n`;
-                content += `    Gender: ${r.gender}\n`;
-                content += `    Location: ${r.owner}\n`;
-                content += `    Price: ${r.price} PKR\n`;
-                content += "-----------------------------------\n";
-            });
-            const b
+    let rows = document.querySelectorAll('#resultsTableBody tr');
+    rows.forEach(row => {
+        let status = row.getAttribute('data-status');
+        if (filterType === 'all' || status === filterType) {
+            row.classList.remove('row-hidden');
+        } else {
+            row.classList.add('row-hidden');
+        }
+    });
+}
+
+// Client-Side CSV Exporter Engine
+function exportTableToCSV() {
+    if (globalResultsData.length === 0) return;
+    
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Sr.,CNIC Number,Status,Database Reference Location\n";
+    
+    globalResultsData.forEach((item, index) => {
+        let cleanOwner = item.owner.replace(/,/g, ' '); // Clean values to prevent cell breaks
+        csvContent += `${index + 1},${item.cnic},${item.status.toUpperCase()},${cleanOwner}\n`;
+    });
+    
+    let encodedUri = encodeURI(csvContent);
+    let downloadLink = document.createElement("a");
+    downloadLink.setAttribute("href", encodedUri);
+    downloadLink.setAttribute("download", `Vyke_Audit_Report_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
+
+function copyRowData(btnElement, textValues) {
+    navigator.clipboard.writeText(textValues).then(() => {
+        let originalText = btnElement.innerHTML;
+        btnElement.innerHTML = "Saved!";
+        btnElement.style.background = "#22c55e";
+        btnElement.style.color = "#ffffff";
+        
+        setTimeout(() => {
+            btnElement.innerHTML = originalText;
+            btnElement.style.background = "#334155";
+            btnElement.style.color = "#38bdf8";
+        }, 1250);
+    }).catch(err => {
+        alert("Manual text capture required.");
+    });
+}
+
+function triggerFakeBalanceError() {
+    alert("❌ SECURITY CONTROL ALERT:\nYour account balance is 0 PKR.\n\nError Code: ERR_INSUFFICIENT_CREDITS\nPlease recharge your Credit Wallet by contacting System Owner to download full package archives (.ZIP / .RAR).");
+}
+</script>
+</body>
+</html>
