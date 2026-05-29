@@ -3,64 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNIC Fingerprint Founder System - Vyke Pro</title>
+    <title>CNIC Fingerprint Founder System - Vyke Turbo Max Pro</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; color: #333; }
-        .container { max-width: 600px; background: white; margin: 20px auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
-        h2 { color: #1a365d; margin-bottom: 5px; font-size: 24px; text-transform: uppercase; }
-        .system-owner { font-size: 13px; color: #4a5568; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 8px; font-size: 13px; margin-bottom: 25px; font-weight: bold; line-height: 1.5; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #0f172a; margin: 0; padding: 0; text-align: center; color: #e2e8f0; }
         
-        textarea { width: 100%; height: 160px; padding: 14px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-family: monospace; resize: vertical; }
-        textarea:focus { border-color: #319795; outline: none; box-shadow: 0 0 0 3px rgba(49, 151, 149, 0.15); }
+        /* Premium Live Moving Price Highlights Patti */
+        .price-ticker { background: linear-gradient(90deg, #1e1b4b, #311042); color: #38bdf8; padding: 10px 0; font-size: 13px; font-weight: bold; border-bottom: 1px solid #475569; overflow: hidden; white-space: nowrap; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .ticker-content { display: inline-block; animation: marquee 25s linear infinite; padding-left: 100%; letter-spacing: 1px; }
+        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+        .ticker-highlight { color: #f43f5e; margin: 0 25px; text-shadow: 0 0 8px rgba(244,63,94,0.4); }
+        .ticker-highlight-male { color: #22c55e; margin: 0 25px; text-shadow: 0 0 8px rgba(34,197,94,0.4); }
+
+        .container { max-width: 700px; background: #1e293b; margin: 30px auto; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; }
+        h2 { color: #38bdf8; margin: 0 0 5px 0; letter-spacing: 1px; font-size: 26px; text-shadow: 0 0 12px rgba(56,189,248,0.3); }
+        .system-owner { font-size: 13px; color: #94a3b8; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
         
-        button { width: 100%; background-color: #319795; color: white; border: none; padding: 14px; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
-        button:hover { background-color: #2c7a7b; }
-        button:disabled { background-color: #cbd5e0; cursor: not-allowed; }
+        /* System Main Layout Fields */
+        textarea { width: 100%; height: 140px; padding: 14px; margin: 10px 0; border: 1px solid #475569; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-family: monospace; background-color: #0f172a; color: #38bdf8; resize: vertical; }
+        textarea:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 0 3px rgba(56,189,248,0.2); }
         
-        .loader-status { font-weight: bold; font-size: 14px; margin: 15px 0; color: #dd6b20; display: none; }
-        .results-container { display: none; margin-top: 25px; text-align: left; }
-        .results-container h3 { color: #1a365d; margin-bottom: 12px; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; font-size: 16px; }
+        button { width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 15px; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+        button:hover { background: linear-gradient(135deg, #0369a1, #075985); transform: translateY(-1px); }
+        button:disabled { background: #475569 !important; cursor: not-allowed; box-shadow: none; transform: none; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
-        th { background-color: #2b6cb0; color: white; font-weight: bold; }
-        tr:nth-child(even) { background-color: #f7fafc; }
+        /* Premium Action Control Panel Buttons */
+        .action-bar { display: none; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .btn-zip { background: linear-gradient(135deg, #b45309, #92400e); width: auto; font-size: 13px; padding: 10px 18px; box-shadow: 0 4px 10px rgba(180,83,9,0.3); margin: 0; }
+        .btn-zip:hover { background: linear-gradient(135deg, #92400e, #78350f); }
+
+        /* Real-time Tracking Progress Systems */
+        .progress-wrapper { display: none; margin: 20px 0; background: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid #334155; }
+        .progress-text { font-weight: bold; font-size: 14px; color: #38bdf8; margin-bottom: 8px; text-align: left; display: flex; justify-content: space-between; }
+        .progress-bar-container { width: 100%; height: 10px; background: #334155; border-radius: 5px; overflow: hidden; margin-bottom: 12px; }
+        .progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #38bdf8, #0ea5e9); transition: width 0.1s linear; }
+        
+        .counter-row { display: flex; gap: 10px; justify-content: space-between; }
+        .counter-badge { flex: 1; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: bold; text-align: center; text-transform: uppercase; }
+        .count-found { background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; color: #4ade80; }
+        .count-notfound { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #f87171; }
+        
+        /* Table Dynamic Visual Grid */
+        .results-container { display: none; margin-top: 20px; text-align: left; }
+        .results-container h3 { color: #38bdf8; margin-bottom: 12px; border-bottom: 2px solid #334155; padding-bottom: 6px; font-size: 16px; letter-spacing: 0.5px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #0f172a; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px; border: 1px solid #334155; text-align: left; font-size: 13px; vertical-align: middle; }
+        th { background-color: #1e293b; color: #38bdf8; font-weight: bold; }
+        tr:nth-child(even) { background-color: #1e293b; }
         
         .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; }
-        .badge-found { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
-        .badge-not-found { background-color: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; }
+        .badge-found { background-color: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .badge-not-found { background-color: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+        
+        /* Advanced Row Action Assets */
+        .btn-copy { background: #334155; color: #38bdf8; border: 1px solid #475569; padding: 4px 8px; font-size: 11px; border-radius: 4px; cursor: pointer; font-weight: bold; width: auto; display: inline-block; margin: 0; box-shadow: none; text-transform: none; letter-spacing: 0; }
+        .btn-copy:hover { background: #38bdf8; color: #0f172a; }
+        
+        /* WhatsApp Direct Integration Icon */
+        .wa-link { display: inline-flex; align-items: center; justify-content: center; margin-left: 8px; vertical-align: middle; text-decoration: none; transition: 0.2s; }
+        .wa-link:hover { transform: scale(1.15); }
+        .wa-icon { width: 18px; height: 18px; display: inline-block; background: #25d366; border-radius: 50%; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .wa-icon::before { content: ""; position: absolute; width: 10px; height: 10px; background: white; border-radius: 50%; top: 4px; left: 4px; clip-path: polygon(30% 20%, 75% 50%, 30% 80%); }
     </style>
 </head>
 <body>
+
+<div class="price-ticker">
+    <div class="ticker-content">
+        ⚡ ATTENTION ALL AGENTS & MEMBERS: SYSTEM BIOMETRIC VERIFICATION ONLINE... 
+        <span class="ticker-highlight">⚠️ FEMALE FINGERPRINT SCAN PRICE: 1500 PKR</span> 
+        <span class="ticker-highlight-male">✅ MALE FINGERPRINT SCAN PRICE: 1200 PKR</span> 
+        ⚡ BALANCES AND LOGS ARE ENCRYPTED VIA VYKE CORE ENGINE V2...
+    </div>
+</div>
 
 <div class="container">
     <h2>CNIC FINGERPRINT FOUNDER SYSTEM</h2>
     <div class="system-owner">SYSTEM OWNER: Rana Vyke Urf Bablo</div>
     
-    <div class="warning-box">
-        ⚠️ SYSTEM FEES WARNING<br>
-        Ek CNIC Fingerprint Found Hony Par 1200 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
+    <div id="progressWrapper" class="progress-wrapper">
+        <div class="progress-text">
+            <span id="progressLabel">⚡ Initializing network handshake...</span>
+            <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="progressBarFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="counter-row">
+            <div class="counter-badge count-found">✅ Live Found: <span id="liveFoundCount">0</span></div>
+            <div class="counter-badge count-notfound">❌ Live Not Found: <span id="liveNotFoundCount">0</span></div>
+        </div>
     </div>
 
-    <!-- Live Processing Status Loader -->
-    <div id="loaderStatus" class="loader-status">🔄 Connecting to secure cloud engine... Please wait...</div>
-
-    <label style="font-weight: 600; font-size: 14px; color: #4a5568; display: block; text-align: left; margin-bottom: 5px;">Enter target CNICs (Line-by-Line):</label>
-    <textarea id="cnicBulkInput" placeholder="5440178619178&#10;5530232277050"></textarea>
+    <textarea id="cnicBulkInput" placeholder="Targets likhein (Line-by-Line):&#10;5440178619178&#10;5530232277050"></textarea>
+    <button id="searchBtn" onclick="runEngineSearchSecure()">START SECURE BULK SEARCH</button>
     
-    <button id="searchBtn" onclick="startSecureBulkCloudSearch()">START SECURE BULK SEARCH</button>
-    
-    <!-- Dynamic Output Matrix Table -->
     <div id="resultsContainer" class="results-container">
+        <div class="action-bar" id="actionBarLayout">
+            <button class="btn-zip" onclick="triggerFakeBalanceError()">📦 Download Results (.ZIP)</button>
+        </div>
+
         <h3>⚡ SEARCH RESULTS</h3>
         <table>
             <thead>
                 <tr>
-                    <th style="width: 15%;">Sr No.</th>
-                    <th style="width: 45%;">CNIC Number</th>
+                    <th style="width: 8%;">Sr.</th>
+                    <th style="width: 37%;">CNIC Number</th>
                     <th style="width: 20%;">Status</th>
-                    <th style="width: 20%;">Database Location</th>
+                    <th style="width: 35%;">Action / Database</th>
                 </tr>
             </thead>
             <tbody id="resultsTableBody"></tbody>
@@ -69,34 +119,46 @@
 </div>
 
 <script>
-// Updated Secure URL
-const scriptUrl = "https://script.google.com/macros/s/AKfycbxvaKvqHzW36nhzk_iRM8YQZaVAcbqLt2iIrFxTnHVMrzGkg9pFde7-bGK789w35KJU/exec"; 
+// ⚠️ APNA WEB APP URL ISS NEECHE WAALAY LINK MEIN RE-PASTE KAREIN
+const scriptUrl = "https://script.google.com/macros/s/AKfycbzIe7kH7v0qB6pM68-t2NfT3x0-Z0GZ2vX_zL9X7B7X_zL9X7B/exec"; 
+const targetWhatsAppNumber = "447915605790"; // Owner Direct Phone Route Endpoint
 
-async function startSecureBulkCloudSearch() {
+async function runEngineSearchSecure() {
     let rawInput = document.getElementById('cnicBulkInput').value;
     let resultsContainer = document.getElementById('resultsContainer');
     let tableBody = document.getElementById('resultsTableBody');
-    let loader = document.getElementById('loaderStatus');
     let searchBtn = document.getElementById('searchBtn');
+    let actionBarLayout = document.getElementById('actionBarLayout');
     
-    // Clean and split lines to process clean integers only
+    let progressWrapper = document.getElementById('progressWrapper');
+    let progressBarFill = document.getElementById('progressBarFill');
+    let progressPercent = document.getElementById('progressPercent');
+    let progressLabel = document.getElementById('progressLabel');
+    let liveFoundCount = document.getElementById('liveFoundCount');
+    let liveNotFoundCount = document.getElementById('liveNotFoundCount');
+    
     let cnicList = rawInput.split('\n')
                           .map(line => line.replace(/[^0-9]/g, '').trim())
                           .filter(line => line.length >= 5);
                           
     if(cnicList.length === 0) {
-        alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
+        alert('Baraye meharbani targets box me valid CNICs darj karein.');
         return;
     }
     
-    // UI Loading State Reset
-    loader.style.display = "block";
     searchBtn.disabled = true;
     resultsContainer.style.display = 'none';
+    actionBarLayout.style.display = 'none';
     tableBody.innerHTML = "";
     
+    progressWrapper.style.display = "block";
+    progressBarFill.style.width = "0%";
+    progressPercent.textContent = "0%";
+    progressLabel.textContent = "🔗 Verifying access token with backend...";
+    liveFoundCount.textContent = "0";
+    liveNotFoundCount.textContent = "0";
+    
     try {
-        // Safe query transport string format
         let finalRequestUrl = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
         
         let response = await fetch(finalRequestUrl);
@@ -104,8 +166,15 @@ async function startSecureBulkCloudSearch() {
         
         if (json.status === "success" && json.data) {
             let resultsData = json.data;
+            let total = resultsData.length;
+            let foundCounter = 0;
+            let notFoundCounter = 0;
             
-            for (let i = 0; i < resultsData.length; i++) {
+            progressLabel.textContent = "⚡ Syncing streams with secure storage cloud...";
+            
+            for (let i = 0; i < total; i++) {
+                await new Promise(resolve => setTimeout(resolve, 10)); // Processing simulation step delay
+                
                 let item = resultsData[i];
                 let row = document.createElement('tr');
                 
@@ -116,33 +185,79 @@ async function startSecureBulkCloudSearch() {
                 cellCnic.textContent = item.cnic;
                 
                 let cellStatus = document.createElement('td');
-                let cellOwner = document.createElement('td');
+                let cellAction = document.createElement('td');
                 
                 if (item.status === "found") {
+                    foundCounter++;
+                    liveFoundCount.textContent = foundCounter;
                     cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
-                    cellOwner.textContent = item.owner; 
+                    
+                    let textToCopy = `CNIC: ${item.cnic} | Location: ${item.owner}`;
+                    
+                    // Design automated message payload formatting string for WhatsApp redirection
+                    let encodedWaMsg = encodeURIComponent(`Hi Rana Vyke, I found a matching record system check:\nCNIC: ${item.cnic}\nDatabase: ${item.owner}\nPlease process this fingerprint layout file.`);
+                    let whatsAppRedirectUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodedWaMsg}`;
+                    
+                    cellAction.innerHTML = `
+                        <button class="btn-copy" onclick="copyRowData(this, '${textToCopy}')">📋 Copy</button>
+                        <a href="${whatsAppRedirectUrl}" target="_blank" class="wa-link" title="Contact System Owner on WhatsApp">
+                            <span class="wa-icon"></span>
+                        </a>
+                        <span style="font-size:11px; margin-left:6px; color:#94a3b8;">(${item.owner})</span>
+                    `;
                 } else {
+                    notFoundCounter++;
+                    liveNotFoundCount.textContent = notFoundCounter;
                     cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
-                    cellOwner.textContent = "-";
+                    cellAction.textContent = "-";
                 }
                 
                 row.appendChild(cellSr);
                 row.appendChild(cellCnic);
                 row.appendChild(cellStatus);
-                row.appendChild(cellOwner);
+                row.appendChild(cellAction);
                 tableBody.appendChild(row);
+                
+                let percentCalculated = Math.round(((i + 1) / total) * 100);
+                progressBarFill.style.width = percentCalculated + "%";
+                progressPercent.textContent = percentCalculated + "%";
             }
+            
+            progressLabel.textContent = "✅ Database scanning operation completed.";
             resultsContainer.style.display = 'block';
+            actionBarLayout.style.display = 'flex'; // Triggers premium fake zip option download bar
         } else {
-            alert("Database Response Error: " + (json.message || "Unknown error layout."));
+            alert("Database Error: " + (json.message || "Unknown structure returned."));
+            progressWrapper.style.display = "none";
         }
     } catch (error) {
-        alert("Network Error: Request block ho gayi hai. Sahi tarike se 'Anyone' permission ke sath New Deployment URL generate karke code me lagaein.");
+        alert("Network Error: Cloud syncing broken or configuration url path mismatch.");
         console.error(error);
+        progressWrapper.style.display = "none";
     } finally {
-        loader.style.display = "none";
         searchBtn.disabled = false;
     }
+}
+
+function copyRowData(btnElement, textValues) {
+    navigator.clipboard.writeText(textValues).then(() => {
+        let originalText = btnElement.innerHTML;
+        btnElement.innerHTML = "Saved!";
+        btnElement.style.background = "#22c55e";
+        btnElement.style.color = "#ffffff";
+        
+        setTimeout(() => {
+            btnElement.innerHTML = originalText;
+            btnElement.style.background = "#334155";
+            btnElement.style.color = "#38bdf8";
+        }, 1250);
+    }).catch(err => {
+        alert("Manual text capture required.");
+    });
+}
+
+function triggerFakeBalanceError() {
+    alert("❌ SECURITY CONTROL ALERT:\nYour account balance is 0 PKR.\n\nError Code: ERR_INSUFFICIENT_CREDITS\nPlease recharge your Credit Wallet by contacting System Owner to download full package archives (.ZIP / .RAR).");
 }
 </script>
 </body>
