@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNIC Fingerprint Founder System - Secure Engine</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/md5.min.js"></script>
+    <title>CNIC Fingerprint Founder System - Turbo Fast</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; }
         .container { max-width: 650px; background: white; margin: 30px auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
@@ -13,11 +11,10 @@
         .system-owner { font-size: 14px; color: #718096; margin-bottom: 20px; }
         .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; font-weight: bold; }
         
-        textarea { width: 100%; height: 150px; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 16px; font-family: inherit; resize: vertical; }
+        textarea { width: 100%; height: 150px; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 16px; font-family: inherit; resize: vertical; background-color: #ffffff; }
         
         button { width: 100%; background-color: #319795; color: white; border: none; padding: 14px; font-size: 16px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 15px; }
         button:hover { background-color: #2c7a7b; }
-        button:disabled { background-color: #cbd5e0; cursor: not-allowed; }
         
         .engine-status { font-weight: bold; font-size: 14px; margin-bottom: 15px; color: #dd6b20; }
         .results-container { display: none; margin-top: 20px; text-align: left; }
@@ -44,10 +41,10 @@
         Ek CNIC Fingerprint Found Hony Par 1200 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
     </div>
 
-    <div id="engineStatus" class="engine-status">🔄 Connecting to secure cloud database...</div>
+    <div id="engineStatus" class="engine-status">🔄 System initialized. Fetching database stream...</div>
 
-    <textarea id="cnicBulkInput" placeholder="Enter target CNICs (Line-by-Line):&#10;5440178619178&#10;5530232277050" disabled></textarea>
-    <button id="searchBtn" onclick="searchBulkSecure()" disabled>START FAST BULK SEARCH</button>
+    <textarea id="cnicBulkInput" placeholder="Enter target CNICs (Line-by-Line):&#10;5440178619178&#10;5530232277050"></textarea>
+    <button id="searchBtn" onclick="searchBulkFast()">START FAST BULK SEARCH</button>
     
     <div id="resultsContainer" class="results-container">
         <h3>Search Results:</h3>
@@ -66,41 +63,42 @@
 </div>
 
 <script>
-let encryptedDatabaseMap = {};
+// Local memory caches
+let localCnicArray = [];
+let localOwnerArray = [];
+let isDatabaseReady = false;
 
-// ⚠️ APNA NEW APPS SCRIPT URL YAHAN BHI PASTE KAREIN
+// ⚠️ APNA NEW DEPLOYMENT WAALA URL YAHAN PASTE KAREIN
 const scriptUrl = "https://script.google.com/macros/s/AKfycbxya9Jvq4E9tKQKZ7sdjZAvf30DC4huTIWcSvUbwlF6lXKW3GhTktZSKd6j3j-JN87ZjQ/exec"; 
 
-async function initSecureEngine() {
+async function downloadDatabaseToBrowser() {
     let statusBox = document.getElementById('engineStatus');
-    let searchBtn = document.getElementById('searchBtn');
-    let inputArea = document.getElementById('cnicBulkInput');
-    
     try {
         let response = await fetch(scriptUrl);
-        let json = await response.json();
+        let data = await response.json();
         
-        if (json.secureData) {
-            encryptedDatabaseMap = json.secureData;
-            statusBox.textContent = "✅ Turbo Engine Online! Data Safely Loaded.";
+        if (data.cnics && data.owners) {
+            localCnicArray = data.cnics;
+            localOwnerArray = data.owners;
+            isDatabaseReady = true;
+            statusBox.textContent = `✅ Turbo Engine Online! ${localCnicArray.length.toLocaleString()} records cached successfully.`;
             statusBox.style.color = "#38a169";
-            searchBtn.disabled = false;
-            inputArea.disabled = false;
         } else {
-            statusBox.textContent = "❌ Database Format Error.";
+            statusBox.textContent = "⚠️ Cloud data empty or sheet structural conflict.";
             statusBox.style.color = "#e53e3e";
         }
     } catch (error) {
-        statusBox.textContent = "⚠️ Cloud Network Error. Refresh the page.";
-        statusBox.style.color = "#e53e3e";
+        statusBox.textContent = "⚠️ Cloud Network Syncing Error. Retrying on click...";
+        statusBox.style.color = "#dd6b20";
         console.error(error);
     }
 }
 
-function searchBulkSecure() {
+async function searchBulkFast() {
     let rawInput = document.getElementById('cnicBulkInput').value;
     let resultsContainer = document.getElementById('resultsContainer');
     let tableBody = document.getElementById('resultsTableBody');
+    let statusBox = document.getElementById('engineStatus');
     
     let cnicList = rawInput.split('\n')
                           .map(line => line.replace(/[^0-9]/g, '').trim())
@@ -110,14 +108,23 @@ function searchBulkSecure() {
         alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
         return;
     }
+
+    // Edge case: Agar page load par network slow tha aur data fetch nahi hua, toh search click par dubara fetch karega
+    if (!isDatabaseReady) {
+        statusBox.textContent = "🔄 Database not synced yet. Fetching stream now...";
+        statusBox.style.color = "#dd6b20";
+        await downloadDatabaseToBrowser();
+        if(!isDatabaseReady) {
+            alert("Database download nahi ho saka. Apna internet connection check karein ya Apps Script deployment check karein.");
+            return;
+        }
+    }
     
     tableBody.innerHTML = "";
     
+    // Original speed indexing implementation
     for (let i = 0; i < cnicList.length; i++) {
         let currentCnic = cnicList[i];
-        
-        // Input ko encrypt karke backend structure se match karna
-        let inputHash = CryptoJS.MD5(currentCnic).toString();
         
         let row = document.createElement('tr');
         let cellSr = document.createElement('td');
@@ -129,10 +136,12 @@ function searchBulkSecure() {
         let cellStatus = document.createElement('td');
         let cellOwner = document.createElement('td');
         
-        // Lightning fast dictionary map validation
-        if (encryptedDatabaseMap[inputHash]) {
+        // Exact matching phase using native array index optimization
+        let matchIndex = localCnicArray.indexOf(currentCnic);
+        
+        if (matchIndex !== -1) {
             cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
-            cellOwner.textContent = encryptedDatabaseMap[inputHash]; 
+            cellOwner.textContent = localOwnerArray[matchIndex]; // Grabs exact partner DB name
         } else {
             cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
             cellOwner.textContent = "-";
@@ -148,7 +157,8 @@ function searchBulkSecure() {
     resultsContainer.style.display = 'block';
 }
 
-window.onload = initSecureEngine;
+// Trigger streaming pool instantly on layout loading
+window.onload = downloadDatabaseToBrowser;
 </script>
 </body>
 </html>
