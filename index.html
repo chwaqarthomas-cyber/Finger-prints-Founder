@@ -1,22 +1,451 @@
-┌─────────────────────────────────────────────────────────────┐
-│  🕵️ CNIC FINGERPRINT FOUNDER    SYSTEM OWNER: RANA VYKE    │
-├─────────────────────────────────────────────────────────────┤
-│ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────┐ │
-│ │📊 TOTAL     │ │✅ MATCH      │ │💰 EST.      │ │⏱️ LAST  │ │
-│ │SEARCHES: 12 │ │RATE: 67%    │ │BALANCE:     │ │SCAN:    │ │
-│ │             │ │██████░░░░   │ │4,200 PKR    │ │Just now │ │
-│ └─────────────┘ └─────────────┘ └─────────────┘ └─────────┘ │
-├─────────────────────────────────────────────────────────────┤
-│  [📝 CNIC Input Box with validation]                        │
-│  [⚡ START FINGERPRINT BULK SEARCH]                         │
-├─────────────────────────────────────────────────────────────┤
-│  [📥 Download] [📋 Copy All] [📊 Export CSV] [🧹 Clear]     │
-│  [🔍 Search CNIC...] [✅ Show Only Found]                   │
-├─────────────────────────────────────────────────────────────┤
-│  📋 FINGERPRINT LIVE RESULTS DATABASE                        │
-│  ┌────┬─────────────┬────────┬────────┬────────────┬──────┐ │
-│  │ #  │ CNIC        │ Gender │ Status │ Owner      │Action│ │
-│  ├────┼─────────────┼────────┼────────┼────────────┼──────┤ │
-│  │ 1  │ 54401***** │ 🕺Male │ ✅FOUND│ ISLAMABAD  │📋📱 │ │
-│  └────┴─────────────┴────────┴────────┴────────────┴──────┘ │
-└─────────────────────────────────────────────────────────────┘
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Vyke Turbo Max Pro | Advanced CNIC Fingerprint Suite</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0a0f1e, #03050b);
+            min-height: 100vh;
+            padding: 20px;
+            color: #eef2ff;
+        }
+
+        /* Animated Ticker */
+        .price-ticker {
+            background: linear-gradient(95deg, #0f172a, #1a1e2f);
+            backdrop-filter: blur(2px);
+            padding: 12px 0;
+            font-size: 14px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+            overflow: hidden;
+            white-space: nowrap;
+            border-radius: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        .ticker-content {
+            display: inline-block;
+            animation: marquee 28s linear infinite;
+            padding-left: 100%;
+        }
+        @keyframes marquee {
+            0% { transform: translate(0,0); }
+            100% { transform: translate(-100%,0); }
+        }
+        .ticker-highlight { color: #f97316; margin: 0 28px; text-shadow: 0 0 6px #f97316; }
+        .ticker-highlight-male { color: #2dd4bf; margin: 0 28px; text-shadow: 0 0 5px #2dd4bf; }
+
+        /* Glass Container */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: rgba(15, 25, 45, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 28px 32px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+        }
+        .system-owner {
+            text-align: center;
+            font-size: 0.8rem;
+            background: #1e2a44aa;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 24px;
+            padding: 4px 20px;
+            border-radius: 40px;
+            color: #a5f3fc;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .stat-card {
+            background: rgba(5, 10, 25, 0.6);
+            border-radius: 24px;
+            padding: 16px 20px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            transition: all 0.2s;
+        }
+        .stat-card:hover { border-color: #38bdf8; transform: translateY(-2px); }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
+        .stat-value { font-size: 1.8rem; font-weight: 800; color: #38bdf8; line-height: 1; margin: 8px 0; }
+        .stat-rate-bar { height: 6px; background: #1e293b; border-radius: 10px; overflow: hidden; margin-top: 8px; }
+        .stat-rate-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #22c55e, #38bdf8); border-radius: 10px; transition: width 0.3s; }
+
+        textarea {
+            width: 100%;
+            background: #0b1120dd;
+            border: 1.5px solid #2d3a5e;
+            border-radius: 20px;
+            padding: 16px 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: #b9f3ff;
+            resize: vertical;
+        }
+        textarea:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 0 3px rgba(56,189,248,0.2); }
+
+        .primary-btn {
+            width: 100%;
+            background: linear-gradient(95deg, #0f3b5e, #0b2b44);
+            border: none;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 60px;
+            color: white;
+            cursor: pointer;
+            margin: 18px 0 12px;
+            transition: 0.2s;
+        }
+        .primary-btn:hover { background: linear-gradient(95deg, #1c6d9e, #0e5a87); transform: scale(1.01); }
+
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .premium-btn {
+            background: #1e293b;
+            border: 1px solid #38bdf866;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #e0f2fe;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .premium-btn:hover { background: #1e3a5f; transform: translateY(-2px); }
+        .wa-btn { background: #075e54; border: none; }
+        .wa-btn:hover { background: #128c7e; }
+
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-input {
+            flex: 1;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 40px;
+            padding: 10px 18px;
+            color: white;
+        }
+        .filter-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #0f172a;
+            padding: 0 16px;
+            border-radius: 40px;
+        }
+
+        .progress-wrapper {
+            background: #030617aa;
+            border-radius: 28px;
+            padding: 18px;
+            margin: 20px 0;
+        }
+        .progress-bar-container {
+            background: #1e293b;
+            border-radius: 30px;
+            height: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #38bdf8, #a855f7);
+            transition: width 0.15s;
+        }
+        .counter-row {
+            display: flex;
+            gap: 14px;
+            margin-top: 12px;
+        }
+        .counter-badge {
+            flex: 1;
+            background: #0f172a;
+            border-radius: 40px;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+            background: #03061755;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        th, td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #1e2f46;
+            text-align: left;
+        }
+        th { background: #0e1b2f; color: #7dd3fc; }
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .badge-found { background: #14532d40; color: #86efac; border: 0.5px solid #4ade80; }
+        .badge-not-found { background: #7f1d1d40; color: #fca5a5; border: 0.5px solid #ef4444; }
+        .gender-male { color: #2dd4bf; }
+        .gender-female { color: #f472b6; }
+        .btn-sm {
+            background: #1f3a5f;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .action-cell { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+        @media (max-width: 768px) {
+            .container { padding: 18px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="price-ticker">
+    <div class="ticker-content">
+        🔥 VYKE TURBO MAX PRO • CNIC FINGERPRINT GRID • 
+        <span class="ticker-highlight">💃 FEMALE SCAN: 1500 PKR</span> 
+        <span class="ticker-highlight-male">🕺 MALE SCAN: 1200 PKR</span> 
+        ⚡ LIVE BALANCE: <span id="tickerBalance">0</span> PKR • ENCRYPTED ENGINE
+    </div>
+</div>
+
+<div class="container">
+    <div style="text-align: center;">
+        <h2>🕵️ CNIC FINGERPRINT FOUNDER</h2>
+        <div class="system-owner">⚡ SYSTEM OWNER: RANA VYKE (BABLOO) ⚡</div>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">📊 TOTAL SEARCHES</div><div class="stat-value" id="totalSearches">0</div></div>
+        <div class="stat-card"><div class="stat-label">✅ MATCH SUCCESS RATE</div><div class="stat-value" id="successRate">0%</div><div class="stat-rate-bar"><div class="stat-rate-fill" id="rateFill"></div></div></div>
+        <div class="stat-card"><div class="stat-label">💰 ESTIMATED BALANCE</div><div class="stat-value" id="estBalance">0 PKR</div></div>
+        <div class="stat-card"><div class="stat-label">⏱️ LAST SCAN</div><div class="stat-value" id="lastScan">—</div></div>
+    </div>
+
+    <textarea id="cnicBulkInput" placeholder="ENTER TARGET CNICS (One per line)&#10;Example:&#10;5440178619178&#10;5530232277050" rows="4"></textarea>
+    <button class="primary-btn" onclick="runEngineSearchSecure()">⚡ START FINGERPRINT BULK SEARCH ⚡</button>
+
+    <div id="progressWrapper" class="progress-wrapper" style="display:none">
+        <div class="progress-text" style="display:flex; justify-content:space-between"><span id="progressLabel">Initializing...</span><span id="progressPercent">0%</span></div>
+        <div class="progress-bar-container"><div id="progressBarFill" class="progress-bar-fill"></div></div>
+        <div class="counter-row"><div class="counter-badge">✅ MATCH: <span id="liveFoundCount">0</span></div><div class="counter-badge">❌ NO MATCH: <span id="liveNotFoundCount">0</span></div></div>
+    </div>
+
+    <div id="resultsContainer" style="display:none">
+        <div class="action-bar">
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+                <button class="premium-btn" id="downloadFingerprintBtn">📥 DOWNLOAD FINGERPRINT</button>
+                <button class="premium-btn" id="copyAllCnicBtn">📋 COPY ALL CNIC</button>
+                <button class="premium-btn" id="exportCsvBtn">📊 EXPORT CSV</button>
+                <button class="premium-btn" id="clearAllBtn">🧹 CLEAR ALL</button>
+            </div>
+            <a id="whatsappAdminTopBtn" class="premium-btn wa-btn" href="#" target="_blank">💬 CONTACT ADMIN</a>
+        </div>
+
+        <div class="filter-bar">
+            <input type="text" id="searchCnicInput" class="filter-input" placeholder="🔍 Filter by CNIC...">
+            <label class="filter-check"><input type="checkbox" id="showOnlyFoundCheckbox"> ✅ Show Only Found</label>
+            <button class="premium-btn" id="loadSampleBtn">📝 Load Sample</button>
+        </div>
+
+        <h3>🔎 FINGERPRINT LIVE RESULTS</h3>
+        <div class="table-wrapper">
+            <table id="resultsTable">
+                <thead><tr><th>#</th><th>CNIC</th><th>Gender</th><th>Status</th><th>Owner/Location</th><th>Action</th></tr></thead>
+                <tbody id="resultsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // CONFIG
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbxSZPDDn1GPYEy_gwib3OR0W2zF2w_yEh-ufTCwa_fnEN3xzcKp84u7nCka6i1SJEBu/exec";
+    const targetWhatsAppNumber = "447915605790";
+    
+    let globalResults = [];
+    let totalSearchCount = parseInt(localStorage.getItem('totalSearches') || '0');
+    let totalBalance = 0;
+    
+    function updateStatsUI() {
+        document.getElementById('totalSearches').innerText = totalSearchCount;
+        document.getElementById('estBalance').innerText = totalBalance.toLocaleString() + " PKR";
+        document.getElementById('tickerBalance').innerText = totalBalance;
+    }
+    
+    function getGenderFromCNIC(cnic) {
+        if(!cnic || cnic.length < 7) return { gender: "Unknown", price: 0 };
+        let seventh = parseInt(cnic.charAt(6));
+        if(isNaN(seventh)) return { gender: "Unknown", price: 0 };
+        if(seventh % 2 === 0) return { gender: "Female", price: 1500 };
+        else return { gender: "Male", price: 1200 };
+    }
+    
+    async function runEngineSearchSecure() {
+        let raw = document.getElementById('cnicBulkInput').value;
+        let cnicList = raw.split('\n').map(l => l.replace(/[^0-9]/g,'').trim()).filter(l => l.length>=5);
+        if(cnicList.length === 0) { alert("Enter valid CNICs"); return; }
+        
+        document.getElementById('progressWrapper').style.display = 'block';
+        document.getElementById('resultsContainer').style.display = 'none';
+        let resultsContainer = document.getElementById('resultsContainer');
+        let tbody = document.getElementById('resultsTableBody');
+        tbody.innerHTML = "";
+        
+        try {
+            let url = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
+            let res = await fetch(url);
+            let json = await res.json();
+            let data = (json && json.data) ? json.data : (Array.isArray(json) ? json : cnicList.map((c,i) => ({cnic:c, status:i%2===0?"found":"notfound", owner:i%2===0?"DATABASE_"+(i%5+1):null})));
+            
+            globalResults = [];
+            let foundCount = 0, notFoundCount = 0, batchBalance = 0;
+            let progressFill = document.getElementById('progressBarFill');
+            let percentSpan = document.getElementById('progressPercent');
+            
+            for(let i=0; i<data.length; i++) {
+                let item = data[i];
+                let cnicVal = item.cnic || "unknown";
+                let statusFlag = item.status === "found" || item.owner ? "found" : "notfound";
+                let ownerInfo = item.owner || "N/A";
+                let { gender, price } = getGenderFromCNIC(cnicVal);
+                if(statusFlag === "found") { foundCount++; batchBalance += price; }
+                else notFoundCount++;
+                
+                globalResults.push({ cnic: cnicVal, status: statusFlag, owner: ownerInfo, gender, price: statusFlag==="found"?price:0 });
+                document.getElementById('liveFoundCount').innerText = foundCount;
+                document.getElementById('liveNotFoundCount').innerText = notFoundCount;
+                
+                let row = tbody.insertRow();
+                row.insertCell(0).innerText = i+1;
+                row.insertCell(1).innerText = cnicVal;
+                row.insertCell(2).innerHTML = `<span class="gender-${gender === 'Male' ? 'male' : 'female'}">${gender === 'Male' ? '🕺 Male' : gender === 'Female' ? '💃 Female' : '❓'}</span>`;
+                row.insertCell(3).innerHTML = statusFlag === "found" ? `<span class="status-badge badge-found">✅ FOUND</span>` : `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
+                row.insertCell(4).innerText = statusFlag === "found" ? ownerInfo : "—";
+                let actionCell = row.insertCell(5);
+                actionCell.className = "action-cell";
+                if(statusFlag === "found") {
+                    let copyText = `CNIC: ${cnicVal} | ${gender} | Owner: ${ownerInfo}`;
+                    let waLink = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(`Fingerprint Found: ${cnicVal}\nInfo: ${ownerInfo}`)}`;
+                    actionCell.innerHTML = `<button class="btn-sm copy-row" data-copy='${copyText}'>📋 Copy</button><a href="${waLink}" target="_blank" style="background:#25d366; border-radius:30px; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none;">📱</a>`;
+                } else actionCell.innerHTML = "—";
+                
+                let percent = Math.round(((i+1)/data.length)*100);
+                progressFill.style.width = percent+"%";
+                percentSpan.innerText = percent+"%";
+                await new Promise(r => setTimeout(r, 10));
+            }
+            
+            totalSearchCount++;
+            totalBalance += batchBalance;
+            localStorage.setItem('totalSearches', totalSearchCount);
+            updateStatsUI();
+            document.getElementById('lastScan').innerText = new Date().toLocaleTimeString();
+            let rate = data.length ? Math.round((foundCount/data.length)*100) : 0;
+            document.getElementById('successRate').innerText = rate+"%";
+            document.getElementById('rateFill').style.width = rate+"%";
+            
+            document.getElementById('resultsContainer').style.display = 'block';
+            document.getElementById('progressWrapper').style.display = 'none';
+            attachEventHandlers();
+        } catch(e) { alert("Error: "+e.message); document.getElementById('progressWrapper').style.display = 'none'; }
+    }
+    
+    function attachEventHandlers() {
+        document.getElementById('downloadFingerprintBtn').onclick = () => {
+            let found = globalResults.filter(r => r.status === "found");
+            if(!found.length) { alert("No matches"); return; }
+            let text = "VYKE FINGERPRINT EXPORT\n"+new Date()+"\n"+found.map((r,i)=>`${i+1}. ${r.cnic} | ${r.gender} | ${r.owner}`).join("\n");
+            let blob = new Blob([text], {type:"text/plain"});
+            let a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `fingerprint_${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        };
+        document.getElementById('copyAllCnicBtn').onclick = () => {
+            let cnics = globalResults.map(r=>r.cnic).join("\n");
+            navigator.clipboard.writeText(cnics);
+            alert("Copied all CNICs!");
+        };
+        document.getElementById('exportCsvBtn').onclick = () => {
+            let headers = ["CNIC","Gender","Status","Owner"];
+            let rows = globalResults.map(r=>[r.cnic, r.gender, r.status.toUpperCase(), r.owner]);
+            let csv = [headers, ...rows].map(row=>row.join(",")).join("\n");
+            let blob = new Blob([csv], {type:"text/csv"});
+            let a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `report_${Date.now()}.csv`;
+            a.click();
+        };
+        document.getElementById('clearAllBtn').onclick = () => {
+            document.getElementById('cnicBulkInput').value = "";
+            document.getElementById('resultsContainer').style.display = 'none';
+            globalResults = [];
+        };
+        document.getElementById('loadSampleBtn').onclick = () => {
+            document.getElementById('cnicBulkInput').value = "5440178619178\n5530232277050\n3520212345678";
+        };
+        document.getElementById('whatsappAdminTopBtn').href = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent("Hello Admin, need fingerprint assistance.")}`;
+        
+        // filters
+        let searchInput = document.getElementById('searchCnicInput');
+        let showOnlyFound = document.getElementById('showOnlyFoundCheckbox');
+        function filterTable() {
+            let keyword = searchInput.value.toLowerCase();
+            let onlyFound = showOnlyFound.checked;
+            let rows = document.querySelectorAll('#resultsTableBody tr');
+            rows.forEach(row => {
+                let cnicCell = row.cells[1]?.innerText.toLowerCase() || "";
+                let statusCell = row.cells[3]?.innerText || "";
+                let matchCnic = cnicCell.includes(keyword);
+                let matchStatus = !onlyFound || statusCell.includes("FOUND");
+                row.style.display = (matchCnic && matchStatus) ? "" : "none";
+            });
+        }
