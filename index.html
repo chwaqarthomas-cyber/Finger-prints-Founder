@@ -3,30 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNIC Fingerprint Founder System - Secure Portal</title>
+    <title>CNIC Fingerprint Founder System - Vyke Pro</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 650px; background: white; margin: 30px auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h2 { color: #1a365d; margin-bottom: 5px; }
-        .system-owner { font-size: 14px; color: #718096; margin-bottom: 20px; }
-        .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; font-weight: bold; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; color: #333; }
+        .container { max-width: 600px; background: white; margin: 20px auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        h2 { color: #1a365d; margin-bottom: 5px; font-size: 24px; text-transform: uppercase; }
+        .system-owner { font-size: 13px; color: #4a5568; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 8px; font-size: 13px; margin-bottom: 25px; font-weight: bold; line-height: 1.5; }
         
-        textarea { width: 100%; height: 150px; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 16px; font-family: inherit; resize: vertical; }
+        textarea { width: 100%; height: 160px; padding: 14px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-family: monospace; resize: vertical; }
+        textarea:focus { border-color: #319795; outline: none; box-shadow: 0 0 0 3px rgba(49, 151, 149, 0.15); }
         
-        button { width: 100%; background-color: #319795; color: white; border: none; padding: 14px; font-size: 16px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 15px; }
+        button { width: 100%; background-color: #319795; color: white; border: none; padding: 14px; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
         button:hover { background-color: #2c7a7b; }
         button:disabled { background-color: #cbd5e0; cursor: not-allowed; }
         
-        .loader-text { font-weight: bold; font-size: 14px; margin-bottom: 15px; color: #dd6b20; display: none; }
-        .results-container { display: none; margin-top: 20px; text-align: left; }
-        .results-container h3 { color: #1a365d; margin-bottom: 10px; border-bottom: 2px solid #edf2f7; padding-bottom: 5px; }
+        .loader-status { font-weight: bold; font-size: 14px; margin: 15px 0; color: #dd6b20; display: none; }
+        .results-container { display: none; margin-top: 25px; text-align: left; }
+        .results-container h3 { color: #1a365d; margin-bottom: 12px; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; font-size: 16px; }
         
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
+        th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
         th { background-color: #2b6cb0; color: white; font-weight: bold; }
         tr:nth-child(even) { background-color: #f7fafc; }
         
-        .status-badge { padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; }
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; }
         .badge-found { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
         .badge-not-found { background-color: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; }
     </style>
@@ -42,20 +43,24 @@
         Ek CNIC Fingerprint Found Hony Par 1200 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
     </div>
 
-    <div id="loaderStatus" class="loader-text">🔄 Searching secure database... Please wait...</div>
+    <!-- Live Processing Status Loader -->
+    <div id="loaderStatus" class="loader-status">🔄 Connecting to secure cloud engine... Please wait...</div>
 
-    <textarea id="cnicBulkInput" placeholder="Enter target CNICs (Line-by-Line):&#10;5440178619178&#10;5530232277050"></textarea>
-    <button id="searchBtn" onclick="searchBulkSecureCloud()">START SECURE BULK SEARCH</button>
+    <label style="font-weight: 600; font-size: 14px; color: #4a5568; display: block; text-align: left; margin-bottom: 5px;">Enter target CNICs (Line-by-Line):</label>
+    <textarea id="cnicBulkInput" placeholder="5440178619178&#10;5530232277050"></textarea>
     
+    <button id="searchBtn" onclick="startSecureBulkCloudSearch()">START SECURE BULK SEARCH</button>
+    
+    <!-- Dynamic Output Matrix Table -->
     <div id="resultsContainer" class="results-container">
-        <h3>Search Results:</h3>
+        <h3>⚡ SEARCH RESULTS</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Sr No.</th>
-                    <th>CNIC Number</th>
-                    <th>Status</th>
-                    <th>Database Location</th>
+                    <th style="width: 15%;">Sr No.</th>
+                    <th style="width: 45%;">CNIC Number</th>
+                    <th style="width: 20%;">Status</th>
+                    <th style="width: 20%;">Database Location</th>
                 </tr>
             </thead>
             <tbody id="resultsTableBody"></tbody>
@@ -64,16 +69,17 @@
 </div>
 
 <script>
-// ⚠️ APNA NEW DEPLOYMENT URL YAHAN PASTE KAREIN
-const scriptUrl = "https://script.google.com/macros/s/YAHAN_APNA_NEW_URL_LAGAEIN/exec"; 
+// Updated Secure URL
+const scriptUrl = "https://script.google.com/macros/s/AKfycbxvaKvqHzW36nhzk_iRM8YQZaVAcbqLt2iIrFxTnHVMrzGkg9pFde7-bGK789w35KJU/exec"; 
 
-async function searchBulkSecureCloud() {
+async function startSecureBulkCloudSearch() {
     let rawInput = document.getElementById('cnicBulkInput').value;
     let resultsContainer = document.getElementById('resultsContainer');
     let tableBody = document.getElementById('resultsTableBody');
     let loader = document.getElementById('loaderStatus');
     let searchBtn = document.getElementById('searchBtn');
     
+    // Clean and split lines to process clean integers only
     let cnicList = rawInput.split('\n')
                           .map(line => line.replace(/[^0-9]/g, '').trim())
                           .filter(line => line.length >= 5);
@@ -83,17 +89,17 @@ async function searchBulkSecureCloud() {
         return;
     }
     
-    // UI Updates
+    // UI Loading State Reset
     loader.style.display = "block";
     searchBtn.disabled = true;
     resultsContainer.style.display = 'none';
     tableBody.innerHTML = "";
     
     try {
-        // Sirf wahi numbers bhej rahe hain jo user ne dale hain (Pure list backend par secure hai)
-        let finalUrl = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
+        // Safe query transport string format
+        let finalRequestUrl = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
         
-        let response = await fetch(finalUrl);
+        let response = await fetch(finalRequestUrl);
         let json = await response.json();
         
         if (json.status === "success" && json.data) {
@@ -128,10 +134,10 @@ async function searchBulkSecureCloud() {
             }
             resultsContainer.style.display = 'block';
         } else {
-            alert("Database Error: " + (json.message || "Unknown error"));
+            alert("Database Response Error: " + (json.message || "Unknown error layout."));
         }
     } catch (error) {
-        alert("Network Error: Request block ho gayi hai. Apna Web App URL check karein.");
+        alert("Network Error: Request block ho gayi hai. Sahi tarike se 'Anyone' permission ke sath New Deployment URL generate karke code me lagaein.");
         console.error(error);
     } finally {
         loader.style.display = "none";
