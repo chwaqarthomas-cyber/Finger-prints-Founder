@@ -20,7 +20,13 @@
         
         .loader-status { font-weight: bold; font-size: 14px; margin: 15px 0; color: #dd6b20; display: none; }
         .results-container { display: none; margin-top: 25px; text-align: left; }
-        .results-container h3 { color: #1a365d; margin-bottom: 12px; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; font-size: 16px; }
+        
+        .results-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 12px; }
+        .results-header h3 { color: #1a365d; margin: 0; font-size: 16px; }
+        
+        /* Copy All Button Style */
+        .copy-all-btn { background-color: #2b6cb0; color: white; border: none; padding: 8px 14px; font-size: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: auto; margin: 0; }
+        .copy-all-btn:hover { background-color: #2b6cb0; opacity: 0.9; }
         
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
@@ -51,7 +57,11 @@
     <button id="searchBtn" onclick="startSecureBulkCloudSearch()">START SECURE BULK SEARCH</button>
     
     <div id="resultsContainer" class="results-container">
-        <h3>⚡ SEARCH RESULTS</h3>
+        <div class="results-header">
+            <h3>⚡ SEARCH RESULTS</h3>
+            <!-- Main Copy Button for All Found Results -->
+            <button id="copyAllBtn" class="copy-all-btn" onclick="copyAllFoundCnics()">📋 Copy All Found</button>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -68,7 +78,10 @@
 
 <script>
 // ⚠️ APNA NEW DEPLOYMENT URL ISS NICHE WAALI LINE MEIN PASTE KAREIN
-const scriptUrl = "https://script.google.com/macros/s/AKfycby2x_N3BadqiNDhWVhZo6YIS7jPGK4dgspwJAduvGHr0nEqXuPm5wd5KxxFFqzUU35dRA/exec"; 
+const scriptUrl = "https://script.google.com/macros/s/AKfycby9mlGchLRaSbzrO7A1-uP5u0bVW3HixjoDcCr4Z5YSFKJQu3bZutB_g0fhmg4Vw_o3CA/exec"; 
+
+// Global array to store only found CNICs for easy bulk extraction
+let currentFoundCnicsList = [];
 
 async function startSecureBulkCloudSearch() {
     let rawInput = document.getElementById('cnicBulkInput').value;
@@ -77,11 +90,14 @@ async function startSecureBulkCloudSearch() {
     let loader = document.getElementById('loaderStatus');
     let searchBtn = document.getElementById('searchBtn');
     
+    // Reset global list
+    currentFoundCnicsList = [];
+    
     // Clean and split lines to process clean integers only
     let cnicList = rawInput.split('\n')
-                          .map(line => line.replace(/[^0-9]/g, '').trim())
-                          .filter(line => line.length >= 5);
-                          
+                           .map(line => line.replace(/[^0-9]/g, '').trim())
+                           .filter(line => line.length >= 5);
+                           
     if(cnicList.length === 0) {
         alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
         return;
@@ -119,6 +135,9 @@ async function startSecureBulkCloudSearch() {
                 if (item.status === "found") {
                     cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
                     cellOwner.textContent = item.owner; 
+                    
+                    // Push to our batch copy target array
+                    currentFoundCnicsList.push(item.cnic);
                 } else {
                     cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
                     cellOwner.textContent = "-";
@@ -130,6 +149,16 @@ async function startSecureBulkCloudSearch() {
                 row.appendChild(cellOwner);
                 tableBody.appendChild(row);
             }
+            
+            // Show or hide the copy button depending on if we found anything
+            let copyAllBtn = document.getElementById('copyAllBtn');
+            if (currentFoundCnicsList.length > 0) {
+                copyAllBtn.style.display = "block";
+                copyAllBtn.textContent = `📋 Copy All Found (${currentFoundCnicsList.length})`;
+            } else {
+                copyAllBtn.style.display = "none";
+            }
+            
             resultsContainer.style.display = 'block';
         } else {
             alert("Database Response Error: " + (json.message || "Unknown error layout."));
@@ -141,6 +170,56 @@ async function startSecureBulkCloudSearch() {
         loader.style.display = "none";
         searchBtn.disabled = false;
     }
+}
+
+// Handler to trigger batch export to system clipboard
+function copyAllFoundCnics() {
+    if (currentFoundCnicsList.length === 0) {
+        alert("Copy karne ke liye koi bhi FOUND result majood nahi hai.");
+        return;
+    }
+    
+    // Join all numbers with a newline so they remain clean line-by-line
+    let bulkText = currentFoundCnicsList.join('\n');
+    let copyAllBtn = document.getElementById('copyAllBtn');
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(bulkText).then(() => {
+            showBulkCopiedFeedback(copyAllBtn);
+        }).catch(err => {
+            fallbackBulkCopy(bulkText, copyAllBtn);
+        });
+    } else {
+        fallbackBulkCopy(bulkText, copyAllBtn);
+    }
+}
+
+// Fallback clipboard logic for decoupled execution environments
+function fallbackBulkCopy(text, buttonElement) {
+    let textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed"; 
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        showBulkCopiedFeedback(buttonElement);
+    } catch (err) {
+        alert('Afsos! Bulk data copy nahi ho saka.');
+    }
+    document.body.removeChild(textArea);
+}
+
+// Visual confirmation state
+function showBulkCopiedFeedback(btn) {
+    let originalText = btn.textContent;
+    btn.textContent = '✔️ All Copied!';
+    btn.style.backgroundColor = '#2f855a';
+    setTimeout(() => {
+        btn.textContent = `📋 Copy All Found (${currentFoundCnicsList.length})`;
+        btn.style.backgroundColor = '#2b6cb0';
+    }, 2000);
 }
 </script>
 </body>
