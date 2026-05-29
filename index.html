@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CNIC Fingerprint Founder System - Vyke Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; color: #333; }
-        .container { max-width: 600px; background: white; margin: 20px auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        .container { max-width: 650px; background: white; margin: 20px auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
         h2 { color: #1a365d; margin-bottom: 5px; font-size: 24px; text-transform: uppercase; }
-        .system-owner { font-size: 13px; color: #4a5568; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .system-owner { font-size: 13px; color: #4a5568; font-weight: 600; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* Top WhatsApp Contact Banner */
+        .top-wa-banner { background-color: #25D366; color: white; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 14px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; box-shadow: 0 4px 10px rgba(37,211,102,0.2); }
+        .top-wa-banner:hover { opacity: 0.9; }
+
         .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 8px; font-size: 13px; margin-bottom: 25px; font-weight: bold; line-height: 1.5; }
         
         textarea { width: 100%; height: 160px; padding: 14px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-family: monospace; resize: vertical; }
@@ -21,11 +27,14 @@
         .loader-status { font-weight: bold; font-size: 14px; margin: 15px 0; color: #dd6b20; display: none; }
         .results-container { display: none; margin-top: 25px; text-align: left; }
         
-        .results-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 12px; }
+        /* Results Header & Counters */
+        .results-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
         .results-header h3 { color: #1a365d; margin: 0; font-size: 16px; }
-        
+        .live-counter-badge { background-color: #e2e8f0; color: #1a202c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .live-counter-badge span { color: #2f855a; }
+
         /* Copy All Button Style */
-        .copy-all-btn { background-color: #2b6cb0; color: white; border: none; padding: 8px 14px; font-size: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: auto; margin: 0; }
+        .copy-all-btn { background-color: #2b6cb0; color: white; border: none; padding: 8px 14px; font-size: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: auto; margin: 0; display: inline-flex; align-items: center; gap: 5px; }
         .copy-all-btn:hover { background-color: #2b6cb0; opacity: 0.9; }
         
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -36,6 +45,10 @@
         .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; }
         .badge-found { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
         .badge-not-found { background-color: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; }
+
+        /* Action Column Row WhatsApp Button */
+        .table-wa-btn { background-color: #25D366; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+        .table-wa-btn:hover { background-color: #20ba5a; }
     </style>
 </head>
 <body>
@@ -44,9 +57,13 @@
     <h2>CNIC FINGERPRINT FOUNDER SYSTEM</h2>
     <div class="system-owner">SYSTEM OWNER: Rana Vyke Urf Bablo</div>
     
+    <a href="https://wa.me/447915605790" target="_blank" class="top-wa-banner">
+        <i class="fab fa-whatsapp"></i> CONTACT SYSTEM OWNER VIA WHATSAPP
+    </a>
+
     <div class="warning-box">
         ⚠️ SYSTEM FEES WARNING<br>
-        Ek CNIC Fingerprint Found Hony Par 1800 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
+        Ek CNIC Fingerprint Found Hony Par 1500 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
     </div>
 
     <div id="loaderStatus" class="loader-status">🔄 Connecting to secure cloud engine... Please wait...</div>
@@ -58,17 +75,17 @@
     
     <div id="resultsContainer" class="results-container">
         <div class="results-header">
-            <h3>⚡ SEARCH RESULTS</h3>
-            <!-- Main Copy Button for All Found Results -->
+            <h3>⚡ SEARCH RESULTS <span class="live-counter-badge">FOUNDS: <span id="liveFoundCounter">0</span></span></h3>
             <button id="copyAllBtn" class="copy-all-btn" onclick="copyAllFoundCnics()">📋 Copy All Found</button>
         </div>
         <table>
             <thead>
                 <tr>
-                    <th style="width: 15%;">Sr No.</th>
-                    <th style="width: 45%;">CNIC Number</th>
+                    <th style="width: 10%;">Sr No.</th>
+                    <th style="width: 35%;">CNIC Number</th>
                     <th style="width: 20%;">Status</th>
                     <th style="width: 20%;">Database Location</th>
+                    <th style="width: 15%;">Action</th>
                 </tr>
             </thead>
             <tbody id="resultsTableBody"></tbody>
@@ -77,11 +94,11 @@
 </div>
 
 <script>
-// ⚠️ APNA NEW DEPLOYMENT URL ISS NICHE WAALI LINE MEIN PASTE KAREIN
 const scriptUrl = "https://script.google.com/macros/s/AKfycby9mlGchLRaSbzrO7A1-uP5u0bVW3HixjoDcCr4Z5YSFKJQu3bZutB_g0fhmg4Vw_o3CA/exec"; 
 
-// Global array to store only found CNICs for easy bulk extraction
+// Global array to store objects of found data (CNIC and Location)
 let currentFoundCnicsList = [];
+const ownerWhatsApp = "447915605790";
 
 async function startSecureBulkCloudSearch() {
     let rawInput = document.getElementById('cnicBulkInput').value;
@@ -89,11 +106,12 @@ async function startSecureBulkCloudSearch() {
     let tableBody = document.getElementById('resultsTableBody');
     let loader = document.getElementById('loaderStatus');
     let searchBtn = document.getElementById('searchBtn');
+    let liveFoundCounter = document.getElementById('liveFoundCounter');
     
-    // Reset global list
+    // Reset global list and live counter
     currentFoundCnicsList = [];
+    liveFoundCounter.textContent = "0";
     
-    // Clean and split lines to process clean integers only
     let cnicList = rawInput.split('\n')
                            .map(line => line.replace(/[^0-9]/g, '').trim())
                            .filter(line => line.length >= 5);
@@ -103,14 +121,12 @@ async function startSecureBulkCloudSearch() {
         return;
     }
     
-    // UI Loading State Reset
     loader.style.display = "block";
     searchBtn.disabled = true;
     resultsContainer.style.display = 'none';
     tableBody.innerHTML = "";
     
     try {
-        // Safe query transport string format
         let finalRequestUrl = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
         
         let response = await fetch(finalRequestUrl);
@@ -118,6 +134,7 @@ async function startSecureBulkCloudSearch() {
         
         if (json.status === "success" && json.data) {
             let resultsData = json.data;
+            let foundCount = 0;
             
             for (let i = 0; i < resultsData.length; i++) {
                 let item = resultsData[i];
@@ -131,26 +148,38 @@ async function startSecureBulkCloudSearch() {
                 
                 let cellStatus = document.createElement('td');
                 let cellOwner = document.createElement('td');
+                let cellAction = document.createElement('td');
                 
                 if (item.status === "found") {
+                    foundCount++;
                     cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
                     cellOwner.textContent = item.owner; 
                     
-                    // Push to our batch copy target array
-                    currentFoundCnicsList.push(item.cnic);
+                    // Create Dynamic WhatsApp Link for this specific record
+                    let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${item.cnic}\n📂 Location: ${item.owner}`);
+                    let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
+                    
+                    cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i> Chat</a>`;
+                    
+                    // Push object to include both CNIC and Location for clipboard function
+                    currentFoundCnicsList.push({ cnic: item.cnic, location: item.owner });
                 } else {
                     cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
                     cellOwner.textContent = "-";
+                    cellAction.textContent = "-";
                 }
                 
                 row.appendChild(cellSr);
                 row.appendChild(cellCnic);
                 row.appendChild(cellStatus);
                 row.appendChild(cellOwner);
+                row.appendChild(cellAction);
                 tableBody.appendChild(row);
             }
             
-            // Show or hide the copy button depending on if we found anything
+            // Update Live Found Count Display
+            liveFoundCounter.textContent = foundCount;
+            
             let copyAllBtn = document.getElementById('copyAllBtn');
             if (currentFoundCnicsList.length > 0) {
                 copyAllBtn.style.display = "block";
@@ -172,15 +201,15 @@ async function startSecureBulkCloudSearch() {
     }
 }
 
-// Handler to trigger batch export to system clipboard
+// Handler to copy all found CNICs along with their Database Locations
 function copyAllFoundCnics() {
     if (currentFoundCnicsList.length === 0) {
         alert("Copy karne ke liye koi bhi FOUND result majood nahi hai.");
         return;
     }
     
-    // Join all numbers with a newline so they remain clean line-by-line
-    let bulkText = currentFoundCnicsList.join('\n');
+    // Format text to show both CNIC and Location side-by-side or line-by-line
+    let bulkText = currentFoundCnicsList.map(item => `CNIC: ${item.cnic} | Location: ${item.location}`).join('\n');
     let copyAllBtn = document.getElementById('copyAllBtn');
     
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -194,7 +223,6 @@ function copyAllFoundCnics() {
     }
 }
 
-// Fallback clipboard logic for decoupled execution environments
 function fallbackBulkCopy(text, buttonElement) {
     let textArea = document.createElement("textarea");
     textArea.value = text;
@@ -211,9 +239,7 @@ function fallbackBulkCopy(text, buttonElement) {
     document.body.removeChild(textArea);
 }
 
-// Visual confirmation state
 function showBulkCopiedFeedback(btn) {
-    let originalText = btn.textContent;
     btn.textContent = '✔️ All Copied!';
     btn.style.backgroundColor = '#2f855a';
     setTimeout(() => {
