@@ -29,24 +29,33 @@
             padding-bottom: 30px;
         }
 
-        /* Continuous Price Ticker Marquee */
+        /* Continuous Pricing Ticker Panel - Large Size with Fixed Price & Account Alert */
         .ticker-wrap {
             width: 100%;
             background: #020617;
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            border-bottom: 2px solid rgba(249, 115, 22, 0.4);
             overflow: hidden;
             white-space: nowrap;
-            padding: 8px 0;
+            padding: 12px 0;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.15);
         }
         .ticker {
             display: inline-block;
-            animation: marquee 25s linear infinite;
-            font-size: 12px;
-            font-weight: bold;
+            animation: marquee 28s linear infinite;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
         }
-        .ticker span { margin-right: 40px; }
-        .ticker .highlight-f { color: #f472b6; }
-        .ticker .highlight-m { color: #38bdf8; }
+        .ticker span { margin-right: 60px; }
+        .ticker .price-highlight { 
+            color: var(--neon-orange); 
+            text-shadow: 0 0 10px rgba(249, 115, 22, 0.6);
+            font-size: 17px;
+        }
+        .ticker .account-alert {
+            color: #f472b6;
+            text-shadow: 0 0 10px rgba(244, 114, 182, 0.5);
+        }
         @keyframes marquee {
             0% { transform: translate3d(0, 0, 0); }
             100% { transform: translate3d(-50%, 0, 0); }
@@ -159,7 +168,7 @@
 
         .warning-box { 
             background-color: rgba(30, 41, 59, 0.5); 
-            border-left: 3px solid var(--neon-cyan); 
+            border-left: 3px solid var(--neon-orange); 
             color: #cbd5e1; 
             padding: 12px; 
             border-radius: 0 8px 8px 0; 
@@ -191,6 +200,7 @@
             height: 6px;
             border-radius: 10px;
             overflow: hidden;
+            margin-bottom: 5px;
         }
         .progress-bar-fill {
             height: 100%;
@@ -221,7 +231,6 @@
         .stat-found-label { color: var(--neon-green); }
         .stat-searched-label { color: var(--neon-cyan); }
 
-        /* Dynamic Auto-Detecting Grid Layout */
         .sub-db-container-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
@@ -380,10 +389,12 @@
 
 <div class="ticker-wrap">
     <div class="ticker">
-        <span>⚡ LIVE BIOMETRIC AUDIT PRICING PANEL</span>
-        <span>👩 FEMALE FINGERPRINT: <span class="highlight-f">1500 PKR</span></span>
-        <span>👨 MALE FINGERPRINT: <span class="highlight-m">1200 PKR</span></span>
-        <span>⚠️ SYSTEM STATUS: SECURE CLOUD ACTIVE</span>
+        <span>📌 1 CNIC FINGERPRINT PRICE: <span class="price-highlight">2000 PKR</span></span>
+        <span>📢 <span class="account-alert">FRESH JAZZCASH AND EASYPAISA ACCOUNT K LIYE THUMB PRINTS K LIYE WHATSAPP PR RABTA KRIAN</span></span>
+        <span>⚠️ SYSTEM STATUS: SECURE CLOUD LINE ACTIVE</span>
+        <span>📌 1 CNIC FINGERPRINT PRICE: <span class="price-highlight">2000 PKR</span></span>
+        <span>📢 <span class="account-alert">FRESH JAZZCASH AND EASYPAISA ACCOUNT K LIYE THUMB PRINTS K LIYE WHATSAPP PR RABTA KRIAN</span></span>
+        <span>⚠️ SYSTEM STATUS: SECURE CLOUD LINE ACTIVE</span>
     </div>
 </div>
 
@@ -405,8 +416,8 @@
     </div>
 
     <div class="warning-box">
-        ⚠️ <strong>AUTOMATED NOTIFICATION:</strong><br>
-        Bulk records audit engine setup configured safely. Processing will automatically trigger cloud deduction loops.
+        ⚠️ <strong>SYSTEM NOTIFICATION:</strong><br>
+        Har ek found card par system wallet se automatic 2000 PKR deduct hongey. Fresh accounts biometric services ke liye admin se direct rabta karein.
     </div>
 
     <div id="progressPanel" class="progress-panel">
@@ -414,7 +425,7 @@
             <span id="progressStatusText">🔄 Ready for processing...</span>
             <span id="progressPercentage">0%</span>
         </div>
-        <div class="container-fill" style="width: 100%; background: #1e293b; height: 6px; border-radius: 10px; overflow: hidden; margin-bottom: 5px;">
+        <div style="width: 100%; background: #1e293b; height: 6px; border-radius: 10px; overflow: hidden; margin-bottom: 5px;">
             <div id="progressBarFill" class="progress-bar-fill"></div>
         </div>
         
@@ -476,7 +487,6 @@
 
 <script>
 // ==================== 🛠️ AUTOMATED DATA ROUTING ENGINE 🛠️ ====================
-// Pure Direct CSV Link Generation Mechanism 
 const csvDirectUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRf_HYZsyjL9C5XRxNNDbjguMCfamdzJzpLGzspTlS3rEUmeSg1KiaThc265XpoSdBzetKVNT-F8_2d/pub?gid=0&single=true&output=csv";
 const ownerWhatsApp = "447915605790";
 // =============================================================================
