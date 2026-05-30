@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CNIC Fingerprint Founder System - JazzCash Light Edition</title>
+    <title>CNIC Fingerprint Founder System - JazzCash Turbo Advance</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* JazzCash Light Theme Palette */
+        /* JazzCash Light Theme Palette - Premium Advance Edition */
         :root {
-            --bg-light: #f4f6f9;
+            --bg-light: #f4f7fa;
             --panel-bg: #ffffff;
             --jc-red: #d32f2f;
             --jc-yellow: #ffb300;
-            --jc-dark: #1a1a1a;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --neon-green: #38a169;
+            --jc-dark: #111827;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --neon-green: #10b981;
+            --primary-blue: #1d4ed8;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -26,7 +27,7 @@
             margin: 0; 
             padding: 0; 
             color: var(--text-main); 
-            padding-bottom: 30px;
+            padding-bottom: 40px;
         }
 
         /* Fixed Big Size Stationary Account Alert Panel (Ruki Hui Headline) */
@@ -36,37 +37,47 @@
             color: #ffffff;
             padding: 16px;
             text-align: center;
-            font-size: 18px; /* Big font size */
+            font-size: 18px; 
             font-weight: 800;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.25);
             border-bottom: 4px solid var(--jc-yellow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         .stationary-alert-panel i {
             color: var(--jc-yellow);
             margin-right: 8px;
+            animation: bell-ring 1s infinite alternate;
+        }
+        @keyframes bell-ring {
+            0% { transform: rotate(-10deg); }
+            100% { transform: rotate(10deg); }
         }
 
-        /* Mini Price Status Line directly under notice */
+        /* Cost Fixed Mini Ticker Status Bar */
         .mini-status-bar {
             background: var(--jc-dark);
             color: #ffffff;
             font-size: 12px;
             font-weight: bold;
-            padding: 6px 0;
+            padding: 8px 0;
             text-align: center;
+            letter-spacing: 0.5px;
         }
         .mini-status-bar span { color: var(--jc-yellow); }
 
         .container { 
             max-width: 680px; 
             background: var(--panel-bg); 
-            margin: 20px auto; 
-            padding: 24px; 
-            border-radius: 16px; 
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); 
-            border: 1px solid #e2e8f0;
+            margin: 25px auto; 
+            padding: 26px; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06); 
+            border: 1px solid #e5e7eb;
             width: 95%;
+            transition: all 0.3s ease;
         }
 
         .header-section {
@@ -76,10 +87,10 @@
         h2 { 
             color: var(--jc-red); 
             margin: 0 0 4px 0; 
-            font-size: 24px; 
+            font-size: 25px; 
             text-transform: uppercase; 
             letter-spacing: 0.5px;
-            font-weight: 800;
+            font-weight: 900;
         }
         .system-owner { 
             font-size: 12px; 
@@ -92,10 +103,10 @@
 
         /* Wallet Core Balance Light Panel */
         .balance-widget {
-            background: #f7fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 14px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -112,10 +123,11 @@
         }
         .balance-label i { color: var(--jc-red); }
         .balance-amount {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 800;
             color: var(--jc-dark);
             font-family: monospace;
+            transition: color 0.3s;
         }
         
         .top-actions {
@@ -128,7 +140,7 @@
             background: linear-gradient(135deg, #128c7e, #25D366); 
             color: white; 
             padding: 14px; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             font-weight: bold; 
             font-size: 13px; 
             display: flex; 
@@ -136,17 +148,19 @@
             justify-content: center; 
             gap: 8px; 
             text-decoration: none; 
-            box-shadow: 0 4px 10px rgba(37,211,102,0.15); 
+            box-shadow: 0 4px 12px rgba(37,211,102,0.15); 
+            transition: transform 0.2s;
         }
+        .top-wa-banner:hover { transform: translateY(-1px); }
 
         .download-rar-btn {
             display: none; 
             background: linear-gradient(135deg, var(--jc-yellow), #f59e0b);
             color: var(--jc-dark);
-            padding: 14px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 12px;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 14px;
             align-items: center;
             justify-content: center;
             gap: 8px;
@@ -154,7 +168,13 @@
             cursor: pointer;
             width: 100%;
             text-transform: uppercase;
-            box-shadow: 0 4px 12px rgba(255, 179, 0, 0.2);
+            box-shadow: 0 4px 14px rgba(255, 179, 0, 0.3);
+            animation: pulse-glow 2s infinite;
+        }
+        @keyframes pulse-glow {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.99); box-shadow: 0 4px 20px rgba(255, 179, 0, 0.5); }
+            100% { transform: scale(1); }
         }
 
         .warning-box { 
@@ -162,39 +182,39 @@
             border-left: 4px solid var(--jc-yellow); 
             color: #7b341e; 
             padding: 14px; 
-            border-radius: 0 10px 10px 0; 
-            font-size: 12px; 
+            border-radius: 0 12px 12px 0; 
+            font-size: 12.5px; 
             margin-bottom: 20px; 
             line-height: 1.5; 
             text-align: left;
         }
         
-        /* Progress Audit Module */
+        /* Advanced Progress Audit Module */
         .progress-panel {
             display: none;
-            background: #f7fafc;
-            padding: 14px;
-            border-radius: 10px;
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 14px;
             margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #e5e7eb;
             text-align: left;
         }
         .progress-info {
             display: flex;
             justify-content: space-between;
             font-size: 12px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             color: var(--text-main);
             font-weight: bold;
         }
         .container-fill {
-            width: 100%; background: #e2e8f0; height: 8px; border-radius: 10px; overflow: hidden; margin-bottom: 5px;
+            width: 100%; background: #e5e7eb; height: 8px; border-radius: 10px; overflow: hidden; margin-bottom: 5px;
         }
         .progress-bar-fill {
             height: 100%;
             width: 0%;
-            background: var(--jc-red);
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--jc-red), #ef4444);
+            transition: width 0.4s ease;
         }
         
         .live-stats-matrix {
@@ -203,18 +223,18 @@
             gap: 8px;
             margin-top: 12px;
             background: #ffffff;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 10px;
             border: 1px solid #edf2f7;
         }
         .stat-widget-box {
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: bold;
             color: var(--text-muted);
         }
         .stat-widget-box span {
             font-family: monospace;
-            font-size: 13px;
+            font-size: 14px;
         }
         .stat-found-label { color: var(--neon-green); }
         .stat-searched-label { color: var(--jc-red); }
@@ -230,9 +250,9 @@
         }
         .db-node-badge {
             background: #ffffff;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #e5e7eb;
             padding: 8px 4px;
-            border-radius: 6px;
+            border-radius: 8px;
             text-align: center;
             font-size: 10px;
             font-weight: bold;
@@ -253,20 +273,21 @@
 
         textarea { 
             width: 100%; 
-            height: 120px; 
-            padding: 12px; 
+            height: 130px; 
+            padding: 14px; 
             background: #ffffff;
             color: var(--jc-dark);
             border: 1px solid #cbd5e0; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             box-sizing: border-box; 
             font-size: 15px; 
             font-family: monospace; 
             resize: vertical; 
             margin-bottom: 15px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
-        textarea:focus { border-color: var(--jc-red); outline: none; box-shadow: 0 0 0 3px rgba(211,47,47,0.1); }
-        textarea:disabled { opacity: 0.6; cursor: not-allowed; background: #f7fafc; }
+        textarea:focus { border-color: var(--jc-red); outline: none; box-shadow: 0 0 0 3px rgba(211,47,47,0.12); }
+        textarea:disabled { opacity: 0.6; cursor: not-allowed; background: #f3f4f6; }
         
         .main-search-btn { 
             width: 100%; 
@@ -275,12 +296,13 @@
             border: none; 
             padding: 15px; 
             font-size: 15px; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             cursor: pointer; 
             font-weight: bold; 
             text-transform: uppercase; 
             letter-spacing: 0.5px; 
-            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
+            box-shadow: 0 4px 14px rgba(211, 47, 47, 0.25);
+            transition: background 0.2s;
         }
         .main-search-btn:disabled {
             background: #cbd5e0 !important;
@@ -300,15 +322,15 @@
         }
         .results-header h3 { color: var(--jc-dark); margin: 0; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* Big Sized All Cnic Copy Found Button Style */
+        /* Premium Big Sized All Cnic Copy Found Button Style */
         .copy-all-btn { 
-            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            background: linear-gradient(135deg, var(--primary-blue), #1e3a8a);
             color: #ffffff; 
-            border: 1px solid #1e88e5; 
-            padding: 14px 18px; 
-            font-size: 15px; /* Big Size */
+            border: 1px solid #3b82f6; 
+            padding: 15px 18px; 
+            font-size: 15px; 
             font-weight: 800; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             cursor: pointer; 
             text-transform: uppercase;
             width: 100%; 
@@ -316,21 +338,22 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(21, 101, 192, 0.2);
-            transition: 0.2s;
+            box-shadow: 0 5px 15px rgba(29, 78, 216, 0.25);
+            transition: all 0.2s;
         }
-        .copy-all-btn:hover { opacity: 0.95; }
+        .copy-all-btn:hover { opacity: 0.95; transform: scale(0.99); }
         
         .table-responsive { 
             overflow-x: auto; 
             width: 100%; 
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
         table { width: 100%; border-collapse: collapse; background: #ffffff; min-width: 480px; }
-        th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
-        th { background-color: #f7fafc; color: var(--jc-dark); font-weight: bold; text-transform: uppercase; font-size: 11px; }
-        tr:nth-child(even) { background-color: #fcfdfd; }
+        th, td { padding: 12px; border: 1px solid #e5e7eb; text-align: left; font-size: 13px; }
+        th { background-color: #f9fafb; color: var(--jc-dark); font-weight: bold; text-transform: uppercase; font-size: 11px; }
+        tr:nth-child(even) { background-color: #f9fafb; }
         
         .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 10px; display: inline-block; }
         .badge-found { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
@@ -353,7 +376,7 @@
             position: fixed;
             top:0; left:0; width:100%; height:100%;
             background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(3px);
             justify-content: center;
             align-items: center;
             z-index: 9999;
@@ -363,22 +386,22 @@
             background: #ffffff;
             border: 2px solid var(--jc-red);
             padding: 30px 20px;
-            border-radius: 16px;
+            border-radius: 20px;
             max-width: 380px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
         .modal-box i { font-size: 45px; color: var(--jc-red); margin-bottom: 12px; }
-        .modal-box h3 { margin: 0 0 10px 0; color: var(--jc-dark); font-size: 19px; font-weight: 800; }
-        .modal-box p { color: var(--text-main); font-size: 13.5px; line-height: 1.5; margin: 0 0 20px 0; }
+        .modal-box h3 { margin: 0 0 10px 0; color: var(--jc-dark); font-size: 20px; font-weight: 800; }
+        .modal-box p { color: var(--text-main); font-size: 14px; line-height: 1.5; margin: 0 0 20px 0; }
         .modal-close-btn {
             background: var(--jc-red);
             color: #fff;
             border: none;
             padding: 12px 20px;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             text-transform: uppercase;
             font-size: 12px;
@@ -393,7 +416,7 @@
 </div>
 
 <div class="mini-status-bar">
-    📌 SYSTEM RATE: <span>1 CNIC FINGERPRINT = 2000 PKR</span> | CORE SERVER: ONLINE 🟢
+    📌 SYSTEM RATE: <span>1 CNIC FINGERPRINT = 2000 PKR</span> | SECURE NODE PORT FRAMEWORK: LIVE 🟢
 </div>
 
 <div class="container">
@@ -404,7 +427,7 @@
     
     <div class="balance-widget">
         <span class="balance-label"><i class="fas fa-wallet"></i> Wallet Core Balance</span>
-        <span class="balance-amount">373,939 PKR</span>
+        <span id="walletBalanceDisplay" class="balance-amount">373,939 PKR</span>
     </div>
     
     <div class="top-actions">
@@ -532,196 +555,5 @@ function parseCSV(text) {
     return map;
 }
 
-async function startSecureBulkCloudSearch() {
-    let rawInput = document.getElementById('cnicBulkInput').value;
-    let resultsContainer = document.getElementById('resultsContainer');
-    let tableBody = document.getElementById('resultsTableBody');
-    let dynamicRarBtn = document.getElementById('dynamicRarBtn');
-    let dbGrid = document.getElementById('dynamicDbGrid');
-    
-    let progressPanel = document.getElementById('progressPanel');
-    let progressBarFill = document.getElementById('progressBarFill');
-    let progressPercentage = document.getElementById('progressPercentage');
-    let progressStatusText = document.getElementById('progressStatusText');
-    let liveTotalInputCount = document.getElementById('liveTotalInputCount');
-    let liveFoundCount = document.getElementById('liveFoundCount');
-    
-    currentFoundCnicsList = [];
-    resultsContainer.style.display = 'none';
-    dynamicRarBtn.style.display = 'none'; 
-    tableBody.innerHTML = "";
-    dbGrid.innerHTML = ""; 
-    
-    let inputCnicList = rawInput.split('\n')
-                               .map(line => line.replace(/[^0-9]/g, '').trim())
-                               .filter(line => line.length >= 5);
-                           
-    if(inputCnicList.length === 0) {
-        alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
-        return;
-    }
-    
-    setInterfaceLockState(true);
-    
-    progressPanel.style.display = "block";
-    progressBarFill.style.width = "20%";
-    progressPercentage.textContent = "20%";
-    progressStatusText.textContent = "Connecting Direct Web Stream...";
-    
-    liveTotalInputCount.textContent = inputCnicList.length;
-    liveFoundCount.textContent = "0";
-    
-    try {
-        progressBarFill.style.width = "60%";
-        progressPercentage.textContent = "60%";
-        progressStatusText.textContent = "Downloading stream rows safely...";
-
-        let response = await fetch(csvDirectUrl);
-        let csvText = await response.text();
-        
-        progressBarFill.style.width = "85%";
-        progressPercentage.textContent = "85%";
-        progressStatusText.textContent = "Mapping layout schemas...";
-        
-        let sheetOwnersMap = parseCSV(csvText);
-        
-        let countsTracker = {};
-        autoDetectedDbNames.forEach(name => countsTracker[name] = 0);
-        
-        let foundCount = 0;
-        
-        for (let i = 0; i < inputCnicList.length; i++) {
-            let targetCnic = inputCnicList[i];
-            let row = document.createElement('tr');
-            
-            let cellSr = document.createElement('td');
-            cellSr.textContent = i + 1;
-            cellSr.style.color = "var(--text-muted)";
-            
-            let cellCnic = document.createElement('td');
-            cellCnic.textContent = targetCnic;
-            cellCnic.style.fontFamily = "monospace";
-            cellCnic.style.fontWeight = "600";
-            
-            let cellStatus = document.createElement('td');
-            let cellOwner = document.createElement('td');
-            let cellAction = document.createElement('td');
-            
-            if (sheetOwnersMap[targetCnic]) {
-                foundCount++;
-                let dbLocation = sheetOwnersMap[targetCnic];
-                
-                if (countsTracker[dbLocation] !== undefined) {
-                    countsTracker[dbLocation]++;
-                }
-                
-                cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
-                cellOwner.textContent = dbLocation; 
-                cellOwner.style.color = "var(--jc-red)";
-                cellOwner.style.fontWeight = "bold";
-                
-                let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${targetCnic}\n📂 Location: ${dbLocation}`);
-                let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
-                
-                cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
-                
-                currentFoundCnicsList.push({ cnic: targetCnic, location: dbLocation });
-            } else {
-                cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
-                cellOwner.textContent = "-";
-                cellOwner.style.color = "var(--text-muted)";
-                cellAction.textContent = "-";
-            }
-            
-            row.appendChild(cellSr);
-            row.appendChild(cellCnic);
-            row.appendChild(cellStatus);
-            row.appendChild(cellOwner);
-            row.appendChild(cellAction);
-            tableBody.appendChild(row);
-        }
-        
-        // Dynamically build Boxes based on sheet columns data sequence
-        autoDetectedDbNames.slice(0, 5).forEach(name => {
-            let badge = document.createElement('div');
-            badge.className = 'db-node-badge';
-            badge.title = name;
-            badge.innerHTML = `${name} <span class="db-count-val">${countsTracker[name]}</span>`;
-            dbGrid.appendChild(badge);
-        });
-        
-        liveFoundCount.textContent = foundCount;
-        progressBarFill.style.width = "100%";
-        progressPercentage.textContent = "100%";
-        progressStatusText.textContent = "Database Audit Synced Successfully.";
-        
-        let copyAllBtn = document.getElementById('copyAllBtn');
-        if (currentFoundCnicsList.length > 0) {
-            copyAllBtn.style.display = "inline-flex"; 
-            dynamicRarBtn.style.display = 'flex'; 
-        } else {
-            copyAllBtn.style.display = "none";
-        }
-        
-        setTimeout(() => { resultsContainer.style.display = 'block'; }, 150);
-        
-    } catch (error) {
-        alert("Execution Error: Stream data fetch dropped.");
-        console.error(error);
-        progressStatusText.textContent = "Execution Error.";
-    } finally {
-        setInterfaceLockState(false);
-    }
-}
-
-function copyAllFoundCnics() {
-    if (currentFoundCnicsList.length === 0) return;
-    
-    let sortedCompilationList = [...currentFoundCnicsList].sort((a, b) => {
-        return autoDetectedDbNames.indexOf(a.location) - autoDetectedDbNames.indexOf(b.location);
-    });
-    
-    let bulkText = sortedCompilationList.map(item => `CNIC: ${item.cnic} | Location: ${item.location}`).join('\n');
-    let copyAllBtn = document.getElementById('copyAllBtn');
-    
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(bulkText).then(() => {
-            showBulkCopiedFeedback(copyAllBtn);
-        }).catch(err => { fallbackBulkCopy(bulkText, copyAllBtn); });
-    } else {
-        fallbackBulkCopy(bulkText, copyAllBtn);
-    }
-}
-
-function fallbackBulkCopy(text, buttonElement) {
-    let textArea = document.createElement("textarea");
-    textArea.value = text;
-    textArea.style.position = "fixed"; 
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-        document.execCommand('copy');
-        showBulkCopiedFeedback(buttonElement);
-    } catch (err) {
-        console.error(err);
-    }
-    document.body.removeChild(textArea);
-}
-
-function showBulkCopiedFeedback(btn) {
-    btn.textContent = 'Sorted & All Copied!';
-    setTimeout(() => { btn.textContent = '📋 All Cnic Copy Found'; }, 2000);
-}
-
-function triggerPremiumError() {
-    document.getElementById('premiumModal').style.display = 'flex';
-}
-
-function closePremiumError() {
-    document.getElementById('premiumModal').style.display = 'none';
-    window.open(`https://wa.me/${ownerWhatsApp}?text=Assalam-o-Alaikum%20Admin,%20Mera%20Biometric%20Engine%20Balance%20Failed%20Error%20Aa%20Rha%20Hai.%20Please%20Wallet%20Recharge%20Kar%20Dain%20Taake%20Main%20RAR%20Fingerprints%20Backup%20Extract%20Kar%20Sakoon.`, '_blank');
-}
-</script>
-</body>
-</html>
+// Helper utility to introduce artificial delay for professional auditing simulation look
+fu
