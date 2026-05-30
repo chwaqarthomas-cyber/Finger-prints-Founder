@@ -221,6 +221,7 @@
         .stat-found-label { color: var(--neon-green); }
         .stat-searched-label { color: var(--neon-cyan); }
 
+        /* Dynamic Auto-Detecting Grid Layout */
         .sub-db-container-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
@@ -232,19 +233,23 @@
         .db-node-badge {
             background: #090d16;
             border: 1px solid #1e293b;
-            padding: 4px;
+            padding: 6px 4px;
             border-radius: 4px;
             text-align: center;
-            font-size: 9px;
+            font-size: 10px;
             font-weight: bold;
             color: #94a3b8;
+            text-transform: uppercase;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .db-node-badge .db-count-val {
             display: block;
-            font-size: 11px;
+            font-size: 13px;
             color: var(--neon-orange);
             font-family: monospace;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         textarea { 
@@ -379,10 +384,6 @@
         <span>👩 FEMALE FINGERPRINT: <span class="highlight-f">1500 PKR</span></span>
         <span>👨 MALE FINGERPRINT: <span class="highlight-m">1200 PKR</span></span>
         <span>⚠️ SYSTEM STATUS: SECURE CLOUD ACTIVE</span>
-        <span>⚡ LIVE BIOMETRIC AUDIT PRICING PANEL</span>
-        <span>👩 FEMALE FINGERPRINT: <span class="highlight-f">1500 PKR</span></span>
-        <span>👨 MALE FINGERPRINT: <span class="highlight-m">1200 PKR</span></span>
-        <span>⚠️ SYSTEM STATUS: SECURE CLOUD ACTIVE</span>
     </div>
 </div>
 
@@ -413,7 +414,7 @@
             <span id="progressStatusText">🔄 Ready for processing...</span>
             <span id="progressPercentage">0%</span>
         </div>
-        <div class="progress-bar-container">
+        <div class="container-fill" style="width: 100%; background: #1e293b; height: 6px; border-radius: 10px; overflow: hidden; margin-bottom: 5px;">
             <div id="progressBarFill" class="progress-bar-fill"></div>
         </div>
         
@@ -422,13 +423,7 @@
             <div class="stat-widget-box stat-found-label">TOTAL FOUND: <span id="liveFoundCount">0</span></div>
         </div>
 
-        <div class="sub-db-container-grid">
-            <div class="db-node-badge">DATABASE 1 <span id="db1Count" class="db-count-val">0</span></div>
-            <div class="db-node-badge">DATABASE 2 <span id="db2Count" class="db-count-val">0</span></div>
-            <div class="db-node-badge">DATABASE 3 <span id="db3Count" class="db-count-val">0</span></div>
-            <div class="db-node-badge">DATABASE 4 <span id="db4Count" class="db-count-val">0</span></div>
-            <div class="db-node-badge">DATABASE 5 <span id="db5Count" class="db-count-val">0</span></div>
-        </div>
+        <div id="dynamicDbGrid" class="sub-db-container-grid"></div>
     </div>
 
     <label style="font-weight: bold; font-size: 11px; color: var(--text-muted); display: block; text-align: left; margin-bottom: 5px; text-transform: uppercase;">Target CNICs Input Panel:</label>
@@ -480,10 +475,14 @@
 </div>
 
 <script>
-const scriptUrl = "https://script.google.com/macros/s/AKfycby9mlGchLRaSbzrO7A1-uP5u0bVW3HixjoDcCr4Z5YSFKJQu3bZutB_g0fhmg4Vw_o3CA/exec"; 
+// ==================== 🛠️ AUTOMATED DATA ROUTING ENGINE 🛠️ ====================
+// Pure Direct CSV Link Generation Mechanism 
+const csvDirectUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRf_HYZsyjL9C5XRxNNDbjguMCfamdzJzpLGzspTlS3rEUmeSg1KiaThc265XpoSdBzetKVNT-F8_2d/pub?gid=0&single=true&output=csv";
 const ownerWhatsApp = "447915605790";
+// =============================================================================
 
 let currentFoundCnicsList = [];
+let autoDetectedDbNames = []; 
 
 function setInterfaceLockState(isLocked) {
     document.getElementById('searchBtn').disabled = isLocked;
@@ -501,11 +500,36 @@ function setInterfaceLockState(isLocked) {
     });
 }
 
+function parseCSV(text) {
+    let lines = text.split('\n');
+    let map = {};
+    autoDetectedDbNames = []; 
+    
+    for (let i = 1; i < lines.length; i++) {
+        let line = lines[i].trim();
+        if (!line) continue;
+        
+        let parts = line.split(',');
+        if (parts.length >= 2) {
+            let cnic = parts[0].replace(/[^0-9]/g, '').trim();
+            let owner = parts[1].trim();
+            if (cnic) {
+                map[cnic] = owner;
+                if (owner && !autoDetectedDbNames.includes(owner)) {
+                    autoDetectedDbNames.push(owner);
+                }
+            }
+        }
+    }
+    return map;
+}
+
 async function startSecureBulkCloudSearch() {
     let rawInput = document.getElementById('cnicBulkInput').value;
     let resultsContainer = document.getElementById('resultsContainer');
     let tableBody = document.getElementById('resultsTableBody');
     let dynamicRarBtn = document.getElementById('dynamicRarBtn');
+    let dbGrid = document.getElementById('dynamicDbGrid');
     
     let progressPanel = document.getElementById('progressPanel');
     let progressBarFill = document.getElementById('progressBarFill');
@@ -518,6 +542,7 @@ async function startSecureBulkCloudSearch() {
     resultsContainer.style.display = 'none';
     dynamicRarBtn.style.display = 'none'; 
     tableBody.innerHTML = "";
+    dbGrid.innerHTML = ""; 
     
     let inputCnicList = rawInput.split('\n')
                                .map(line => line.replace(/[^0-9]/g, '').trim())
@@ -533,115 +558,107 @@ async function startSecureBulkCloudSearch() {
     progressPanel.style.display = "block";
     progressBarFill.style.width = "20%";
     progressPercentage.textContent = "20%";
-    progressStatusText.textContent = "Connecting to database matrix...";
+    progressStatusText.textContent = "Connecting Direct Web Stream...";
     
     liveTotalInputCount.textContent = inputCnicList.length;
     liveFoundCount.textContent = "0";
     
-    document.getElementById('db1Count').textContent = "0";
-    document.getElementById('db2Count').textContent = "0";
-    document.getElementById('db3Count').textContent = "0";
-    document.getElementById('db4Count').textContent = "0";
-    document.getElementById('db5Count').textContent = "0";
-    
     try {
-        progressBarFill.style.width = "50%";
-        progressPercentage.textContent = "50%";
-        progressStatusText.textContent = "Downloading encrypted core records...";
+        progressBarFill.style.width = "60%";
+        progressPercentage.textContent = "60%";
+        progressStatusText.textContent = "Downloading stream data rows...";
 
-        // CORS standard bypass route using silent redirection headers
-        let response = await fetch(scriptUrl);
-        let json = await response.json();
+        let response = await fetch(csvDirectUrl);
+        let csvText = await response.text();
         
         progressBarFill.style.width = "85%";
         progressPercentage.textContent = "85%";
-        progressStatusText.textContent = "Matching and sorting target cells...";
+        progressStatusText.textContent = "Mapping layout schemas...";
         
-        if (json && json.owners) {
-            let sheetOwnersMap = json.owners;
-            let foundCount = 0;
-            let c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0;
+        let sheetOwnersMap = parseCSV(csvText);
+        
+        let countsTracker = {};
+        autoDetectedDbNames.forEach(name => countsTracker[name] = 0);
+        
+        let foundCount = 0;
+        
+        for (let i = 0; i < inputCnicList.length; i++) {
+            let targetCnic = inputCnicList[i];
+            let row = document.createElement('tr');
             
-            for (let i = 0; i < inputCnicList.length; i++) {
-                let targetCnic = inputCnicList[i];
-                let row = document.createElement('tr');
+            let cellSr = document.createElement('td');
+            cellSr.textContent = i + 1;
+            cellSr.style.color = "var(--text-muted)";
+            
+            let cellCnic = document.createElement('td');
+            cellCnic.textContent = targetCnic;
+            cellCnic.style.fontFamily = "monospace";
+            
+            let cellStatus = document.createElement('td');
+            let cellOwner = document.createElement('td');
+            let cellAction = document.createElement('td');
+            
+            if (sheetOwnersMap[targetCnic]) {
+                foundCount++;
+                let dbLocation = sheetOwnersMap[targetCnic];
                 
-                let cellSr = document.createElement('td');
-                cellSr.textContent = i + 1;
-                cellSr.style.color = "var(--text-muted)";
-                
-                let cellCnic = document.createElement('td');
-                cellCnic.textContent = targetCnic;
-                cellCnic.style.fontFamily = "monospace";
-                
-                let cellStatus = document.createElement('td');
-                let cellOwner = document.createElement('td');
-                let cellAction = document.createElement('td');
-                
-                if (sheetOwnersMap[targetCnic]) {
-                    foundCount++;
-                    let dbLocation = sheetOwnersMap[targetCnic];
-                    
-                    let matchText = dbLocation.toLowerCase();
-                    if(matchText.includes('database 1') || matchText.includes('data 1')) c1++;
-                    else if(matchText.includes('database 2') || matchText.includes('data 2')) c2++;
-                    else if(matchText.includes('database 3') || matchText.includes('data 3')) c3++;
-                    else if(matchText.includes('database 4') || matchText.includes('data 4')) c4++;
-                    else if(matchText.includes('database 5') || matchText.includes('data 5')) c5++;
-                    else c1++; 
-                    
-                    cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
-                    cellOwner.textContent = dbLocation; 
-                    cellOwner.style.color = "var(--neon-cyan)";
-                    
-                    let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${targetCnic}\n📂 Location: ${dbLocation}`);
-                    let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
-                    
-                    cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
-                    
-                    currentFoundCnicsList.push({ cnic: targetCnic, location: dbLocation });
-                } else {
-                    cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
-                    cellOwner.textContent = "-";
-                    cellOwner.style.color = "var(--text-muted)";
-                    cellAction.textContent = "-";
+                if (countsTracker[dbLocation] !== undefined) {
+                    countsTracker[dbLocation]++;
                 }
                 
-                row.appendChild(cellSr);
-                row.appendChild(cellCnic);
-                row.appendChild(cellStatus);
-                row.appendChild(cellOwner);
-                row.appendChild(cellAction);
-                tableBody.appendChild(row);
-            }
-            
-            liveFoundCount.textContent = foundCount;
-            document.getElementById('db1Count').textContent = c1;
-            document.getElementById('db2Count').textContent = c2;
-            document.getElementById('db3Count').textContent = c3;
-            document.getElementById('db4Count').textContent = c4;
-            document.getElementById('db5Count').textContent = c5;
-            
-            progressBarFill.style.width = "100%";
-            progressPercentage.textContent = "100%";
-            progressStatusText.textContent = "Database Audit Synced Successfully.";
-            
-            let copyAllBtn = document.getElementById('copyAllBtn');
-            if (currentFoundCnicsList.length > 0) {
-                copyAllBtn.style.display = "block";
-                dynamicRarBtn.style.display = 'flex'; 
+                cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
+                cellOwner.textContent = dbLocation; 
+                cellOwner.style.color = "var(--neon-cyan)";
+                
+                let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${targetCnic}\n📂 Location: ${dbLocation}`);
+                let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
+                
+                cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
+                
+                currentFoundCnicsList.push({ cnic: targetCnic, location: dbLocation });
             } else {
-                copyAllBtn.style.display = "none";
+                cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
+                cellOwner.textContent = "-";
+                cellOwner.style.color = "var(--text-muted)";
+                cellAction.textContent = "-";
             }
             
-            setTimeout(() => { resultsContainer.style.display = 'block'; }, 150);
-        } else {
-            alert("Database Logic Error: Cloud returned invalid or empty parameters frame.");
+            row.appendChild(cellSr);
+            row.appendChild(cellCnic);
+            row.appendChild(cellStatus);
+            row.appendChild(cellOwner);
+            row.appendChild(cellAction);
+            tableBody.appendChild(row);
         }
+        
+        // Dynamically build Boxes based on sheet columns
+        autoDetectedDbNames.slice(0, 5).forEach(name => {
+            let badge = document.createElement('div');
+            badge.className = 'db-node-badge';
+            badge.title = name;
+            badge.innerHTML = `${name} <span class="db-count-val">${countsTracker[name]}</span>`;
+            dbGrid.appendChild(badge);
+        });
+        
+        liveFoundCount.textContent = foundCount;
+        progressBarFill.style.width = "100%";
+        progressPercentage.textContent = "100%";
+        progressStatusText.textContent = "Database Audit Synced Successfully.";
+        
+        let copyAllBtn = document.getElementById('copyAllBtn');
+        if (currentFoundCnicsList.length > 0) {
+            copyAllBtn.style.display = "block";
+            dynamicRarBtn.style.display = 'flex'; 
+        } else {
+            copyAllBtn.style.display = "none";
+        }
+        
+        setTimeout(() => { resultsContainer.style.display = 'block'; }, 150);
+        
     } catch (error) {
-        alert("Network Error: Response dropped. Web App ko deploy karte waqt setting me 'Anyone' access lazmi check karke save karein.");
+        alert("Execution Error: Stream data fetch dropped.");
         console.error(error);
-        progressStatusText.textContent = "Pipeline execution error loop.";
+        progressStatusText.textContent = "Execution Error.";
     } finally {
         setInterfaceLockState(false);
     }
@@ -650,26 +667,9 @@ async function startSecureBulkCloudSearch() {
 function copyAllFoundCnics() {
     if (currentFoundCnicsList.length === 0) return;
     
-    let databaseBuckets = { d1: [], d2: [], d3: [], d4: [], d5: [], other: [] };
-    
-    currentFoundCnicsList.forEach(item => {
-        let currentLoc = item.location.toLowerCase();
-        if(currentLoc.includes('database 1') || currentLoc.includes('data 1')) databaseBuckets.d1.push(item);
-        else if(currentLoc.includes('database 2') || currentLoc.includes('data 2')) databaseBuckets.d2.push(item);
-        else if(currentLoc.includes('database 3') || currentLoc.includes('data 3')) databaseBuckets.d3.push(item);
-        else if(currentLoc.includes('database 4') || currentLoc.includes('data 4')) databaseBuckets.d4.push(item);
-        else if(currentLoc.includes('database 5') || currentLoc.includes('data 5')) databaseBuckets.d5.push(item);
-        else databaseBuckets.other.push(item);
+    let sortedCompilationList = [...currentFoundCnicsList].sort((a, b) => {
+        return autoDetectedDbNames.indexOf(a.location) - autoDetectedDbNames.indexOf(b.location);
     });
-    
-    let sortedCompilationList = [
-        ...databaseBuckets.d1,
-        ...databaseBuckets.d2,
-        ...databaseBuckets.d3,
-        ...databaseBuckets.d4,
-        ...databaseBuckets.d5,
-        ...databaseBuckets.other
-    ];
     
     let bulkText = sortedCompilationList.map(item => `CNIC: ${item.cnic} | Location: ${item.location}`).join('\n');
     let copyAllBtn = document.getElementById('copyAllBtn');
