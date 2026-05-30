@@ -138,7 +138,7 @@
 
         /* Dynamic RAR Download Button Style */
         .download-rar-btn {
-            display: none; /* Controlled via Search Results Event Logic */
+            display: none; 
             background: linear-gradient(135deg, #f97316, #ea580c);
             color: white;
             padding: 12px;
@@ -376,7 +376,7 @@
 
     <div id="progressPanel" class="progress-panel">
         <div class="progress-info">
-            <span id="progressStatusText">🔄 Accessing Routing Nodes...</span>
+            <span id="progressStatusText">🔄 Connecting Secure Cloud Node...</span>
             <span id="progressPercentage">0%</span>
         </div>
         <div class="progress-bar-container">
@@ -433,7 +433,6 @@
 
 <script>
 // ==================== LIVE RUNTIME PERSISTENT ROUTING ====================
-// AAPKA ORIGINAL BACKEND SCRIPT URL APNI JAGAH PAR BAAQI HAI
 const scriptUrl = "https://script.google.com/macros/s/AKfycby9mlGchLRaSbzrO7A1-uP5u0bVW3HixjoDcCr4Z5YSFKJQu3bZutB_g0fhmg4Vw_o3CA/exec"; 
 const ownerWhatsApp = "447915605790";
 // =========================================================================
@@ -456,47 +455,45 @@ async function startSecureBulkCloudSearch() {
     
     currentFoundCnicsList = [];
     resultsContainer.style.display = 'none';
-    dynamicRarBtn.style.display = 'none'; // Hide rar option initially on re-search execution
+    dynamicRarBtn.style.display = 'none'; 
     tableBody.innerHTML = "";
     
-    let cnicList = rawInput.split('\n')
-                           .map(line => line.replace(/[^0-9]/g, '').trim())
-                           .filter(line => line.length >= 5);
+    // JS Regex to clear formatting and get cleaned array
+    let inputCnicList = rawInput.split('\n')
+                               .map(line => line.replace(/[^0-9]/g, '').trim())
+                               .filter(line => line.length >= 5);
                            
-    if(cnicList.length === 0) {
+    if(inputCnicList.length === 0) {
         alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
         return;
     }
     
     searchBtn.disabled = true;
     progressPanel.style.display = "block";
-    progressBarFill.style.width = "15%";
-    progressPercentage.textContent = "15%";
-    progressStatusText.textContent = "Connecting Secure Cloud Node...";
+    progressBarFill.style.width = "25%";
+    progressPercentage.textContent = "25%";
+    progressStatusText.textContent = "Fetching complete database layout...";
     liveFoundCount.textContent = "0";
     liveNotFoundCount.textContent = "0";
     
     try {
-        progressBarFill.style.width = "45%";
-        progressPercentage.textContent = "45%";
-        progressStatusText.textContent = "Scanning Core Indexes...";
-
-        let finalRequestUrl = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
-        let response = await fetch(finalRequestUrl);
+        // Fetch data based on your precise Web App structure
+        let response = await fetch(scriptUrl);
         
-        progressBarFill.style.width = "80%";
-        progressPercentage.textContent = "80%";
-        progressStatusText.textContent = "Decrypting Schema Tables...";
+        progressBarFill.style.width = "65%";
+        progressPercentage.textContent = "65%";
+        progressStatusText.textContent = "Processing and auditing local nodes...";
         
         let json = await response.json();
         
-        if (json.status === "success" && json.data) {
-            let resultsData = json.data;
+        // Match with your exact Google Apps Script structure (json.owners mapping)
+        if (json && json.owners) {
+            let sheetOwnersMap = json.owners;
             let foundCount = 0;
             let notFoundCount = 0;
             
-            for (let i = 0; i < resultsData.length; i++) {
-                let item = resultsData[i];
+            for (let i = 0; i < inputCnicList.length; i++) {
+                let targetCnic = inputCnicList[i];
                 let row = document.createElement('tr');
                 
                 let cellSr = document.createElement('td');
@@ -504,26 +501,118 @@ async function startSecureBulkCloudSearch() {
                 cellSr.style.color = "var(--text-muted)";
                 
                 let cellCnic = document.createElement('td');
-                cellCnic.textContent = item.cnic;
+                cellCnic.textContent = targetCnic;
                 cellCnic.style.fontFamily = "monospace";
                 
                 let cellStatus = document.createElement('td');
                 let cellOwner = document.createElement('td');
                 let cellAction = document.createElement('td');
                 
-                if (item.status === "found") {
+                // Real-time lookup check inside the owners map returned by your sheets script
+                if (sheetOwnersMap[targetCnic]) {
                     foundCount++;
+                    let dbLocation = sheetOwnersMap[targetCnic];
+                    
                     cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
-                    cellOwner.textContent = item.owner; 
+                    cellOwner.textContent = dbLocation; 
                     cellOwner.style.color = "var(--neon-cyan)";
                     
-                    let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${item.cnic}\n📂 Location: ${item.owner}`);
+                    let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${targetCnic}\n📂 Location: ${dbLocation}`);
                     let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
                     
                     cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
                     
-                    currentFoundCnicsList.push({ cnic: item.cnic, location: item.owner });
+                    currentFoundCnicsList.push({ cnic: targetCnic, location: dbLocation });
                 } else {
                     notFoundCount++;
                     cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
-                  
+                    cellOwner.textContent = "-";
+                    cellOwner.style.color = "var(--text-muted)";
+                    cellAction.textContent = "-";
+                }
+                
+                row.appendChild(cellSr);
+                row.appendChild(cellCnic);
+                row.appendChild(cellStatus);
+                row.appendChild(cellOwner);
+                row.appendChild(cellAction);
+                tableBody.appendChild(row);
+            }
+            
+            // Sync up final layouts
+            liveFoundCount.textContent = foundCount;
+            liveNotFoundCount.textContent = notFoundCount;
+            progressBarFill.style.width = "100%";
+            progressPercentage.textContent = "100%";
+            progressStatusText.textContent = "Sync Process Finished.";
+            
+            let copyAllBtn = document.getElementById('copyAllBtn');
+            if (currentFoundCnicsList.length > 0) {
+                copyAllBtn.style.display = "block";
+                dynamicRarBtn.style.display = 'flex'; // Triggers .RAR format exposure
+            } else {
+                copyAllBtn.style.display = "none";
+            }
+            
+            setTimeout(() => { resultsContainer.style.display = 'block'; }, 150);
+        } else {
+            alert("Database Schema Error: Script content logic response unexpected.");
+        }
+    } catch (error) {
+        alert("Configuration Handshake Failed. Make sure you deployed Apps script as 'Anyone'.");
+        console.error(error);
+        progressStatusText.textContent = "Execution Error.";
+    } finally {
+        searchBtn.disabled = false;
+    }
+}
+
+function copyAllFoundCnics() {
+    if (currentFoundCnicsList.length === 0) return;
+    let bulkText = currentFoundCnicsList.map(item => `CNIC: ${item.cnic} | Location: ${item.location}`).join('\n');
+    let copyAllBtn = document.getElementById('copyAllBtn');
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(bulkText).then(() => {
+            showBulkCopiedFeedback(copyAllBtn);
+        }).catch(err => { fallbackBulkCopy(bulkText, copyAllBtn); });
+    } else {
+        fallbackBulkCopy(bulkText, copyAllBtn);
+    }
+}
+
+function fallbackBulkCopy(text, buttonElement) {
+    let textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed"; 
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        showBulkCopiedFeedback(buttonElement);
+    } catch (err) {
+        console.error(err);
+    }
+    document.body.removeChild(textArea);
+}
+
+function showBulkCopiedFeedback(btn) {
+    btn.textContent = 'Copied!';
+    setTimeout(() => {
+        btn.textContent = '📋 Copy Found';
+    }, 2000);
+}
+
+// Balance Failed custom premium error alert modal
+function triggerPremiumError() {
+    document.getElementById('premiumModal').style.display = 'flex';
+}
+
+function closePremiumError() {
+    document.getElementById('premiumModal').style.display = 'none';
+    window.open(`https://wa.me/${ownerWhatsApp}?text=Assalam-o-Alaikum%20Admin,%20Mera%20Biometric%20Engine%20Balance%20Failed%20Error%20Aa%20Rha%20Hai.%20Please%20Wallet%20Recharge%20Kar%20Dain%20Taake%20Main%20RAR%20Fingerprints%20Backup%20Extract%20Kar%20Sakoon.`, '_blank');
+}
+</script>
+</body>
+</html>
