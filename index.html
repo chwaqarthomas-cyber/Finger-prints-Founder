@@ -84,7 +84,6 @@
             letter-spacing: 1px; 
         }
 
-        /* Wallet Panel showing 373,939 Balance */
         .balance-widget {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(6, 182, 212, 0.2);
@@ -134,7 +133,6 @@
             box-shadow: 0 4px 10px rgba(37,211,102,0.15); 
         }
 
-        /* Dynamic RAR Download Button Style */
         .download-rar-btn {
             display: none; 
             background: linear-gradient(135deg, #f97316, #ea580c);
@@ -171,6 +169,7 @@
             text-align: left;
         }
         
+        /* Interactive Search Cloud Engine Progress Module */
         .progress-panel {
             display: none;
             background: #0b111e;
@@ -200,15 +199,56 @@
             background: var(--neon-cyan);
             transition: width 0.2s ease;
         }
-        .live-stats {
-            display: flex;
-            gap: 15px;
-            margin-top: 8px;
+        
+        /* Advanced Dynamic Counting Analytics Engine */
+        .live-stats-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+        .stat-widget-box {
             font-size: 11px;
             font-weight: bold;
+            color: var(--text-muted);
         }
-        .stat-found { color: var(--neon-green); }
-        .stat-notfound { color: var(--neon-red); }
+        .stat-widget-box span {
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .stat-found-label { color: var(--neon-green); }
+        .stat-searched-label { color: var(--neon-cyan); }
+
+        /* Real-time Cloud Sub-Database Node Counters */
+        .sub-db-container-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 6px;
+            margin-top: 8px;
+            border-top: 1px dashed rgba(255,255,255,0.05);
+            padding-top: 8px;
+        }
+        .db-node-badge {
+            background: #090d16;
+            border: 1px solid #1e293b;
+            padding: 4px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 9px;
+            font-weight: bold;
+            color: #94a3b8;
+        }
+        .db-node-badge .db-count-val {
+            display: block;
+            font-size: 11px;
+            color: var(--neon-orange);
+            font-family: monospace;
+            margin-top: 2px;
+        }
 
         textarea { 
             width: 100%; 
@@ -225,6 +265,7 @@
             margin-bottom: 12px;
         }
         textarea:focus { border-color: var(--neon-cyan); outline: none; }
+        textarea:disabled { opacity: 0.6; cursor: not-allowed; background: #06090e; }
         
         .main-search-btn { 
             width: 100%; 
@@ -240,9 +281,14 @@
             letter-spacing: 0.5px; 
             box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
         }
+        .main-search-btn:disabled {
+            background: #1e293b !important;
+            color: #475569 !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+        }
         
         .results-container { display: none; margin-top: 20px; text-align: left; }
-        
         .results-header { 
             display: flex; 
             justify-content: space-between; 
@@ -252,7 +298,6 @@
             margin-bottom: 12px; 
         }
         .results-header h3 { color: var(--text-main); margin: 0; font-size: 14px; text-transform: uppercase; }
-        
         .copy-all-btn { 
             background-color: #111c30; 
             color: #93c5fd; 
@@ -265,7 +310,6 @@
             text-transform: uppercase;
         }
         
-        /* Mobile Fluid Table Controls */
         .table-responsive { 
             overflow-x: auto; 
             width: 100%; 
@@ -292,7 +336,6 @@
             font-weight: bold;
         }
 
-        /* Responsive Custom Alert Popup Modals */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -358,8 +401,8 @@
     </div>
     
     <div class="top-actions">
-        <a href="https://wa.me/447915605790" target="_blank" class="top-wa-banner">
-            <i class="fab fa-whatsapp"></i> CONTACT SYSTEM OWNER
+        <a href="https://wa.me/447915605790" target="_blank" class="top-wa-banner custom-lockable-btn">
+            <i class="fab fa-whatsapp"></i> CONTACT SYSTEM OWNER / ADMIN WHATSAPP
         </a>
     </div>
 
@@ -370,15 +413,24 @@
 
     <div id="progressPanel" class="progress-panel">
         <div class="progress-info">
-            <span id="progressStatusText">🔄 Accessing Routing Nodes...</span>
+            <span id="progressStatusText">🔄 Accessing Cloud Server...</span>
             <span id="progressPercentage">0%</span>
         </div>
         <div class="progress-bar-container">
             <div id="progressBarFill" class="progress-bar-fill"></div>
         </div>
-        <div class="live-stats">
-            <span class="stat-found">FOUND: <span id="liveFoundCount">0</span></span>
-            <span class="stat-notfound">NOT FOUND: <span id="liveNotFoundCount">0</span></span>
+        
+        <div class="live-stats-matrix">
+            <div class="stat-widget-box stat-searched-label">TOTAL SEARCHING: <span id="liveTotalInputCount">0</span></div>
+            <div class="stat-widget-box stat-found-label">TOTAL FOUND: <span id="liveFoundCount">0</span></div>
+        </div>
+
+        <div class="sub-db-container-grid">
+            <div class="db-node-badge">DATABASE 1 <span id="db1Count" class="db-count-val">0</span></div>
+            <div class="db-node-badge">DATABASE 2 <span id="db2Count" class="db-count-val">0</span></div>
+            <div class="db-node-badge">DATABASE 3 <span id="db3Count" class="db-count-val">0</span></div>
+            <div class="db-node-badge">DATABASE 4 <span id="db4Count" class="db-count-val">0</span></div>
+            <div class="db-node-badge">DATABASE 5 <span id="db5Count" class="db-count-val">0</span></div>
         </div>
     </div>
 
@@ -387,8 +439,13 @@
     
     <button id="searchBtn" class="main-search-btn" onclick="startSecureBulkCloudSearch()">START SECURE BULK SEARCH</button>
     
+    <div style="margin-top: 12px; margin-bottom: 5px;">
+        <a href="https://wa.me/447915605790" target="_blank" class="top-wa-banner custom-lockable-btn" style="background: #1e293b; border: 1px solid rgba(37,211,102,0.4); font-size:12px; padding:10px;">
+            <i class="fab fa-whatsapp"></i> CONTACT SYSTEM OWNER / ADMIN WHATSAPP (SUPPORT)
+        </a>
+    </div>
+
     <div id="resultsContainer" class="results-container">
-        
         <div style="margin-bottom: 12px;">
              <button id="dynamicRarBtn" class="download-rar-btn" onclick="triggerPremiumError()">
                  <i class="fas fa-file-archive"></i> Download All Fingerprints (.RAR)
@@ -421,7 +478,7 @@
         <i class="fas fa-exclamation-circle"></i>
         <h3>BALANCE_VERIFICATION_FAILED</h3>
         <p>Server error logic code: [ERR_LOW_RESERVE]. Cloud data download block ho gaya hai. Local node framework update karne ke liye credentials ya main balance top-up recharge karein.</p>
-        <button class="modal-close-btn" onclick="closePremiumError()">CONTACT SYSTEM OWNER</button>
+        <button class="modal-close-btn" onclick="closePremiumError()">CONTACT SYSTEM OWNER / ADMIN WHATSAPP</button>
     </div>
 </div>
 
@@ -432,139 +489,228 @@ const ownerWhatsApp = "447915605790";
 // =========================================================================
 
 let currentFoundCnicsList = [];
+let globalCnicInputList = [];
+
+// Lock Web Controls Framework to prevent any user clicks during processing
+function setInterfaceLockState(isLocked) {
+    document.getElementById('searchBtn').disabled = isLocked;
+    document.getElementById('cnicBulkInput').disabled = isLocked;
+    
+    // Disable external hyper banners
+    let targetActionElements = document.querySelectorAll('.custom-lockable-btn');
+    targetActionElements.forEach(btn => {
+        if(isLocked) {
+            btn.style.pointerEvents = 'none';
+            btn.style.opacity = '0.4';
+        } else {
+            btn.style.pointerEvents = 'auto';
+            btn.style.opacity = '1';
+        }
+    });
+}
+
+window.handleDatabaseResponse = function(json) {
+    let resultsContainer = document.getElementById('resultsContainer');
+    let tableBody = document.getElementById('resultsTableBody');
+    let dynamicRarBtn = document.getElementById('dynamicRarBtn');
+    
+    let progressBarFill = document.getElementById('progressBarFill');
+    let progressPercentage = document.getElementById('progressPercentage');
+    let progressStatusText = document.getElementById('progressStatusText');
+    let liveFoundCount = document.getElementById('liveFoundCount');
+    
+    // Core database variable node elements
+    let db1Count = document.getElementById('db1Count');
+    let db2Count = document.getElementById('db2Count');
+    let db3Count = document.getElementById('db3Count');
+    let db4Count = document.getElementById('db4Count');
+    let db5Count = document.getElementById('db5Count');
+
+    progressBarFill.style.width = "75%";
+    progressPercentage.textContent = "75%";
+    progressStatusText.textContent = "Sorting data arrays dynamically...";
+
+    if (json && json.owners) {
+        let sheetOwnersMap = json.owners;
+        let foundCount = 0;
+        
+        let c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0;
+        
+        for (let i = 0; i < globalCnicInputList.length; i++) {
+            let targetCnic = globalCnicInputList[i];
+            let row = document.createElement('tr');
+            
+            let cellSr = document.createElement('td');
+            cellSr.textContent = i + 1;
+            cellSr.style.color = "var(--text-muted)";
+            
+            let cellCnic = document.createElement('td');
+            cellCnic.textContent = targetCnic;
+            cellCnic.style.fontFamily = "monospace";
+            
+            let cellStatus = document.createElement('td');
+            let cellOwner = document.createElement('td');
+            let cellAction = document.createElement('td');
+            
+            if (sheetOwnersMap[targetCnic]) {
+                foundCount++;
+                let dbLocation = sheetOwnersMap[targetCnic];
+                
+                // Track dynamic counter quantities for each source file layout
+                let matchText = dbLocation.toLowerCase();
+                if(matchText.includes('database 1') || matchText.includes('data 1')) c1++;
+                else if(matchText.includes('database 2') || matchText.includes('data 2')) c2++;
+                else if(matchText.includes('database 3') || matchText.includes('data 3')) c3++;
+                else if(matchText.includes('database 4') || matchText.includes('data 4')) c4++;
+                else if(matchText.includes('database 5') || matchText.includes('data 5')) c5++;
+                else c1++; // Default fallback grouping increment
+                
+                cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
+                cellOwner.textContent = dbLocation; 
+                cellOwner.style.color = "var(--neon-cyan)";
+                
+                let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${targetCnic}\n📂 Location: ${dbLocation}`);
+                let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
+                
+                cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
+                
+                currentFoundCnicsList.push({ cnic: targetCnic, location: dbLocation });
+            } else {
+                cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
+                cellOwner.textContent = "-";
+                cellOwner.style.color = "var(--text-muted)";
+                cellAction.textContent = "-";
+            }
+            
+            row.appendChild(cellSr);
+            row.appendChild(cellCnic);
+            row.appendChild(cellStatus);
+            row.appendChild(cellOwner);
+            row.appendChild(cellAction);
+            tableBody.appendChild(row);
+        }
+        
+        // Render current parsed statistics counters layout
+        liveFoundCount.textContent = foundCount;
+        db1Count.textContent = c1;
+        db2Count.textContent = c2;
+        db3Count.textContent = c3;
+        db4Count.textContent = c4;
+        db5Count.textContent = c5;
+        
+        progressBarFill.style.width = "100%";
+        progressPercentage.textContent = "100%";
+        progressStatusText.textContent = "Database Audit Synced Successfully.";
+        
+        let copyAllBtn = document.getElementById('copyAllBtn');
+        if (currentFoundCnicsList.length > 0) {
+            copyAllBtn.style.display = "block";
+            dynamicRarBtn.style.display = 'flex'; 
+        } else {
+            copyAllBtn.style.display = "none";
+        }
+        
+        setTimeout(() => { resultsContainer.style.display = 'block'; }, 150);
+    } else {
+        alert("Schema Response Error Formulate Exception.");
+    }
+    
+    // Unlock control features instantly
+    setInterfaceLockState(false);
+};
 
 async function startSecureBulkCloudSearch() {
     let rawInput = document.getElementById('cnicBulkInput').value;
     let resultsContainer = document.getElementById('resultsContainer');
     let tableBody = document.getElementById('resultsTableBody');
-    let searchBtn = document.getElementById('searchBtn');
     let dynamicRarBtn = document.getElementById('dynamicRarBtn');
     
     let progressPanel = document.getElementById('progressPanel');
     let progressBarFill = document.getElementById('progressBarFill');
     let progressPercentage = document.getElementById('progressPercentage');
     let progressStatusText = document.getElementById('progressStatusText');
+    let liveTotalInputCount = document.getElementById('liveTotalInputCount');
     let liveFoundCount = document.getElementById('liveFoundCount');
-    let liveNotFoundCount = document.getElementById('liveNotFoundCount');
     
     currentFoundCnicsList = [];
+    globalCnicInputList = [];
     resultsContainer.style.display = 'none';
     dynamicRarBtn.style.display = 'none'; 
     tableBody.innerHTML = "";
     
-    let cnicList = rawInput.split('\n')
-                           .map(line => line.replace(/[^0-9]/g, '').trim())
-                           .filter(line => line.length >= 5);
+    globalCnicInputList = rawInput.split('\n')
+                                 .map(line => line.replace(/[^0-9]/g, '').trim())
+                                 .filter(line => line.length >= 5);
                            
-    if(cnicList.length === 0) {
+    if(globalCnicInputList.length === 0) {
         alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
         return;
     }
     
-    searchBtn.disabled = true;
-    progressPanel.style.display = "block";
-    progressBarFill.style.width = "20%";
-    progressPercentage.textContent = "20%";
-    progressStatusText.textContent = "Connecting Secure Cloud Node...";
-    liveFoundCount.textContent = "0";
-    liveNotFoundCount.textContent = "0";
+    // Trigger System Locking Engine Execution State
+    setInterfaceLockState(true);
     
-    try {
-        progressBarFill.style.width = "50%";
-        progressPercentage.textContent = "50%";
-        progressStatusText.textContent = "Querying Database Sheets...";
-
-        // URL par split params send ho rahe hain jo aapki active script handle karti hai
-        let finalRequestUrl = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
-        let response = await fetch(finalRequestUrl);
-        
-        progressBarFill.style.width = "85%";
-        progressPercentage.textContent = "85%";
-        progressStatusText.textContent = "Parsing Response Payload...";
-        
-        let json = await response.json();
-        
-        // Aapki current working script ke response layout (status: "success", data: [...]) ke mutabiq
-        if (json.status === "success" && json.data) {
-            let resultsData = json.data;
-            let foundCount = 0;
-            let notFoundCount = 0;
-            
-            for (let i = 0; i < resultsData.length; i++) {
-                let item = resultsData[i];
-                let row = document.createElement('tr');
-                
-                let cellSr = document.createElement('td');
-                cellSr.textContent = i + 1;
-                cellSr.style.color = "var(--text-muted)";
-                
-                let cellCnic = document.createElement('td');
-                cellCnic.textContent = item.cnic;
-                cellCnic.style.fontFamily = "monospace";
-                
-                let cellStatus = document.createElement('td');
-                let cellOwner = document.createElement('td');
-                let cellAction = document.createElement('td');
-                
-                // 'found' status matching directly from your sheets response code
-                if (item.status === "found") {
-                    foundCount++;
-                    cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
-                    cellOwner.textContent = item.owner; 
-                    cellOwner.style.color = "var(--neon-cyan)";
-                    
-                    let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${item.cnic}\n📂 Location: ${item.owner}`);
-                    let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
-                    
-                    cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
-                    
-                    currentFoundCnicsList.push({ cnic: item.cnic, location: item.owner });
-                } else {
-                    notFoundCount++;
-                    cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
-                    cellOwner.textContent = "-";
-                    cellOwner.style.color = "var(--text-muted)";
-                    cellAction.textContent = "-";
-                }
-                
-                row.appendChild(cellSr);
-                row.appendChild(cellCnic);
-                row.appendChild(cellStatus);
-                row.appendChild(cellOwner);
-                row.appendChild(cellAction);
-                tableBody.appendChild(row);
-            }
-            
-            liveFoundCount.textContent = foundCount;
-            liveNotFoundCount.textContent = notFoundCount;
-            progressBarFill.style.width = "100%";
-            progressPercentage.textContent = "100%";
-            progressStatusText.textContent = "Sync Process Finished.";
-            
-            let copyAllBtn = document.getElementById('copyAllBtn');
-            if (currentFoundCnicsList.length > 0) {
-                copyAllBtn.style.display = "block";
-                dynamicRarBtn.style.display = 'flex'; // Exposes RAR Download format options if cards found
-            } else {
-                copyAllBtn.style.display = "none";
-            }
-            
-            setTimeout(() => { resultsContainer.style.display = 'block'; }, 150);
-        } else {
-            alert("Database Response Error: " + (json.message || "Unknown schema structure."));
-        }
-    } catch (error) {
-        alert("Configuration Handshake Failed. Make sure you deployed Apps script as 'Anyone'.");
-        console.error(error);
-        progressStatusText.textContent = "Execution Error Context Pinpoint.";
-    } finally {
-        searchBtn.disabled = false;
-    }
+    progressPanel.style.display = "block";
+    progressBarFill.style.width = "30px";
+    progressBarFill.style.width = "30%";
+    progressPercentage.textContent = "30%";
+    progressStatusText.textContent = "Connecting pipeline framework keys...";
+    
+    // Sync Public Inputs Quantity
+    liveTotalInputCount.textContent = globalCnicInputList.length;
+    liveFoundCount.textContent = "0";
+    
+    document.getElementById('db1Count').textContent = "0";
+    document.getElementById('db2Count').textContent = "0";
+    document.getElementById('db3Count').textContent = "0";
+    document.getElementById('db4Count').textContent = "0";
+    document.getElementById('db5Count').textContent = "0";
+    
+    let oldScript = document.getElementById('jsonpTempScript');
+    if(oldScript) { oldScript.remove(); }
+    
+    let jsonpUrl = `${scriptUrl}?callback=handleDatabaseResponse`;
+    let script = document.createElement('script');
+    script.id = 'jsonpTempScript';
+    script.src = jsonpUrl;
+    
+    script.onerror = function() {
+        alert("Handshake Failed. Node response parameters drop exception.");
+        setInterfaceLockState(false);
+        progressStatusText.textContent = "Handshake Error Node Execution.";
+    };
+    
+    document.body.appendChild(script);
 }
 
+// Advanced Sequential Clipboard Compiler Method (Database 1 -> 5 Sorting Grid Loop)
 function copyAllFoundCnics() {
     if (currentFoundCnicsList.length === 0) return;
-    let bulkText = currentFoundCnicsList.map(item => `CNIC: ${item.cnic} | Location: ${item.location}`).join('\n');
+    
+    // Separation Storage Buckets initialization stage
+    let databaseBuckets = { d1: [], d2: [], d3: [], d4: [], d5: [], other: [] };
+    
+    currentFoundCnicsList.forEach(item => {
+        let currentLoc = item.location.toLowerCase();
+        if(currentLoc.includes('database 1') || currentLoc.includes('data 1')) databaseBuckets.d1.push(item);
+        else if(currentLoc.includes('database 2') || currentLoc.includes('data 2')) databaseBuckets.d2.push(item);
+        else if(currentLoc.includes('database 3') || currentLoc.includes('data 3')) databaseBuckets.d3.push(item);
+        else if(currentLoc.includes('database 4') || currentLoc.includes('data 4')) databaseBuckets.d4.push(item);
+        else if(currentLoc.includes('database 5') || currentLoc.includes('data 5')) databaseBuckets.d5.push(item);
+        else databaseBuckets.other.push(item);
+    });
+    
+    // Compile single sequential sorted output array text sequence block
+    let sortedCompilationList = [
+        ...databaseBuckets.d1,
+        ...databaseBuckets.d2,
+        ...databaseBuckets.d3,
+        ...databaseBuckets.d4,
+        ...databaseBuckets.d5,
+        ...databaseBuckets.other
+    ];
+    
+    let bulkText = sortedCompilationList.map(item => `CNIC: ${item.cnic} | Location: ${item.location}`).join('\n');
     let copyAllBtn = document.getElementById('copyAllBtn');
     
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -593,7 +739,7 @@ function fallbackBulkCopy(text, buttonElement) {
 }
 
 function showBulkCopiedFeedback(btn) {
-    btn.textContent = 'Copied!';
+    btn.textContent = 'Sorted & Copied!';
     setTimeout(() => { btn.textContent = '📋 Copy Found'; }, 2000);
 }
 
