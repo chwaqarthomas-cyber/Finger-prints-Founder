@@ -169,7 +169,6 @@
             text-align: left;
         }
         
-        /* Interactive Search Cloud Engine Progress Module */
         .progress-panel {
             display: none;
             background: #0b111e;
@@ -197,10 +196,9 @@
             height: 100%;
             width: 0%;
             background: var(--neon-cyan);
-            transition: width 0.2s ease;
+            transition: width 0.3s ease;
         }
         
-        /* Advanced Dynamic Counting Analytics Engine */
         .live-stats-matrix {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -223,7 +221,6 @@
         .stat-found-label { color: var(--neon-green); }
         .stat-searched-label { color: var(--neon-cyan); }
 
-        /* Real-time Cloud Sub-Database Node Counters */
         .sub-db-container-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
@@ -413,7 +410,7 @@
 
     <div id="progressPanel" class="progress-panel">
         <div class="progress-info">
-            <span id="progressStatusText">🔄 Accessing Cloud Server...</span>
+            <span id="progressStatusText">🔄 Ready for processing...</span>
             <span id="progressPercentage">0%</span>
         </div>
         <div class="progress-bar-container">
@@ -483,20 +480,15 @@
 </div>
 
 <script>
-// ==================== LIVE RUNTIME PERSISTENT ROUTING ====================
 const scriptUrl = "https://script.google.com/macros/s/AKfycby9mlGchLRaSbzrO7A1-uP5u0bVW3HixjoDcCr4Z5YSFKJQu3bZutB_g0fhmg4Vw_o3CA/exec"; 
 const ownerWhatsApp = "447915605790";
-// =========================================================================
 
 let currentFoundCnicsList = [];
-let globalCnicInputList = [];
 
-// Lock Web Controls Framework to prevent any user clicks during processing
 function setInterfaceLockState(isLocked) {
     document.getElementById('searchBtn').disabled = isLocked;
     document.getElementById('cnicBulkInput').disabled = isLocked;
     
-    // Disable external hyper banners
     let targetActionElements = document.querySelectorAll('.custom-lockable-btn');
     targetActionElements.forEach(btn => {
         if(isLocked) {
@@ -508,116 +500,6 @@ function setInterfaceLockState(isLocked) {
         }
     });
 }
-
-window.handleDatabaseResponse = function(json) {
-    let resultsContainer = document.getElementById('resultsContainer');
-    let tableBody = document.getElementById('resultsTableBody');
-    let dynamicRarBtn = document.getElementById('dynamicRarBtn');
-    
-    let progressBarFill = document.getElementById('progressBarFill');
-    let progressPercentage = document.getElementById('progressPercentage');
-    let progressStatusText = document.getElementById('progressStatusText');
-    let liveFoundCount = document.getElementById('liveFoundCount');
-    
-    // Core database variable node elements
-    let db1Count = document.getElementById('db1Count');
-    let db2Count = document.getElementById('db2Count');
-    let db3Count = document.getElementById('db3Count');
-    let db4Count = document.getElementById('db4Count');
-    let db5Count = document.getElementById('db5Count');
-
-    progressBarFill.style.width = "75%";
-    progressPercentage.textContent = "75%";
-    progressStatusText.textContent = "Sorting data arrays dynamically...";
-
-    if (json && json.owners) {
-        let sheetOwnersMap = json.owners;
-        let foundCount = 0;
-        
-        let c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0;
-        
-        for (let i = 0; i < globalCnicInputList.length; i++) {
-            let targetCnic = globalCnicInputList[i];
-            let row = document.createElement('tr');
-            
-            let cellSr = document.createElement('td');
-            cellSr.textContent = i + 1;
-            cellSr.style.color = "var(--text-muted)";
-            
-            let cellCnic = document.createElement('td');
-            cellCnic.textContent = targetCnic;
-            cellCnic.style.fontFamily = "monospace";
-            
-            let cellStatus = document.createElement('td');
-            let cellOwner = document.createElement('td');
-            let cellAction = document.createElement('td');
-            
-            if (sheetOwnersMap[targetCnic]) {
-                foundCount++;
-                let dbLocation = sheetOwnersMap[targetCnic];
-                
-                // Track dynamic counter quantities for each source file layout
-                let matchText = dbLocation.toLowerCase();
-                if(matchText.includes('database 1') || matchText.includes('data 1')) c1++;
-                else if(matchText.includes('database 2') || matchText.includes('data 2')) c2++;
-                else if(matchText.includes('database 3') || matchText.includes('data 3')) c3++;
-                else if(matchText.includes('database 4') || matchText.includes('data 4')) c4++;
-                else if(matchText.includes('database 5') || matchText.includes('data 5')) c5++;
-                else c1++; // Default fallback grouping increment
-                
-                cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
-                cellOwner.textContent = dbLocation; 
-                cellOwner.style.color = "var(--neon-cyan)";
-                
-                let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${targetCnic}\n📂 Location: ${dbLocation}`);
-                let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
-                
-                cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
-                
-                currentFoundCnicsList.push({ cnic: targetCnic, location: dbLocation });
-            } else {
-                cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
-                cellOwner.textContent = "-";
-                cellOwner.style.color = "var(--text-muted)";
-                cellAction.textContent = "-";
-            }
-            
-            row.appendChild(cellSr);
-            row.appendChild(cellCnic);
-            row.appendChild(cellStatus);
-            row.appendChild(cellOwner);
-            row.appendChild(cellAction);
-            tableBody.appendChild(row);
-        }
-        
-        // Render current parsed statistics counters layout
-        liveFoundCount.textContent = foundCount;
-        db1Count.textContent = c1;
-        db2Count.textContent = c2;
-        db3Count.textContent = c3;
-        db4Count.textContent = c4;
-        db5Count.textContent = c5;
-        
-        progressBarFill.style.width = "100%";
-        progressPercentage.textContent = "100%";
-        progressStatusText.textContent = "Database Audit Synced Successfully.";
-        
-        let copyAllBtn = document.getElementById('copyAllBtn');
-        if (currentFoundCnicsList.length > 0) {
-            copyAllBtn.style.display = "block";
-            dynamicRarBtn.style.display = 'flex'; 
-        } else {
-            copyAllBtn.style.display = "none";
-        }
-        
-        setTimeout(() => { resultsContainer.style.display = 'block'; }, 150);
-    } else {
-        alert("Schema Response Error Formulate Exception.");
-    }
-    
-    // Unlock control features instantly
-    setInterfaceLockState(false);
-};
 
 async function startSecureBulkCloudSearch() {
     let rawInput = document.getElementById('cnicBulkInput').value;
@@ -633,31 +515,27 @@ async function startSecureBulkCloudSearch() {
     let liveFoundCount = document.getElementById('liveFoundCount');
     
     currentFoundCnicsList = [];
-    globalCnicInputList = [];
     resultsContainer.style.display = 'none';
     dynamicRarBtn.style.display = 'none'; 
     tableBody.innerHTML = "";
     
-    globalCnicInputList = rawInput.split('\n')
-                                 .map(line => line.replace(/[^0-9]/g, '').trim())
-                                 .filter(line => line.length >= 5);
+    let inputCnicList = rawInput.split('\n')
+                               .map(line => line.replace(/[^0-9]/g, '').trim())
+                               .filter(line => line.length >= 5);
                            
-    if(globalCnicInputList.length === 0) {
+    if(inputCnicList.length === 0) {
         alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
         return;
     }
     
-    // Trigger System Locking Engine Execution State
     setInterfaceLockState(true);
     
     progressPanel.style.display = "block";
-    progressBarFill.style.width = "30px";
-    progressBarFill.style.width = "30%";
-    progressPercentage.textContent = "30%";
-    progressStatusText.textContent = "Connecting pipeline framework keys...";
+    progressBarFill.style.width = "20%";
+    progressPercentage.textContent = "20%";
+    progressStatusText.textContent = "Connecting to database matrix...";
     
-    // Sync Public Inputs Quantity
-    liveTotalInputCount.textContent = globalCnicInputList.length;
+    liveTotalInputCount.textContent = inputCnicList.length;
     liveFoundCount.textContent = "0";
     
     document.getElementById('db1Count').textContent = "0";
@@ -666,28 +544,112 @@ async function startSecureBulkCloudSearch() {
     document.getElementById('db4Count').textContent = "0";
     document.getElementById('db5Count').textContent = "0";
     
-    let oldScript = document.getElementById('jsonpTempScript');
-    if(oldScript) { oldScript.remove(); }
-    
-    let jsonpUrl = `${scriptUrl}?callback=handleDatabaseResponse`;
-    let script = document.createElement('script');
-    script.id = 'jsonpTempScript';
-    script.src = jsonpUrl;
-    
-    script.onerror = function() {
-        alert("Handshake Failed. Node response parameters drop exception.");
+    try {
+        progressBarFill.style.width = "50%";
+        progressPercentage.textContent = "50%";
+        progressStatusText.textContent = "Downloading encrypted core records...";
+
+        // CORS standard bypass route using silent redirection headers
+        let response = await fetch(scriptUrl);
+        let json = await response.json();
+        
+        progressBarFill.style.width = "85%";
+        progressPercentage.textContent = "85%";
+        progressStatusText.textContent = "Matching and sorting target cells...";
+        
+        if (json && json.owners) {
+            let sheetOwnersMap = json.owners;
+            let foundCount = 0;
+            let c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0;
+            
+            for (let i = 0; i < inputCnicList.length; i++) {
+                let targetCnic = inputCnicList[i];
+                let row = document.createElement('tr');
+                
+                let cellSr = document.createElement('td');
+                cellSr.textContent = i + 1;
+                cellSr.style.color = "var(--text-muted)";
+                
+                let cellCnic = document.createElement('td');
+                cellCnic.textContent = targetCnic;
+                cellCnic.style.fontFamily = "monospace";
+                
+                let cellStatus = document.createElement('td');
+                let cellOwner = document.createElement('td');
+                let cellAction = document.createElement('td');
+                
+                if (sheetOwnersMap[targetCnic]) {
+                    foundCount++;
+                    let dbLocation = sheetOwnersMap[targetCnic];
+                    
+                    let matchText = dbLocation.toLowerCase();
+                    if(matchText.includes('database 1') || matchText.includes('data 1')) c1++;
+                    else if(matchText.includes('database 2') || matchText.includes('data 2')) c2++;
+                    else if(matchText.includes('database 3') || matchText.includes('data 3')) c3++;
+                    else if(matchText.includes('database 4') || matchText.includes('data 4')) c4++;
+                    else if(matchText.includes('database 5') || matchText.includes('data 5')) c5++;
+                    else c1++; 
+                    
+                    cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
+                    cellOwner.textContent = dbLocation; 
+                    cellOwner.style.color = "var(--neon-cyan)";
+                    
+                    let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${targetCnic}\n📂 Location: ${dbLocation}`);
+                    let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
+                    
+                    cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
+                    
+                    currentFoundCnicsList.push({ cnic: targetCnic, location: dbLocation });
+                } else {
+                    cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
+                    cellOwner.textContent = "-";
+                    cellOwner.style.color = "var(--text-muted)";
+                    cellAction.textContent = "-";
+                }
+                
+                row.appendChild(cellSr);
+                row.appendChild(cellCnic);
+                row.appendChild(cellStatus);
+                row.appendChild(cellOwner);
+                row.appendChild(cellAction);
+                tableBody.appendChild(row);
+            }
+            
+            liveFoundCount.textContent = foundCount;
+            document.getElementById('db1Count').textContent = c1;
+            document.getElementById('db2Count').textContent = c2;
+            document.getElementById('db3Count').textContent = c3;
+            document.getElementById('db4Count').textContent = c4;
+            document.getElementById('db5Count').textContent = c5;
+            
+            progressBarFill.style.width = "100%";
+            progressPercentage.textContent = "100%";
+            progressStatusText.textContent = "Database Audit Synced Successfully.";
+            
+            let copyAllBtn = document.getElementById('copyAllBtn');
+            if (currentFoundCnicsList.length > 0) {
+                copyAllBtn.style.display = "block";
+                dynamicRarBtn.style.display = 'flex'; 
+            } else {
+                copyAllBtn.style.display = "none";
+            }
+            
+            setTimeout(() => { resultsContainer.style.display = 'block'; }, 150);
+        } else {
+            alert("Database Logic Error: Cloud returned invalid or empty parameters frame.");
+        }
+    } catch (error) {
+        alert("Network Error: Response dropped. Web App ko deploy karte waqt setting me 'Anyone' access lazmi check karke save karein.");
+        console.error(error);
+        progressStatusText.textContent = "Pipeline execution error loop.";
+    } finally {
         setInterfaceLockState(false);
-        progressStatusText.textContent = "Handshake Error Node Execution.";
-    };
-    
-    document.body.appendChild(script);
+    }
 }
 
-// Advanced Sequential Clipboard Compiler Method (Database 1 -> 5 Sorting Grid Loop)
 function copyAllFoundCnics() {
     if (currentFoundCnicsList.length === 0) return;
     
-    // Separation Storage Buckets initialization stage
     let databaseBuckets = { d1: [], d2: [], d3: [], d4: [], d5: [], other: [] };
     
     currentFoundCnicsList.forEach(item => {
@@ -700,7 +662,6 @@ function copyAllFoundCnics() {
         else databaseBuckets.other.push(item);
     });
     
-    // Compile single sequential sorted output array text sequence block
     let sortedCompilationList = [
         ...databaseBuckets.d1,
         ...databaseBuckets.d2,
