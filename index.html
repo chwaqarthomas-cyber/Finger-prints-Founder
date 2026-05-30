@@ -63,7 +63,6 @@
             width: 95%;
         }
 
-        /* Top Header & Dynamic Balance Panel */
         .header-section {
             text-align: center;
             margin-bottom: 15px;
@@ -85,7 +84,7 @@
             letter-spacing: 1px; 
         }
 
-        /* Credits Premium Widget */
+        /* Wallet Panel showing 373,939 Balance */
         .balance-widget {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(6, 182, 212, 0.2);
@@ -114,7 +113,6 @@
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
         }
         
-        /* Interactive Actions Matrix */
         .top-actions {
             display: grid;
             grid-template-columns: 1fr;
@@ -173,7 +171,6 @@
             text-align: left;
         }
         
-        /* Real-time Live Progress Panel */
         .progress-panel {
             display: none;
             background: #0b111e;
@@ -227,10 +224,7 @@
             resize: vertical; 
             margin-bottom: 12px;
         }
-        textarea:focus { 
-            border-color: var(--neon-cyan); 
-            outline: none; 
-        }
+        textarea:focus { border-color: var(--neon-cyan); outline: none; }
         
         .main-search-btn { 
             width: 100%; 
@@ -376,7 +370,7 @@
 
     <div id="progressPanel" class="progress-panel">
         <div class="progress-info">
-            <span id="progressStatusText">🔄 Connecting Secure Cloud Node...</span>
+            <span id="progressStatusText">🔄 Accessing Routing Nodes...</span>
             <span id="progressPercentage">0%</span>
         </div>
         <div class="progress-bar-container">
@@ -458,42 +452,46 @@ async function startSecureBulkCloudSearch() {
     dynamicRarBtn.style.display = 'none'; 
     tableBody.innerHTML = "";
     
-    // JS Regex to clear formatting and get cleaned array
-    let inputCnicList = rawInput.split('\n')
-                               .map(line => line.replace(/[^0-9]/g, '').trim())
-                               .filter(line => line.length >= 5);
+    let cnicList = rawInput.split('\n')
+                           .map(line => line.replace(/[^0-9]/g, '').trim())
+                           .filter(line => line.length >= 5);
                            
-    if(inputCnicList.length === 0) {
+    if(cnicList.length === 0) {
         alert('Baraye meharbani kam az kam aik darust CNIC darj karein.');
         return;
     }
     
     searchBtn.disabled = true;
     progressPanel.style.display = "block";
-    progressBarFill.style.width = "25%";
-    progressPercentage.textContent = "25%";
-    progressStatusText.textContent = "Fetching complete database layout...";
+    progressBarFill.style.width = "20%";
+    progressPercentage.textContent = "20%";
+    progressStatusText.textContent = "Connecting Secure Cloud Node...";
     liveFoundCount.textContent = "0";
     liveNotFoundCount.textContent = "0";
     
     try {
-        // Fetch data based on your precise Web App structure
-        let response = await fetch(scriptUrl);
+        progressBarFill.style.width = "50%";
+        progressPercentage.textContent = "50%";
+        progressStatusText.textContent = "Querying Database Sheets...";
+
+        // URL par split params send ho rahe hain jo aapki active script handle karti hai
+        let finalRequestUrl = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
+        let response = await fetch(finalRequestUrl);
         
-        progressBarFill.style.width = "65%";
-        progressPercentage.textContent = "65%";
-        progressStatusText.textContent = "Processing and auditing local nodes...";
+        progressBarFill.style.width = "85%";
+        progressPercentage.textContent = "85%";
+        progressStatusText.textContent = "Parsing Response Payload...";
         
         let json = await response.json();
         
-        // Match with your exact Google Apps Script structure (json.owners mapping)
-        if (json && json.owners) {
-            let sheetOwnersMap = json.owners;
+        // Aapki current working script ke response layout (status: "success", data: [...]) ke mutabiq
+        if (json.status === "success" && json.data) {
+            let resultsData = json.data;
             let foundCount = 0;
             let notFoundCount = 0;
             
-            for (let i = 0; i < inputCnicList.length; i++) {
-                let targetCnic = inputCnicList[i];
+            for (let i = 0; i < resultsData.length; i++) {
+                let item = resultsData[i];
                 let row = document.createElement('tr');
                 
                 let cellSr = document.createElement('td');
@@ -501,28 +499,26 @@ async function startSecureBulkCloudSearch() {
                 cellSr.style.color = "var(--text-muted)";
                 
                 let cellCnic = document.createElement('td');
-                cellCnic.textContent = targetCnic;
+                cellCnic.textContent = item.cnic;
                 cellCnic.style.fontFamily = "monospace";
                 
                 let cellStatus = document.createElement('td');
                 let cellOwner = document.createElement('td');
                 let cellAction = document.createElement('td');
                 
-                // Real-time lookup check inside the owners map returned by your sheets script
-                if (sheetOwnersMap[targetCnic]) {
+                // 'found' status matching directly from your sheets response code
+                if (item.status === "found") {
                     foundCount++;
-                    let dbLocation = sheetOwnersMap[targetCnic];
-                    
                     cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
-                    cellOwner.textContent = dbLocation; 
+                    cellOwner.textContent = item.owner; 
                     cellOwner.style.color = "var(--neon-cyan)";
                     
-                    let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${targetCnic}\n📂 Location: ${dbLocation}`);
+                    let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${item.cnic}\n📂 Location: ${item.owner}`);
                     let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
                     
                     cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
                     
-                    currentFoundCnicsList.push({ cnic: targetCnic, location: dbLocation });
+                    currentFoundCnicsList.push({ cnic: item.cnic, location: item.owner });
                 } else {
                     notFoundCount++;
                     cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
@@ -539,7 +535,6 @@ async function startSecureBulkCloudSearch() {
                 tableBody.appendChild(row);
             }
             
-            // Sync up final layouts
             liveFoundCount.textContent = foundCount;
             liveNotFoundCount.textContent = notFoundCount;
             progressBarFill.style.width = "100%";
@@ -549,19 +544,19 @@ async function startSecureBulkCloudSearch() {
             let copyAllBtn = document.getElementById('copyAllBtn');
             if (currentFoundCnicsList.length > 0) {
                 copyAllBtn.style.display = "block";
-                dynamicRarBtn.style.display = 'flex'; // Triggers .RAR format exposure
+                dynamicRarBtn.style.display = 'flex'; // Exposes RAR Download format options if cards found
             } else {
                 copyAllBtn.style.display = "none";
             }
             
             setTimeout(() => { resultsContainer.style.display = 'block'; }, 150);
         } else {
-            alert("Database Schema Error: Script content logic response unexpected.");
+            alert("Database Response Error: " + (json.message || "Unknown schema structure."));
         }
     } catch (error) {
         alert("Configuration Handshake Failed. Make sure you deployed Apps script as 'Anyone'.");
         console.error(error);
-        progressStatusText.textContent = "Execution Error.";
+        progressStatusText.textContent = "Execution Error Context Pinpoint.";
     } finally {
         searchBtn.disabled = false;
     }
@@ -599,12 +594,9 @@ function fallbackBulkCopy(text, buttonElement) {
 
 function showBulkCopiedFeedback(btn) {
     btn.textContent = 'Copied!';
-    setTimeout(() => {
-        btn.textContent = '📋 Copy Found';
-    }, 2000);
+    setTimeout(() => { btn.textContent = '📋 Copy Found'; }, 2000);
 }
 
-// Balance Failed custom premium error alert modal
 function triggerPremiumError() {
     document.getElementById('premiumModal').style.display = 'flex';
 }
