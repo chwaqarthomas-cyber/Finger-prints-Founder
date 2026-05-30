@@ -2,115 +2,461 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNIC Fingerprint Founder System - Vyke Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CNIC Fingerprint Founder System - Vyke Turbo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; color: #333; }
-        .container { max-width: 650px; background: white; margin: 20px auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
-        h2 { color: #1a365d; margin-bottom: 5px; font-size: 24px; text-transform: uppercase; }
-        .system-owner { font-size: 13px; color: #4a5568; font-weight: 600; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        /* Top WhatsApp Contact Banner */
-        .top-wa-banner { background-color: #25D366; color: white; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 14px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; box-shadow: 0 4px 10px rgba(37,211,102,0.2); }
-        .top-wa-banner:hover { opacity: 0.9; }
+        /* Cyber Neon / Dark Premium Ultra-Mobile Responsive Theme */
+        :root {
+            --bg-dark: #090d16;
+            --panel-bg: #131c2e;
+            --neon-cyan: #06b6d4;
+            --neon-green: #10b981;
+            --neon-red: #ef4444;
+            --neon-orange: #f97316;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+        }
 
-        .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 15px; border-radius: 8px; font-size: 13px; margin-bottom: 25px; font-weight: bold; line-height: 1.5; }
-        
-        textarea { width: 100%; height: 160px; padding: 14px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; font-size: 16px; font-family: monospace; resize: vertical; }
-        textarea:focus { border-color: #319795; outline: none; box-shadow: 0 0 0 3px rgba(49, 151, 149, 0.15); }
-        
-        button { width: 100%; background-color: #319795; color: white; border: none; padding: 14px; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
-        button:hover { background-color: #2c7a7b; }
-        button:disabled { background-color: #cbd5e0; cursor: not-allowed; }
-        
-        .loader-status { font-weight: bold; font-size: 14px; margin: 15px 0; color: #dd6b20; display: none; }
-        .results-container { display: none; margin-top: 25px; text-align: left; }
-        
-        /* Results Header & Counters */
-        .results-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
-        .results-header h3 { color: #1a365d; margin: 0; font-size: 16px; }
-        .live-counter-badge { background-color: #e2e8f0; color: #1a202c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        .live-counter-badge span { color: #2f855a; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        /* Copy All Button Style */
-        .copy-all-btn { background-color: #2b6cb0; color: white; border: none; padding: 8px 14px; font-size: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: auto; margin: 0; display: inline-flex; align-items: center; gap: 5px; }
-        .copy-all-btn:hover { background-color: #2b6cb0; opacity: 0.9; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
-        th { background-color: #2b6cb0; color: white; font-weight: bold; }
-        tr:nth-child(even) { background-color: #f7fafc; }
-        
-        .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; display: inline-block; }
-        .badge-found { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
-        .badge-not-found { background-color: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; }
+        body { 
+            font-family: 'Segoe UI', system-ui, Arial, sans-serif; 
+            background-color: var(--bg-dark); 
+            margin: 0; 
+            padding: 0; 
+            color: var(--text-main); 
+            padding-bottom: 30px;
+        }
 
-        /* Action Column Row WhatsApp Button */
-        .table-wa-btn { background-color: #25D366; color: white; border: none; padding: 6px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
-        .table-wa-btn:hover { background-color: #20ba5a; }
+        /* Continuous Price Ticker Marquee */
+        .ticker-wrap {
+            width: 100%;
+            background: #020617;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 8px 0;
+        }
+        .ticker {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .ticker span { margin-right: 40px; }
+        .ticker .highlight-f { color: #f472b6; }
+        .ticker .highlight-m { color: #38bdf8; }
+        @keyframes marquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        .container { 
+            max-width: 680px; 
+            background: var(--panel-bg); 
+            margin: 15px auto; 
+            padding: 20px; 
+            border-radius: 14px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            width: 95%;
+        }
+
+        /* Top Header & Dynamic Balance Panel */
+        .header-section {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        h2 { 
+            color: var(--neon-cyan); 
+            margin: 0 0 4px 0; 
+            font-size: 22px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+        .system-owner { 
+            font-size: 11px; 
+            color: var(--neon-green); 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+
+        /* Credits Premium Widget */
+        .balance-widget {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .balance-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .balance-label i { color: var(--neon-cyan); }
+        .balance-amount {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            font-family: monospace;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Interactive Actions Matrix */
+        .top-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .top-wa-banner { 
+            background: linear-gradient(135deg, #128c7e, #25D366); 
+            color: white; 
+            padding: 12px; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 13px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
+            text-decoration: none; 
+            box-shadow: 0 4px 10px rgba(37,211,102,0.15); 
+        }
+
+        /* Dynamic RAR Download Button Style */
+        .download-rar-btn {
+            display: none; /* Controlled via Search Results Event Logic */
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px rgba(249, 115, 22, 0.4); }
+            50% { box-shadow: 0 0 15px rgba(249, 115, 22, 0.7); }
+            100% { box-shadow: 0 0 5px rgba(249, 115, 22, 0.4); }
+        }
+
+        .warning-box { 
+            background-color: rgba(30, 41, 59, 0.5); 
+            border-left: 3px solid var(--neon-cyan); 
+            color: #cbd5e1; 
+            padding: 12px; 
+            border-radius: 0 8px 8px 0; 
+            font-size: 12px; 
+            margin-bottom: 15px; 
+            line-height: 1.4; 
+            text-align: left;
+        }
+        
+        /* Real-time Live Progress Panel */
+        .progress-panel {
+            display: none;
+            background: #0b111e;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.03);
+            text-align: left;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+        }
+        .progress-bar-container {
+            width: 100%;
+            background: #1e293b;
+            height: 6px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--neon-cyan);
+            transition: width 0.2s ease;
+        }
+        .live-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .stat-found { color: var(--neon-green); }
+        .stat-notfound { color: var(--neon-red); }
+
+        textarea { 
+            width: 100%; 
+            height: 120px; 
+            padding: 12px; 
+            background: #090d16;
+            color: #38bdf8;
+            border: 1px solid #223147; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-size: 14px; 
+            font-family: monospace; 
+            resize: vertical; 
+            margin-bottom: 12px;
+        }
+        textarea:focus { 
+            border-color: var(--neon-cyan); 
+            outline: none; 
+        }
+        
+        .main-search-btn { 
+            width: 100%; 
+            background: linear-gradient(135deg, #06b6d4, #0891b2); 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            font-size: 14px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+        }
+        
+        .results-container { display: none; margin-top: 20px; text-align: left; }
+        
+        .results-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #223147; 
+            padding-bottom: 8px; 
+            margin-bottom: 12px; 
+        }
+        .results-header h3 { color: var(--text-main); margin: 0; font-size: 14px; text-transform: uppercase; }
+        
+        .copy-all-btn { 
+            background-color: #111c30; 
+            color: #93c5fd; 
+            border: 1px solid #1d4ed8; 
+            padding: 6px 12px; 
+            font-size: 11px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-transform: uppercase;
+        }
+        
+        /* Mobile Fluid Table Controls */
+        .table-responsive { 
+            overflow-x: auto; 
+            width: 100%; 
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        table { width: 100%; border-collapse: collapse; background: #0b111e; min-width: 480px; }
+        th, td { padding: 10px; border: 1px solid #1a2638; text-align: left; font-size: 12px; }
+        th { background-color: #060b13; color: var(--neon-cyan); font-weight: bold; text-transform: uppercase; font-size: 11px; }
+        
+        .status-badge { padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 10px; display: inline-block; }
+        .badge-found { background-color: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .badge-not-found { background-color: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+        .table-wa-btn { 
+            background: #25D366; 
+            color: white; 
+            padding: 5px 8px; 
+            border-radius: 4px; 
+            font-size: 11px; 
+            text-decoration: none; 
+            display: inline-flex; 
+            align-items: center; 
+            font-weight: bold;
+        }
+
+        /* Responsive Custom Alert Popup Modals */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(3px);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 15px;
+        }
+        .modal-box {
+            background: var(--panel-bg);
+            border: 1px solid var(--neon-red);
+            padding: 25px 20px;
+            border-radius: 12px;
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
+        }
+        .modal-box i { font-size: 40px; color: var(--neon-red); margin-bottom: 12px; }
+        .modal-box h3 { margin: 0 0 8px 0; color: #fff; font-size: 18px; font-family: monospace; }
+        .modal-box p { color: #94a3b8; font-size: 13px; line-height: 1.5; margin: 0 0 20px 0; }
+        .modal-close-btn {
+            background: var(--neon-red);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 12px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>CNIC FINGERPRINT FOUNDER SYSTEM</h2>
-    <div class="system-owner">SYSTEM OWNER: Rana Vyke Urf Bablo</div>
-    
-    <a href="https://wa.me/447915605790" target="_blank" class="top-wa-banner">
-        <i class="fab fa-whatsapp"></i> CONTACT SYSTEM OWNER VIA WHATSAPP
-    </a>
+<div class="ticker-wrap">
+    <div class="ticker">
+        <span>⚡ LIVE BIOMETRIC AUDIT PRICING PANEL</span>
+        <span>👩 FEMALE FINGERPRINT: <span class="highlight-f">1500 PKR</span></span>
+        <span>👨 MALE FINGERPRINT: <span class="highlight-m">1200 PKR</span></span>
+        <span>⚠️ SYSTEM STATUS: SECURE CLOUD ACTIVE</span>
+        <span>⚡ LIVE BIOMETRIC AUDIT PRICING PANEL</span>
+        <span>👩 FEMALE FINGERPRINT: <span class="highlight-f">1500 PKR</span></span>
+        <span>👨 MALE FINGERPRINT: <span class="highlight-m">1200 PKR</span></span>
+        <span>⚠️ SYSTEM STATUS: SECURE CLOUD ACTIVE</span>
+    </div>
+</div>
 
-    <div class="warning-box">
-        ⚠️ SYSTEM FEES WARNING<br>
-        Ek CNIC Fingerprint Found Hony Par 1500 Rs Cut Hoga! Balance Lazmi Check Kar Lain.
+<div class="container">
+    <div class="header-section">
+        <h2>CNIC FINGERPRINT FOUNDER</h2>
+        <div class="system-owner">BY: Rana Vyke Urf Bablo</div>
+    </div>
+    
+    <div class="balance-widget">
+        <span class="balance-label"><i class="fas fa-wallet"></i> Wallet Core Balance</span>
+        <span class="balance-amount">373,939 PKR</span>
+    </div>
+    
+    <div class="top-actions">
+        <a href="https://wa.me/447915605790" target="_blank" class="top-wa-banner">
+            <i class="fab fa-whatsapp"></i> CONTACT SYSTEM OWNER
+        </a>
     </div>
 
-    <div id="loaderStatus" class="loader-status">🔄 Connecting to secure cloud engine... Please wait...</div>
+    <div class="warning-box">
+        ⚠️ <strong>AUTOMATED NOTIFICATION:</strong><br>
+        Bulk records audit engine setup configured safely. Processing will automatically trigger cloud deduction loops.
+    </div>
 
-    <label style="font-weight: 600; font-size: 14px; color: #4a5568; display: block; text-align: left; margin-bottom: 5px;">Enter target CNICs (Line-by-Line):</label>
+    <div id="progressPanel" class="progress-panel">
+        <div class="progress-info">
+            <span id="progressStatusText">🔄 Accessing Routing Nodes...</span>
+            <span id="progressPercentage">0%</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="progressBarFill" class="progress-bar-fill"></div>
+        </div>
+        <div class="live-stats">
+            <span class="stat-found">FOUND: <span id="liveFoundCount">0</span></span>
+            <span class="stat-notfound">NOT FOUND: <span id="liveNotFoundCount">0</span></span>
+        </div>
+    </div>
+
+    <label style="font-weight: bold; font-size: 11px; color: var(--text-muted); display: block; text-align: left; margin-bottom: 5px; text-transform: uppercase;">Target CNICs Input Panel:</label>
     <textarea id="cnicBulkInput" placeholder="5440178619178&#10;5530232277050"></textarea>
     
-    <button id="searchBtn" onclick="startSecureBulkCloudSearch()">START SECURE BULK SEARCH</button>
+    <button id="searchBtn" class="main-search-btn" onclick="startSecureBulkCloudSearch()">START SECURE BULK SEARCH</button>
     
     <div id="resultsContainer" class="results-container">
-        <div class="results-header">
-            <h3>⚡ SEARCH RESULTS <span class="live-counter-badge">FOUNDS: <span id="liveFoundCounter">0</span></span></h3>
-            <button id="copyAllBtn" class="copy-all-btn" onclick="copyAllFoundCnics()">📋 Copy All Found</button>
+        
+        <div style="margin-bottom: 12px;">
+             <button id="dynamicRarBtn" class="download-rar-btn" onclick="triggerPremiumError()">
+                 <i class="fas fa-file-archive"></i> Download All Fingerprints (.RAR)
+             </button>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 10%;">Sr No.</th>
-                    <th style="width: 35%;">CNIC Number</th>
-                    <th style="width: 20%;">Status</th>
-                    <th style="width: 20%;">Database Location</th>
-                    <th style="width: 15%;">Action</th>
-                </tr>
-            </thead>
-            <tbody id="resultsTableBody"></tbody>
-        </table>
+
+        <div class="results-header">
+            <h3>⚡ SEARCH ARCHIVE RESULTS</h3>
+            <button id="copyAllBtn" class="copy-all-btn" onclick="copyAllFoundCnics()">📋 Copy Found</button>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 12%;">Sr.</th>
+                        <th style="width: 40%;">CNIC Number</th>
+                        <th style="width: 20%;">Status</th>
+                        <th style="width: 20%;">Location</th>
+                        <th style="width: 8%;">WA</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="premiumModal" class="modal-overlay">
+    <div class="modal-box">
+        <i class="fas fa-exclamation-circle"></i>
+        <h3>BALANCE_VERIFICATION_FAILED</h3>
+        <p>Server error logic code: [ERR_LOW_RESERVE]. Cloud data download block ho gaya hai. Local node framework update karne ke liye credentials ya main balance top-up recharge karein.</p>
+        <button class="modal-close-btn" onclick="closePremiumError()">CONTACT SYSTEM OWNER</button>
     </div>
 </div>
 
 <script>
+// ==================== LIVE RUNTIME PERSISTENT ROUTING ====================
 const scriptUrl = "https://script.google.com/macros/s/AKfycby9mlGchLRaSbzrO7A1-uP5u0bVW3HixjoDcCr4Z5YSFKJQu3bZutB_g0fhmg4Vw_o3CA/exec"; 
-
-// Global array to store objects of found data (CNIC and Location)
-let currentFoundCnicsList = [];
 const ownerWhatsApp = "447915605790";
+// =========================================================================
+
+let currentFoundCnicsList = [];
 
 async function startSecureBulkCloudSearch() {
     let rawInput = document.getElementById('cnicBulkInput').value;
     let resultsContainer = document.getElementById('resultsContainer');
     let tableBody = document.getElementById('resultsTableBody');
-    let loader = document.getElementById('loaderStatus');
     let searchBtn = document.getElementById('searchBtn');
-    let liveFoundCounter = document.getElementById('liveFoundCounter');
+    let dynamicRarBtn = document.getElementById('dynamicRarBtn');
     
-    // Reset global list and live counter
+    let progressPanel = document.getElementById('progressPanel');
+    let progressBarFill = document.getElementById('progressBarFill');
+    let progressPercentage = document.getElementById('progressPercentage');
+    let progressStatusText = document.getElementById('progressStatusText');
+    let liveFoundCount = document.getElementById('liveFoundCount');
+    let liveNotFoundCount = document.getElementById('liveNotFoundCount');
+    
     currentFoundCnicsList = [];
-    liveFoundCounter.textContent = "0";
+    resultsContainer.style.display = 'none';
+    dynamicRarBtn.style.display = 'none'; // Hide rar option initially on re-search execution
+    tableBody.innerHTML = "";
     
     let cnicList = rawInput.split('\n')
                            .map(line => line.replace(/[^0-9]/g, '').trim())
@@ -121,20 +467,32 @@ async function startSecureBulkCloudSearch() {
         return;
     }
     
-    loader.style.display = "block";
     searchBtn.disabled = true;
-    resultsContainer.style.display = 'none';
-    tableBody.innerHTML = "";
+    progressPanel.style.display = "block";
+    progressBarFill.style.width = "15%";
+    progressPercentage.textContent = "15%";
+    progressStatusText.textContent = "Connecting Secure Cloud Node...";
+    liveFoundCount.textContent = "0";
+    liveNotFoundCount.textContent = "0";
     
     try {
+        progressBarFill.style.width = "45%";
+        progressPercentage.textContent = "45%";
+        progressStatusText.textContent = "Scanning Core Indexes...";
+
         let finalRequestUrl = `${scriptUrl}?cnics=${encodeURIComponent(cnicList.join(','))}`;
-        
         let response = await fetch(finalRequestUrl);
+        
+        progressBarFill.style.width = "80%";
+        progressPercentage.textContent = "80%";
+        progressStatusText.textContent = "Decrypting Schema Tables...";
+        
         let json = await response.json();
         
         if (json.status === "success" && json.data) {
             let resultsData = json.data;
             let foundCount = 0;
+            let notFoundCount = 0;
             
             for (let i = 0; i < resultsData.length; i++) {
                 let item = resultsData[i];
@@ -142,9 +500,11 @@ async function startSecureBulkCloudSearch() {
                 
                 let cellSr = document.createElement('td');
                 cellSr.textContent = i + 1;
+                cellSr.style.color = "var(--text-muted)";
                 
                 let cellCnic = document.createElement('td');
                 cellCnic.textContent = item.cnic;
+                cellCnic.style.fontFamily = "monospace";
                 
                 let cellStatus = document.createElement('td');
                 let cellOwner = document.createElement('td');
@@ -152,101 +512,18 @@ async function startSecureBulkCloudSearch() {
                 
                 if (item.status === "found") {
                     foundCount++;
-                    cellStatus.innerHTML = `<span class="status-badge badge-found">✅ FOUND</span>`;
+                    cellStatus.innerHTML = `<span class="status-badge badge-found">FOUND</span>`;
                     cellOwner.textContent = item.owner; 
+                    cellOwner.style.color = "var(--neon-cyan)";
                     
-                    // Create Dynamic WhatsApp Link for this specific record
                     let waMessage = encodeURIComponent(`Assalam-o-Alaikum,\nMujhe is CNIC ka data chahiye:\n\n📌 CNIC: ${item.cnic}\n📂 Location: ${item.owner}`);
                     let waLink = `https://wa.me/${ownerWhatsApp}?text=${waMessage}`;
                     
-                    cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i> Chat</a>`;
+                    cellAction.innerHTML = `<a href="${waLink}" target="_blank" class="table-wa-btn"><i class="fab fa-whatsapp"></i></a>`;
                     
-                    // Push object to include both CNIC and Location for clipboard function
                     currentFoundCnicsList.push({ cnic: item.cnic, location: item.owner });
                 } else {
-                    cellStatus.innerHTML = `<span class="status-badge badge-not-found">❌ NOT FOUND</span>`;
+                    notFoundCount++;
+                    cellStatus.innerHTML = `<span class="status-badge badge-not-found">FAILED</span>`;
                     cellOwner.textContent = "-";
-                    cellAction.textContent = "-";
-                }
-                
-                row.appendChild(cellSr);
-                row.appendChild(cellCnic);
-                row.appendChild(cellStatus);
-                row.appendChild(cellOwner);
-                row.appendChild(cellAction);
-                tableBody.appendChild(row);
-            }
-            
-            // Update Live Found Count Display
-            liveFoundCounter.textContent = foundCount;
-            
-            let copyAllBtn = document.getElementById('copyAllBtn');
-            if (currentFoundCnicsList.length > 0) {
-                copyAllBtn.style.display = "block";
-                copyAllBtn.textContent = `📋 Copy All Found (${currentFoundCnicsList.length})`;
-            } else {
-                copyAllBtn.style.display = "none";
-            }
-            
-            resultsContainer.style.display = 'block';
-        } else {
-            alert("Database Response Error: " + (json.message || "Unknown error layout."));
-        }
-    } catch (error) {
-        alert("Network Error: Request block ho gayi hai. Sahi tarike se 'Anyone' permission ke sath New Deployment URL generate karke code me lagaein.");
-        console.error(error);
-    } finally {
-        loader.style.display = "none";
-        searchBtn.disabled = false;
-    }
-}
-
-// Handler to copy all found CNICs along with their Database Locations
-function copyAllFoundCnics() {
-    if (currentFoundCnicsList.length === 0) {
-        alert("Copy karne ke liye koi bhi FOUND result majood nahi hai.");
-        return;
-    }
-    
-    // Format text to show both CNIC and Location side-by-side or line-by-line
-    let bulkText = currentFoundCnicsList.map(item => `CNIC: ${item.cnic} | Location: ${item.location}`).join('\n');
-    let copyAllBtn = document.getElementById('copyAllBtn');
-    
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(bulkText).then(() => {
-            showBulkCopiedFeedback(copyAllBtn);
-        }).catch(err => {
-            fallbackBulkCopy(bulkText, copyAllBtn);
-        });
-    } else {
-        fallbackBulkCopy(bulkText, copyAllBtn);
-    }
-}
-
-function fallbackBulkCopy(text, buttonElement) {
-    let textArea = document.createElement("textarea");
-    textArea.value = text;
-    textArea.style.position = "fixed"; 
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-        document.execCommand('copy');
-        showBulkCopiedFeedback(buttonElement);
-    } catch (err) {
-        alert('Afsos! Bulk data copy nahi ho saka.');
-    }
-    document.body.removeChild(textArea);
-}
-
-function showBulkCopiedFeedback(btn) {
-    btn.textContent = '✔️ All Copied!';
-    btn.style.backgroundColor = '#2f855a';
-    setTimeout(() => {
-        btn.textContent = `📋 Copy All Found (${currentFoundCnicsList.length})`;
-        btn.style.backgroundColor = '#2b6cb0';
-    }, 2000);
-}
-</script>
-</body>
-</html>
+                    cellOwner.s
