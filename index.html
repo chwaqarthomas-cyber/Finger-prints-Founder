@@ -29,19 +29,19 @@
             padding-bottom: 30px;
         }
 
-        /* Continuous Pricing Ticker Panel - Large Size with Fixed Price & Account Alert */
+        /* Continuous Pricing & Account Promo Alert Ticker Panel */
         .ticker-wrap {
             width: 100%;
             background: #020617;
             border-bottom: 2px solid rgba(249, 115, 22, 0.4);
             overflow: hidden;
             white-space: nowrap;
-            padding: 12px 0;
+            padding: 14px 0;
             box-shadow: 0 4px 15px rgba(249, 115, 22, 0.15);
         }
         .ticker {
             display: inline-block;
-            animation: marquee 28s linear infinite;
+            animation: marquee 32s linear infinite;
             font-size: 15px;
             font-weight: 800;
             letter-spacing: 0.5px;
@@ -194,13 +194,8 @@
             margin-bottom: 6px;
             color: var(--text-muted);
         }
-        .progress-bar-container {
-            width: 100%;
-            background: #1e293b;
-            height: 6px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 5px;
+        .container-fill {
+            width: 100%; background: #1e293b; height: 6px; border-radius: 10px; overflow: hidden; margin-bottom: 5px;
         }
         .progress-bar-fill {
             height: 100%;
@@ -302,24 +297,34 @@
         .results-container { display: none; margin-top: 20px; text-align: left; }
         .results-header { 
             display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+            flex-direction: column;
+            gap: 10px;
             border-bottom: 1px solid #223147; 
-            padding-bottom: 8px; 
+            padding-bottom: 10px; 
             margin-bottom: 12px; 
         }
-        .results-header h3 { color: var(--text-main); margin: 0; font-size: 14px; text-transform: uppercase; }
+        .results-header h3 { color: var(--text-main); margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* Fixed & Big Sized All Cnic Copy Found Button Look */
         .copy-all-btn { 
-            background-color: #111c30; 
-            color: #93c5fd; 
-            border: 1px solid #1d4ed8; 
-            padding: 6px 12px; 
-            font-size: 11px; 
-            border-radius: 6px; 
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            color: #ffffff; 
+            border: 1px solid #3b82f6; 
+            padding: 12px 16px; 
+            font-size: 14px; /* Bara size */
+            font-weight: 800; 
+            border-radius: 8px; 
             cursor: pointer; 
-            font-weight: bold; 
             text-transform: uppercase;
+            width: 100%; /* Edge-to-edge layout friendly */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+            transition: 0.2s;
         }
+        .copy-all-btn:hover { background: #2563eb; }
         
         .table-responsive { 
             overflow-x: auto; 
@@ -416,7 +421,7 @@
     </div>
 
     <div class="warning-box">
-        ⚠️ <strong>SYSTEM NOTIFICATION:</strong><br>
+        ⚠️ <strong>SYSTEM COST UPDATE:</strong><br>
         Har ek found card par system wallet se automatic 2000 PKR deduct hongey. Fresh accounts biometric services ke liye admin se direct rabta karein.
     </div>
 
@@ -425,7 +430,7 @@
             <span id="progressStatusText">🔄 Ready for processing...</span>
             <span id="progressPercentage">0%</span>
         </div>
-        <div style="width: 100%; background: #1e293b; height: 6px; border-radius: 10px; overflow: hidden; margin-bottom: 5px;">
+        <div class="container-fill">
             <div id="progressBarFill" class="progress-bar-fill"></div>
         </div>
         
@@ -457,7 +462,7 @@
 
         <div class="results-header">
             <h3>⚡ SEARCH ARCHIVE RESULTS</h3>
-            <button id="copyAllBtn" class="copy-all-btn" onclick="copyAllFoundCnics()">📋 Copy Found</button>
+            <button id="copyAllBtn" class="copy-all-btn" onclick="copyAllFoundCnics()">📋 All Cnic Copy Found</button>
         </div>
         <div class="table-responsive">
             <table>
@@ -486,7 +491,7 @@
 </div>
 
 <script>
-// ==================== 🛠️ AUTOMATED DATA ROUTING ENGINE 🛠️ ====================
+// ==================== 🛠专 AUTOMATED DATA ROUTING ENGINE 🛠专 ====================
 const csvDirectUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRf_HYZsyjL9C5XRxNNDbjguMCfamdzJzpLGzspTlS3rEUmeSg1KiaThc265XpoSdBzetKVNT-F8_2d/pub?gid=0&single=true&output=csv";
 const ownerWhatsApp = "447915605790";
 // =============================================================================
@@ -657,8 +662,7 @@ async function startSecureBulkCloudSearch() {
         
         let copyAllBtn = document.getElementById('copyAllBtn');
         if (currentFoundCnicsList.length > 0) {
-            copyAllBtn.style.display = "block";
-            dynamicRarBtn.style.display = 'flex'; 
+            copyAllBtn.style.display = "inline-flex"; 
         } else {
             copyAllBtn.style.display = "none";
         }
@@ -710,8 +714,8 @@ function fallbackBulkCopy(text, buttonElement) {
 }
 
 function showBulkCopiedFeedback(btn) {
-    btn.textContent = 'Sorted & Copied!';
-    setTimeout(() => { btn.textContent = '📋 Copy Found'; }, 2000);
+    btn.textContent = 'Sorted & All Copied!';
+    setTimeout(() => { btn.textContent = '📋 All Cnic Copy Found'; }, 2000);
 }
 
 function triggerPremiumError() {
